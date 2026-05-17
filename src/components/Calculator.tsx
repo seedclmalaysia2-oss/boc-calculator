@@ -40,7 +40,7 @@ const hasAnyK = (eye: EyeInput) =>
 const hasBothK = (eye: EyeInput) =>
   eye.flatK.trim() !== "" && eye.steepK.trim() !== "";
 
-export function Calculator() {
+export function Calculator({ simple = false }: { simple?: boolean }) {
   const [re, setRe] = useState<EyeInput>(EMPTY_EYE);
   const [le, setLe] = useState<EyeInput>(EMPTY_EYE);
   const [unit, setUnit] = useState<Unit>("mm");
@@ -187,6 +187,7 @@ export function Calculator() {
           unit={unit}
           result={result}
           locked={hasCalculated}
+          simple={simple}
           onField={onField}
           onUnit={onUnit}
           onAdoptUnit={onAdoptUnit}
@@ -198,6 +199,7 @@ export function Calculator() {
           reActive={reActive}
           leActive={leActive}
           locked={hasCalculated}
+          simple={simple}
           onField={onField}
         />
       </div>
@@ -248,11 +250,13 @@ export function Calculator() {
 
       {hasCalculated && (
         <>
-          <ConversionTable
-            result={result}
-            reActive={reActive}
-            leActive={leActive}
-          />
+          {!simple && (
+            <ConversionTable
+              result={result}
+              reActive={reActive}
+              leActive={leActive}
+            />
+          )}
           <ResultsSection
             result={result}
             reActive={reActive}

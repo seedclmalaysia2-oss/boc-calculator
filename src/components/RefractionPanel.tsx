@@ -11,6 +11,7 @@ export function RefractionPanel({
   reActive,
   leActive,
   locked,
+  simple,
   onField,
 }: {
   re: EyeInput;
@@ -19,6 +20,7 @@ export function RefractionPanel({
   reActive: boolean;
   leActive: boolean;
   locked: boolean;
+  simple: boolean;
   onField: (eye: Eye, field: keyof EyeInput, value: string) => void;
 }) {
   const eyeData = (key: Eye) => (key === "re" ? re : le);
@@ -82,7 +84,9 @@ export function RefractionPanel({
         le={input("le", "va", "Visual acuity")}
       />
 
-      <ScreeningTable result={result} reActive={reActive} leActive={leActive} />
+      {!simple && (
+        <ScreeningTable result={result} reActive={reActive} leActive={leActive} />
+      )}
     </Panel>
   );
 }
