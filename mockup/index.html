@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BOC Ortho-K Calculator — Design Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --blue:#2a5193; --blue-dark:#1f3d70; --blue-deep:#16294d;
+    --blue-tint:#eef2f9; --blue-line:#d6e0ee;
+    --gold:#b38a4c; --gold-soft:#f1e8d6;
+    --bg:#f4f6f9; --surface:#ffffff;
+    --ink:#1c2330; --ink-2:#4d5666; --ink-3:#828c9c;
+    --line:#e3e7ed; --line-2:#edf0f4;
+    --ok:#1e7d4f; --ok-bg:#e9f4ee; --ok-line:#bfe0cc;
+    --no:#c0392b; --no-bg:#fae9e7; --no-line:#ecc6c1;
+    --display:'Archivo',sans-serif;
+    --body:'Hanken Grotesk',sans-serif;
+    --mono:'IBM Plex Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:var(--bg);}
+  body{font-family:var(--body);color:var(--ink);
+    -webkit-font-smoothing:antialiased;line-height:1.5;padding:30px 20px 56px;}
+  .wrap{max-width:1090px;margin:0 auto;}
+
+  /* ---------- header ---------- */
+  .topbar{
+    position:relative;overflow:hidden;border-radius:16px;
+    background:linear-gradient(115deg,#2a5193 0%,#234780 55%,#1b3866 100%);
+    color:#fff;padding:24px 30px;display:flex;align-items:center;
+    justify-content:space-between;gap:24px;
+    box-shadow:0 12px 30px -14px rgba(31,61,112,.55);
+  }
+  .topbar::after{
+    content:"";position:absolute;right:-110px;top:50%;
+    width:360px;height:360px;transform:translateY(-50%);
+    background:repeating-radial-gradient(circle at center,
+      transparent 0 19px,rgba(255,255,255,.07) 19px 20px);
+    border-radius:50%;pointer-events:none;
+  }
+  .brand{display:flex;align-items:center;gap:18px;position:relative;z-index:1;}
+  .logo-chip{
+    background:#fff;border-radius:11px;padding:9px 13px;
+    box-shadow:0 4px 14px -4px rgba(0,0,0,.3);flex:none;
+  }
+  .logo-chip img{display:block;height:42px;width:auto;}
+  .brand .titles h1{
+    font-family:var(--display);font-weight:700;font-size:22px;
+    letter-spacing:-.015em;line-height:1.15;
+  }
+  .brand .titles p{
+    font-size:11.5px;color:#b9c8e2;margin-top:4px;
+    text-transform:uppercase;letter-spacing:.17em;font-weight:600;
+  }
+  .meta{position:relative;z-index:1;text-align:right;}
+  .meta .lbl{font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+    color:#9fb1d0;font-weight:700;}
+  .meta .val{font-family:var(--mono);font-size:15px;color:#fff;margin-top:3px;}
+
+  /* ---------- instructions ---------- */
+  .instructions{
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:13px;margin-top:15px;padding:0;overflow:hidden;
+  }
+  .ins-head{
+    display:flex;align-items:center;gap:9px;
+    background:var(--blue-tint);border-bottom:1px solid var(--blue-line);
+    padding:11px 22px;font-family:var(--display);font-weight:700;
+    font-size:12px;text-transform:uppercase;letter-spacing:.13em;color:var(--blue);
+  }
+  .ins-head svg{display:block;}
+  .ins-body{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:16px 22px;}
+  .step-note{display:flex;gap:11px;font-size:13.5px;color:var(--ink-2);}
+  .step-note b{
+    font-family:var(--mono);font-size:10.5px;font-weight:600;color:#fff;
+    background:var(--gold);padding:3px 8px;border-radius:5px;
+    height:fit-content;white-space:nowrap;letter-spacing:.03em;
+  }
+  .step-note strong{color:var(--ink);font-weight:700;}
+
+  /* ---------- panels ---------- */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:15px;}
+  .panel{
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:13px;overflow:hidden;
+  }
+  .panel-head{
+    display:flex;align-items:center;gap:11px;
+    background:var(--blue-tint);border-bottom:1px solid var(--blue-line);
+    padding:13px 20px;
+  }
+  .step-num{
+    font-family:var(--mono);font-weight:600;font-size:12px;color:#fff;
+    background:var(--gold);width:26px;height:26px;border-radius:7px;
+    display:grid;place-items:center;flex:none;
+  }
+  .panel-head h2{
+    font-family:var(--display);font-weight:700;font-size:17px;
+    letter-spacing:-.015em;color:var(--blue);
+  }
+  .panel-head .sub{
+    font-size:10.5px;color:var(--ink-3);margin-left:auto;
+    text-transform:uppercase;letter-spacing:.12em;font-weight:700;
+  }
+  .panel-body{padding:18px 20px 20px;}
+
+  /* segmented unit toggle */
+  .seg{display:inline-flex;background:#fff;border-radius:8px;padding:3px;
+    gap:2px;border:1px solid var(--blue-line);margin-left:auto;}
+  .seg button{
+    font-family:var(--mono);font-size:11px;font-weight:500;border:0;
+    background:transparent;color:var(--ink-3);padding:5px 12px;
+    border-radius:5px;cursor:pointer;letter-spacing:.03em;
+  }
+  .seg button.on{background:var(--blue);color:#fff;font-weight:600;}
+
+  /* data rows */
+  .colhead,.field,.readout{
+    display:grid;grid-template-columns:116px 1fr 1fr;gap:10px;align-items:center;
+  }
+  .colhead{margin-bottom:9px;}
+  .colhead span{
+    font-size:10px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+    display:flex;align-items:center;gap:6px;justify-content:center;color:var(--ink-3);
+  }
+  .colhead span:first-child{visibility:hidden;}
+  .eye-dot{width:7px;height:7px;border-radius:50%;}
+  .eye-dot.re{background:var(--blue);}
+  .eye-dot.le{background:var(--gold);}
+  .field{margin-bottom:9px;}
+  .field > label{font-size:12.5px;font-weight:600;color:var(--ink-2);}
+
+  input.cell,select.cell{
+    font-family:var(--mono);font-size:14px;color:var(--ink);width:100%;
+    padding:9px 11px;border:1px solid var(--line);border-radius:8px;
+    background:#fafbfc;text-align:center;outline:none;
+    transition:border-color .15s,box-shadow .15s,background .15s;
+  }
+  input.cell:focus,select.cell:focus{
+    border-color:var(--blue);box-shadow:0 0 0 3px rgba(42,81,147,.13);background:#fff;
+  }
+  select.cell{cursor:pointer;-webkit-appearance:none;appearance:none;padding-right:24px;
+    background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23828c9c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 11px center;}
+
+  .readout{margin-top:13px;padding-top:13px;border-top:1px dashed var(--line);}
+  .readout label{font-size:12.5px;font-weight:700;color:var(--ink);}
+  .readout .v{
+    font-family:var(--mono);font-size:15px;font-weight:600;text-align:center;color:var(--blue);
+  }
+
+  /* screening table */
+  .screen{margin-top:18px;}
+  .screen .cap{
+    font-size:11px;font-weight:700;color:var(--ink-2);margin-bottom:8px;
+    display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.06em;
+  }
+  .screen .cap::before{content:"";width:14px;height:3px;background:var(--gold);border-radius:2px;}
+  table{width:100%;border-collapse:collapse;}
+  .screen th,.screen td{font-size:12px;padding:8px 10px;text-align:center;
+    border:1px solid var(--line-2);}
+  .screen thead th{
+    background:var(--blue);color:#fff;font-weight:600;font-size:10.5px;
+    letter-spacing:.07em;text-transform:uppercase;border-color:var(--blue);
+  }
+  .screen td:first-child,.screen thead th:first-child{
+    text-align:left;font-weight:600;color:var(--ink-2);}
+  .screen thead th:first-child{color:#dce5f3;}
+  .screen .num{font-family:var(--mono);font-weight:600;}
+  .tag{
+    font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;
+    letter-spacing:.03em;display:inline-block;
+  }
+  .tag.ok{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok-line);}
+  .tag.no{background:var(--no-bg);color:var(--no);border:1px solid var(--no-line);}
+
+  /* calculate */
+  .actionbar{display:flex;justify-content:center;margin:22px 0 4px;}
+  .btn-calc{
+    font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.01em;
+    color:#fff;background:linear-gradient(180deg,#2f5aa0,#244784);
+    border:0;border-radius:10px;padding:15px 56px;cursor:pointer;
+    display:flex;align-items:center;gap:11px;
+    box-shadow:0 8px 20px -7px rgba(31,61,112,.6);
+  }
+  .btn-calc .ring{
+    width:14px;height:14px;border-radius:50%;
+    border:2px solid var(--gold);border-right-color:transparent;
+  }
+
+  /* results */
+  .results-head{display:flex;align-items:center;gap:14px;margin:30px 0 14px;}
+  .results-head h2{
+    font-family:var(--display);font-weight:800;font-size:15px;
+    text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;color:var(--blue);
+  }
+  .results-head::after{content:"";height:2px;background:var(--blue-line);flex:1;border-radius:2px;}
+
+  .lens-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .lens{
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:13px;overflow:hidden;
+  }
+  .lens-top{
+    padding:13px 16px;display:flex;align-items:center;justify-content:space-between;
+    gap:10px;background:linear-gradient(120deg,#2a5193,#21437c);color:#fff;
+  }
+  .lens-top .name{font-family:var(--display);font-weight:700;font-size:16px;}
+  .lens-top .name small{
+    display:block;font-family:var(--body);font-weight:600;font-size:9px;
+    letter-spacing:.13em;text-transform:uppercase;color:#aebfdc;margin-top:2px;
+  }
+  .badge{
+    font-size:10px;font-weight:800;letter-spacing:.05em;padding:5px 10px;
+    border-radius:6px;display:flex;align-items:center;gap:6px;
+    text-transform:uppercase;white-space:nowrap;
+  }
+  .badge.ok{background:#fff;color:var(--ok);}
+  .badge.no{background:#fff;color:var(--no);}
+  .badge .d{width:7px;height:7px;border-radius:50%;}
+  .badge.ok .d{background:var(--ok);}
+  .badge.no .d{background:var(--no);}
+  .lens-body{padding:4px 18px 16px;}
+  .lens-row{
+    display:grid;grid-template-columns:1fr auto auto;gap:8px;padding:9px 0;
+    border-bottom:1px solid var(--line-2);align-items:center;
+  }
+  .lens-row:last-of-type{border-bottom:0;}
+  .lens-row .k{font-size:11.5px;font-weight:700;color:var(--ink-2);}
+  .lens-row .k small{color:var(--ink-3);font-weight:500;}
+  .lens-row .re,.lens-row .le{
+    font-family:var(--mono);font-size:14px;font-weight:600;width:62px;text-align:right;
+  }
+  .lens-row.head .re,.lens-row.head .le{
+    font-family:var(--body);font-size:9.5px;font-weight:700;
+    color:var(--ink-3);letter-spacing:.09em;
+  }
+  .lens-row .re{color:var(--blue);}
+  .lens-row .le{color:var(--gold);}
+  .reason{font-size:11px;color:var(--ink-3);padding:11px 0 2px;display:flex;gap:7px;}
+  .reason b{color:var(--ink-2);font-weight:700;}
+
+  .conv{
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:13px;overflow:hidden;margin-top:14px;
+  }
+  .conv .cap{
+    display:flex;align-items:center;gap:9px;background:var(--blue-tint);
+    border-bottom:1px solid var(--blue-line);padding:11px 22px;
+    font-family:var(--display);font-weight:700;font-size:12px;
+    text-transform:uppercase;letter-spacing:.1em;color:var(--blue);
+  }
+  .conv .cap::before{content:"";width:16px;height:3px;background:var(--gold);border-radius:2px;}
+  .conv .ctable{padding:14px 22px 18px;}
+  .conv table th,.conv table td{
+    font-size:12px;padding:8px 10px;border:1px solid var(--line-2);text-align:center;
+  }
+  .conv table thead th{
+    background:var(--blue);color:#fff;font-size:10.5px;font-weight:600;
+    text-transform:uppercase;letter-spacing:.06em;border-color:var(--blue);
+  }
+  .conv table td:first-child,.conv table thead th:first-child{
+    text-align:left;font-weight:600;color:var(--ink-2);}
+  .conv table thead th:first-child{color:#dce5f3;}
+  .conv .num{font-family:var(--mono);font-weight:600;}
+
+  .pdf-bar{display:flex;justify-content:flex-end;gap:10px;margin-top:16px;}
+  .btn-pdf{
+    font-family:var(--body);font-weight:700;font-size:12.5px;
+    border:1px solid var(--blue-line);background:var(--surface);color:var(--blue);
+    border-radius:9px;padding:11px 18px;cursor:pointer;
+    display:flex;align-items:center;gap:8px;
+  }
+  .btn-pdf.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+
+  /* disclaimer */
+  .disclaimer{
+    margin-top:24px;background:var(--surface);border:1px solid var(--line);
+    border-radius:13px;padding:18px 22px;counter-reset:d;
+  }
+  .disclaimer h3{
+    font-family:var(--display);font-weight:700;font-size:11px;
+    text-transform:uppercase;letter-spacing:.14em;color:var(--ink-3);margin-bottom:10px;
+  }
+  .disclaimer p{
+    font-size:11.5px;color:var(--ink-3);line-height:1.65;
+    padding-left:22px;position:relative;margin-bottom:6px;
+  }
+  .disclaimer p::before{
+    content:counter(d);counter-increment:d;position:absolute;left:0;top:0;
+    font-family:var(--mono);font-size:10px;color:#fff;background:var(--blue);
+    width:15px;height:15px;border-radius:4px;display:grid;place-items:center;font-weight:600;
+  }
+
+  @media(max-width:880px){
+    .grid,.ins-body,.lens-grid{grid-template-columns:1fr;}
+    .topbar{flex-direction:column;align-items:flex-start;gap:16px;}
+    .meta{text-align:left;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo-chip"><img src="boc-logo.jpg" alt="Breath-O Correct" /></div>
+      <div class="titles">
+        <h1>Ortho-K Trial Lens Calculator</h1>
+        <p>Initial Lens Selection Tool</p>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="lbl">Report Date</div>
+      <div class="val">15 May 2026</div>
+    </div>
+  </header>
+
+  <!-- INSTRUCTIONS -->
+  <section class="instructions">
+    <div class="ins-head">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <circle cx="7" cy="7" r="6.3" stroke="#2a5193" stroke-width="1.3"/>
+        <path d="M7 6v4" stroke="#2a5193" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="7" cy="3.7" r="1" fill="#2a5193"/>
+      </svg>
+      Instructions
+    </div>
+    <div class="ins-body">
+      <div class="step-note"><b>STEP 1</b>
+        <span>Key in keratometry data — Flat K and Steep K in <strong>mm or dioptre</strong> — then select the closest diameter (based on 95% of HVID).</span></div>
+      <div class="step-note"><b>STEP 2</b>
+        <span>Key in the spectacle refraction data, then press <strong>Calculate</strong> to view recommended trial lenses.</span></div>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <div class="grid">
+
+    <section class="panel">
+      <div class="panel-head">
+        <span class="step-num">1</span>
+        <h2>Keratometry</h2>
+        <div class="seg"><button class="on">mm</button><button>Dioptre</button></div>
+      </div>
+      <div class="panel-body">
+        <div class="colhead">
+          <span></span>
+          <span><i class="eye-dot re"></i>RE · OD</span>
+          <span><i class="eye-dot le"></i>LE · OS</span>
+        </div>
+        <div class="field"><label>Flat K</label>
+          <input class="cell" value="7.80"><input class="cell" value="7.85"></div>
+        <div class="field"><label>Flat K Axis</label>
+          <input class="cell" value="180"><input class="cell" value="175"></div>
+        <div class="field"><label>Steep K</label>
+          <input class="cell" value="7.60"><input class="cell" value="7.65"></div>
+        <div class="field"><label>Steep K Axis</label>
+          <input class="cell" value="90"><input class="cell" value="85"></div>
+        <div class="field"><label>Closest Diameter</label>
+          <select class="cell"><option>10.2</option><option selected>10.6</option><option>11.0</option></select>
+          <select class="cell"><option>10.2</option><option selected>10.6</option><option>11.0</option></select></div>
+        <div class="readout"><label>Average K</label>
+          <span class="v">7.70</span><span class="v">7.75</span></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <span class="step-num">2</span>
+        <h2>Refraction</h2>
+        <span class="sub">Dioptre</span>
+      </div>
+      <div class="panel-body">
+        <div class="colhead">
+          <span></span>
+          <span><i class="eye-dot re"></i>RE · OD</span>
+          <span><i class="eye-dot le"></i>LE · OS</span>
+        </div>
+        <div class="field"><label>Sphere</label>
+          <select class="cell"><option selected>-3.00</option></select>
+          <select class="cell"><option selected>-2.75</option></select></div>
+        <div class="field"><label>Cylinder</label>
+          <select class="cell"><option selected>0.00</option></select>
+          <select class="cell"><option selected>-0.50</option></select></div>
+        <div class="field"><label>Axis</label>
+          <input class="cell" value="180"><input class="cell" value="10"></div>
+        <div class="field"><label>VA</label>
+          <input class="cell" value="6/6"><input class="cell" value="6/6"></div>
+
+        <div class="screen">
+          <div class="cap">Shape of Cornea Effectiveness</div>
+          <table>
+            <thead><tr><th>Flattest K − Target Power</th><th>RE · OD</th><th>LE · OS</th></tr></thead>
+            <tbody>
+              <tr><td>Screening ≥ 39</td><td class="num">39.63</td><td class="num">39.84</td></tr>
+              <tr><td>Suitability</td>
+                <td><span class="tag ok">Yes</span></td><td><span class="tag ok">Yes</span></td></tr>
+              <tr><td>Reason</td>
+                <td><span class="tag ok">≥ 39.00</span></td><td><span class="tag ok">≥ 39.00</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- CALCULATE -->
+  <div class="actionbar">
+    <button class="btn-calc"><span class="ring"></span>Calculate</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results-head"><h2>Trial Lens Results</h2></div>
+
+  <div class="lens-grid">
+
+    <article class="lens">
+      <div class="lens-top">
+        <div class="name">BOC STD<small>1st Trial Lens</small></div>
+        <div class="badge no"><span class="d"></span>Not Suitable</div>
+      </div>
+      <div class="lens-body">
+        <div class="lens-row head"><span class="k"></span><span class="re">RE · OD</span><span class="le">LE · OS</span></div>
+        <div class="lens-row"><span class="k">FT <small>Fitting Curve</small></span><span class="re">43.75</span><span class="le">44.00</span></div>
+        <div class="lens-row"><span class="k">TP <small>Target Power</small></span><span class="re">−3.50</span><span class="le">−3.25</span></div>
+        <div class="lens-row"><span class="k">CYL <small>Cylinder</small></span><span class="re">−1.25</span><span class="le">−1.00</span></div>
+        <div class="lens-row"><span class="k">DIA <small>Diameter</small></span><span class="re">10.60</span><span class="le">10.60</span></div>
+        <div class="reason"><b>Reason</b><span>Corneal cylinder out of range for STD.</span></div>
+      </div>
+    </article>
+
+    <article class="lens">
+      <div class="lens-top">
+        <div class="name">BOC HD<small>1st Trial Lens</small></div>
+        <div class="badge no"><span class="d"></span>Not Suitable</div>
+      </div>
+      <div class="lens-body">
+        <div class="lens-row head"><span class="k"></span><span class="re">RE · OD</span><span class="le">LE · OS</span></div>
+        <div class="lens-row"><span class="k">FT <small>Fitting Curve</small></span><span class="re">43.75</span><span class="le">44.00</span></div>
+        <div class="lens-row"><span class="k">TP <small>Target Power</small></span><span class="re">−3.50</span><span class="le">−3.25</span></div>
+        <div class="lens-row"><span class="k">CYL <small>Cylinder</small></span><span class="re">−1.25</span><span class="le">−1.00</span></div>
+        <div class="lens-row"><span class="k">DIA <small>Diameter</small></span><span class="re">10.60</span><span class="le">10.60</span></div>
+        <div class="reason"><b>Reason</b><span>Target power above HD range (−4.25 to −8.00).</span></div>
+      </div>
+    </article>
+
+    <article class="lens">
+      <div class="lens-top">
+        <div class="name">BOC TD<small>1st Trial Lens</small></div>
+        <div class="badge ok"><span class="d"></span>Suitable</div>
+      </div>
+      <div class="lens-body">
+        <div class="lens-row head"><span class="k"></span><span class="re">RE · OD</span><span class="le">LE · OS</span></div>
+        <div class="lens-row"><span class="k">FT <small>Fitting Curve</small></span><span class="re">43.25</span><span class="le">43.00</span></div>
+        <div class="lens-row"><span class="k">TP <small>Target Power</small></span><span class="re">−3.00</span><span class="le">−2.75</span></div>
+        <div class="lens-row"><span class="k">CYL <small>Cylinder</small></span><span class="re">−1.00</span><span class="le">−1.00</span></div>
+        <div class="lens-row"><span class="k">DIA <small>Diameter</small></span><span class="re">10.60</span><span class="le">10.60</span></div>
+        <div class="reason"><b>Reason</b><span>All parameters within range.</span></div>
+      </div>
+    </article>
+  </div>
+
+  <!-- CONVERSION TABLE -->
+  <div class="conv">
+    <div class="cap">Keratometry Information — Dioptre</div>
+    <div class="ctable">
+      <table>
+        <thead><tr><th>Fitting Curve (D)</th><th>RE · OD</th><th>LE · OS</th></tr></thead>
+        <tbody>
+          <tr><td>Flat K</td><td class="num">43.27</td><td class="num">42.99</td></tr>
+          <tr><td>Flat K Axis</td><td class="num">180</td><td class="num">175</td></tr>
+          <tr><td>Steep K</td><td class="num">44.41</td><td class="num">44.12</td></tr>
+          <tr><td>Steep K Axis</td><td class="num">90</td><td class="num">85</td></tr>
+          <tr><td>Cylinder</td>
+            <td class="num" style="color:var(--no)">−1.25</td>
+            <td class="num" style="color:var(--no)">−1.00</td></tr>
+          <tr><td>Average K</td><td class="num">43.84</td><td class="num">43.56</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="pdf-bar">
+    <button class="btn-pdf">Detailed Report</button>
+    <button class="btn-pdf primary">Download Report</button>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <section class="disclaimer">
+    <h3>Disclaimer</h3>
+    <p>This calculator is not intended to determine final lens specifications; it does not account for topography images reflecting the actual eye condition before or after fitting BOC Ortho-K lenses.</p>
+    <p>It is solely for selecting initial trial lenses. Further parameter adjustments are necessary if the initial trial lens is unsuitable after the fitting process.</p>
+    <p>No data is stored, captured, or screenshotted. No information is saved on any server or location.</p>
+  </section>
+
+</div>
+</body>
+</html>

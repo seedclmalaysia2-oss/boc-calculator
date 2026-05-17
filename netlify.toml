@@ -1,0 +1,5 @@
+# Netlify deploy config. For drag-and-drop deploys this file is unused —
+# it applies when the project is connected to Netlify via Git.
+[build]
+  command = "npm run build"
+  publish = "out"

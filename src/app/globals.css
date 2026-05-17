@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+/* Class-based dark mode: `dark:` variants apply under a `.dark` ancestor. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-brand: #2a5193;
+  --color-brand-dark: #1f3d70;
+  --color-brand-deep: #16294d;
+  --color-tint: #eef2f9;
+  --color-hairline: #d6e0ee;
+  --color-gold: #b38a4c;
+  --color-gold-soft: #f1e8d6;
+  --color-canvas: #f4f6f9;
+  --color-ink: #1c2330;
+  --color-ink2: #4d5666;
+  --color-ink3: #828c9c;
+  --color-line: #e3e7ed;
+  --color-line2: #edf0f4;
+  --color-ok: #1e7d4f;
+  --color-ok-soft: #e9f4ee;
+  --color-ok-line: #bfe0cc;
+  --color-no: #c0392b;
+  --color-no-soft: #fae9e7;
+  --color-no-line: #ecc6c1;
+
+  /* Surfaces — replace literal white so they can re-theme. */
+  --color-surface: #ffffff;
+  --color-field: #fafbfc;
+  --color-field-focus: #ffffff;
+  /* Table header fill — kept dark in both themes for white-text contrast. */
+  --color-tablehead: #2a5193;
+
+  --font-display: var(--font-archivo), sans-serif;
+  --font-body: var(--font-hanken), sans-serif;
+  --font-mono: var(--font-plex-mono), monospace;
+}
+
+/* Non-scale tokens: input focus ring colours. */
+:root {
+  --focus-ring: rgba(42, 81, 147, 0.16);
+  --focus-ring-invalid: rgba(192, 57, 43, 0.16);
+  color-scheme: light;
+}
+
+/*
+ * Dark theme. Tailwind utilities for theme colours resolve through
+ * var(--color-*), so overriding the token values here re-themes every
+ * component — no per-component `dark:` variants needed.
+ */
+.dark {
+  --color-brand: #6f9bd8;
+  --color-brand-dark: #8fb2e3;
+  --color-brand-deep: #b9cdee;
+  --color-tint: #1f2735;
+  --color-hairline: #2e3747;
+  --color-gold: #caa05c;
+  --color-gold-soft: #2b2418;
+  --color-canvas: #0e1117;
+  --color-ink: #e7eaf0;
+  --color-ink2: #abb4c3;
+  --color-ink3: #8a93a3;
+  --color-line: #2a313d;
+  --color-line2: #232a35;
+  --color-ok: #3fd081;
+  --color-ok-soft: #15271d;
+  --color-ok-line: #305b42;
+  --color-no: #f0796d;
+  --color-no-soft: #2d1a1a;
+  --color-no-line: #5e3a37;
+
+  --color-surface: #181d27;
+  --color-field: #1e2430;
+  --color-field-focus: #262e3c;
+  --color-tablehead: #222b3b;
+
+  --focus-ring: rgba(111, 155, 216, 0.32);
+  --focus-ring-invalid: rgba(240, 121, 109, 0.3);
+  color-scheme: dark;
+}
+
+html,
+body {
+  background: var(--color-canvas);
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/*
+ * Print: the report is the page itself. Buttons carry `print:hidden`;
+ * here we force the light theme, print background fills faithfully, and
+ * keep cards intact across page breaks.
+ */
+@media print {
+  .dark {
+    --color-brand: #2a5193;
+    --color-brand-dark: #1f3d70;
+    --color-brand-deep: #16294d;
+    --color-tint: #eef2f9;
+    --color-hairline: #d6e0ee;
+    --color-gold: #b38a4c;
+    --color-gold-soft: #f1e8d6;
+    --color-canvas: #f4f6f9;
+    --color-ink: #1c2330;
+    --color-ink2: #4d5666;
+    --color-ink3: #828c9c;
+    --color-line: #e3e7ed;
+    --color-line2: #edf0f4;
+    --color-ok: #1e7d4f;
+    --color-ok-soft: #e9f4ee;
+    --color-ok-line: #bfe0cc;
+    --color-no: #c0392b;
+    --color-no-soft: #fae9e7;
+    --color-no-line: #ecc6c1;
+    --color-surface: #ffffff;
+    --color-field: #fafbfc;
+    --color-field-focus: #ffffff;
+    --color-tablehead: #2a5193;
+    color-scheme: light;
+  }
+
+  @page {
+    margin: 12mm;
+  }
+
+  html,
+  body {
+    background: #ffffff;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  article,
+  details,
+  table,
+  tr {
+    break-inside: avoid;
+  }
+
+  /* Reveal collapsed explainers in the printed report. */
+  details > :not(summary) {
+    display: block !important;
+  }
+}

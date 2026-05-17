@@ -1,0 +1,1000 @@
+.table td, .table th {
+    border: 1px solid #dee2e6 !important;
+}
+
+body{
+    background: #f4f4f4;
+}
+
+h5{
+    font-weight: bold;
+}
+.table {
+    /* font-family: 'Josefin Sans', sans-serif; */
+}
+
+.table thead th {
+    text-align: left;
+    font-size: 15px !important;
+}
+
+.table thead th{
+    color: #FFF !important;
+    font-size: 20px;
+}
+
+.table p{
+    /* font-size: 15px !important; */
+}       
+
+/* spinner */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0,0,0,.05);
+}
+
+.spinner-border {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.table-sm td, .table-sm th {
+    padding: 0.3rem;
+}
+p{
+    margin-bottom: 0px;
+}
+table td{
+    padding: 0.3rem !important; 
+    text-align: center;
+    
+}
+table th{
+    /* background-color: #009639; */
+    padding: 5px !important;
+    text-align: center !important;
+}
+
+
+
+
+body{
+    font-family: 'Roboto', sans-serif;
+    /* background-color: rgba(179, 138, 76, 1) !important; */
+}
+
+thead{
+    background-color: rgba(179, 138, 76, 1) !important;
+    /* background-color: rgba(29,103,205,1) !important; */
+}
+td{
+    vertical-align: middle;
+}
+
+h6{
+   font-size: 16px !important;
+   /* color: rgba(29,103,205,1) !important; */
+   color: rgba(0,0,0,1);
+}
+
+label{
+    color: #FFF !important;
+}
+
+.form-control{
+    font-size: 16px !important;
+    border-radius:5px !important;
+    /* height: 28px !important; */
+    /* font-weight: 600 !important; */
+    background-color: yellow;
+    text-align: center;
+}
+
+table td{
+    padding: 0px;
+}
+
+
+body{
+    /* font-family: 'Montserrat'; */
+    font-size: 17px;
+    letter-spacing: normal;
+    word-spacing: 1px;
+    background: #FFFFFF;
+}
+
+.logoImg img{
+    width: 100%;
+    max-width: 500px;
+}
+
+.marginTopBottom{
+    margin-top: 40px;
+    margin-bottom: 40px;
+    justify-content: center;
+}
+
+.cardOne{
+    border-radius: 8px;
+    border: 1px solid #f0f0f2 !important;
+    /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    /* height: 100%; */
+
+}
+
+.h1Style{
+    margin-bottom: 40px;
+}
+
+.h1Style h1{
+    color: #153357;
+    font-size: 48px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.h1Style p{
+    text-align: center;
+    font-weight: 500;
+}
+
+.h5Style h5{
+    font-weight: 700;
+    font-size: 30px;
+    color: #92d050;
+}
+
+.labelInput{
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.labelInput label{
+    font-weight: 500;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color:#000000;
+    align-items: end;
+    line-height: 1.2;
+}
+
+small{
+    font-size: 14px;
+    line-height: 1 !important;
+}
+
+.cardStyle{
+    /* max-width: 900px; */
+    margin: auto;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0px 15px 30px 0px rgba(119, 123, 146, 0.1);
+    border: none;
+    background: #FFFFFF;
+}
+
+.labelInput input{
+    font-size: 18px;
+    font-weight: 600;
+    color:#000000;
+    border-bottom-left-radius: 0px;
+}
+
+.fontz{
+    font-size: 13px;
+}
+.unit_class{
+    min-width: 80px;
+}
+
+.border_right{
+    border-right: none !important;
+}
+.unit_grey{
+    color: grey;
+}
+.labelInput select {
+    font-size: 18px;
+    font-weight: 400;
+    border-radius: 8px;
+    padding-top: 13px;
+    border: 1px solid #EE9012;
+    color: #153357;
+}
+.sitemapline2{
+    text-align: center;
+}
+.custom-btn{
+    width: 100%;
+    max-width: 350px;
+    background:#92d050;
+    color: #FFFFFF;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 18px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin:auto;
+    text-align: center;
+}
+
+.custom-btn:hover{
+    background:#92d050;
+    color: white;
+}
+
+.marginBottom{
+    margin-bottom: 0px;
+}
+
+.sitemapresult h5{
+    font-size: 30px;
+    font-weight: 700;
+}
+
+
+#container {
+    height: 300px;
+}
+
+.highcharts-data-table table {
+	font-family: Verdana, sans-serif;
+	border-collapse: collapse;
+	border: 1px solid #EBEBEB;
+	margin: 10px auto;
+	text-align: center;
+	width: 100%;
+	max-width: 500px;
+}
+.highcharts-data-table caption {
+    padding: 1em 0;
+    font-size: 1.2em;
+    color: #555;
+}
+.highcharts-data-table th {
+	font-weight: 600;
+    padding: 0.5em;
+}
+.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+    padding: 0.5em;
+}
+.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+    background: #f8f8f8;
+}
+.highcharts-data-table tr:hover {
+    background: #f1f7ff;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1500px) {
+}
+
+@media (max-width: 1199px) {
+}
+
+@media(max-width: 991px) {
+
+    .labelInput label {
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+}
+
+@media(max-width: 769px) {
+    
+    .MakeCenterOnsmallDevices{
+        text-align: center;
+        margin-top: 10px;
+        font-size: 20px;
+        padding: 20px;
+        justify-content: center;
+    }
+
+    .cardOne{
+        margin: 14px !important;
+    }
+
+    h5{
+        font-size: 14px;
+    }
+    h6{
+        font-size: 14px !important;
+    }
+    table td{
+        font-size: 12px;
+    }
+
+    table th{
+        font-size: 13px !important;
+        vertical-align: middle;
+    }
+    h2{
+        font-size: 18px !important;
+    }
+
+    .form-control{
+        font-size: 12px !important;
+    }
+    
+}
+
+@media(max-width: 768px) {
+    
+    .d-flex{
+        flex-wrap: wrap;
+    }
+    
+}
+
+@media(max-width: 479px) {
+    
+    .p-3{
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+    .h1Style h1{
+        font-size: 38px;
+        margin-bottom: 30px;
+    }
+
+    .h1Style p {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .h5Style h5 {
+        font-weight: 700;
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .labelInput label {
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .sitemapresult h5 {
+        font-size: 20px;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    .results label, p {
+        font-size: 16px;
+        font-weight: 600;
+    }
+    
+    .results{
+        display: block !important;
+    }
+
+    .results p{
+        display: flex;
+        justify-content: center;
+    }
+    .results label{
+        display: flex;
+        justify-content: center;
+    }
+    .linkCopy p {
+        font-weight: 400;
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .jahreParah {
+        font-size: 16px;
+    }
+
+}
+
+@media(max-width: 320px) {
+
+    h1{
+        font-size: 30px;
+    }
+
+    .p-3{
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+
+    .h1Style h1{
+        font-size: 32px;
+        margin-bottom: 30px;
+    }
+
+    .h1Style p {
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .h5Style h5 {
+        font-weight: 700;
+        font-size: 20px;
+    }
+    .labelInput label {
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .sitemapresult h5 {
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .results label, p {
+        font-size: 17px;
+        font-weight: 600;
+    }
+    
+    .results{
+        display: block !important;
+    }
+
+    .results p{
+        display: flex;
+        justify-content: center;
+    }
+    .results label{
+        display: flex;
+        justify-content: center;
+    }
+
+    .linkCopy p {
+        font-weight: 400;
+        font-size: 12px;
+        text-align: center;
+    }
+
+}
+
+@media (max-width: 350px) {
+
+    h2{
+        font-size: 30px !important;
+    }
+}
+
+
+input[type="radio"]{
+    appearance: none;
+}
+
+.paddingZeroOnDesktop{
+    padding: 0px !important;
+}
+
+@media (max-width: 768px) {
+
+    .cardOne, .cardTwo{
+        /* max-width: 500px; */
+        margin: auto;
+    }
+
+    .cardOne{
+        border-radius: 8px;
+    }
+
+    .cardTwo{
+        margin-top: 10px;
+        border-radius: 8px;
+    }
+
+    .whatIfResult{
+        margin-top: 5px;
+    }
+
+}
+
+.mainResult{
+    font-size: 14px;
+    color: #FFFFFF !important;
+}
+
+.mainResult p, .mainResult span{
+    color: #FFFFFF !important;
+}
+
+/* TAB STYLE */
+
+  .nav-tabs{
+    width: 100%;
+    margin: auto;
+    justify-content: center;
+    border-bottom: 0px !important;
+    margin-bottom: 20px;
+}
+
+  .tab{
+      color: #0083BB;
+      padding: 10px;
+      text-align: center;
+      flex-grow: 1;
+      cursor: pointer;
+      margin-top: 5px;
+      border: 1px solid #dedede;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+  }
+
+  .tab-1{
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+  }
+
+  .tab-2{
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
+  
+  .tab a{
+    text-decoration: none !important;
+    color: #0083BB;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  
+  .active{
+    background: #92d050;
+    color: #FFFFFF;
+  }
+
+  .active a{
+    background: #92d050;
+    color: #FFFFFF;
+  }
+
+  .whatIf h1{
+    font-size: 30px;
+    color: #FFFFFF;
+    }
+
+  .headerText{
+    /* font-family: "zuume",Sans-serif !important; */
+    margin: auto;
+    margin-bottom:10px;
+}
+
+.whatIfResult{
+    background: #FFFFFF;
+    padding: 6px;
+    border-radius: 12px;
+}
+
+h2{
+    margin-bottom: 7px;
+    font-size: 20px;
+    font-weight: bold;
+    color:rgba(179, 138, 76, 1) !important;
+    line-height: 1.67em;
+}
+
+.material-icons{
+    font-size: 40px;
+}
+
+.headerText{
+    font-size: 16px !important;
+}
+
+.headingHeight{
+    min-height: 70px;
+}
+
+.whatIfResult p{
+    font-size: 14px;
+}
+
+
+.SetMargin_top{
+    margin-top: 20px
+}
+
+
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+/* Rules for using icons as black on a light background. */
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+/* Rules for using icons as white on a dark background. */
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+
+.brandImg{
+    padding: 5px;
+    /* border: 1px solid #dedede;
+    height: 108; */
+    /* height: 108px; */
+    text-align: center;
+}
+
+.brandingAds{
+    text-decoration: none;
+    color: #333333;
+}
+.brandingAds:hover{
+    text-decoration: none;
+    color: #333333;
+}
+
+.brandImg img{
+    width: 100%;
+    max-width: 200px;
+}
+
+.alignCenter{
+    align-items: center;
+    border: 1px solid #dedede;
+    min-height: 100px;
+}
+
+.alignCenter:hover{
+    border: 1px solid #92d050;
+}
+
+#mybutton{
+    margin-bottom: 20px;
+}
+
+
+@media (max-width:320px) {
+    
+    .FontStyle{
+        font-size: 20px;
+        font-weight: normal;
+        text-align: center;
+    }
+    .NewStyleSet{
+        justify-content: center;
+        margin: auto;
+        text-align: center;
+        justify-items: flex-end;
+    }
+    .NewStyleFonts{
+        text-align: auto;
+        text-decoration: dotted;
+        margin: 0%;
+    }
+    .fontSizeNewProperty{
+        text-align: center;
+        margin: auto;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+h6{
+    font-size: 30px;
+}
+
+
+/* @import url('https://fonts.googleapis.com/css?family=Damion|Muli:400,600'); */
+
+.textEdit {
+    /* font-family: 'Damion', cursive; */
+    font-weight: 400;
+    color: #FFF;
+    font-size: 50px;
+    text-align: center;
+    position: relative;
+}
+.textEdit:before {
+    position: absolute;
+    content: '';
+    width: 100%;
+    left: 0;
+    top: 22px;
+    background: #FFF;
+    height: 1px;
+}
+.textEdit i {
+    font-style: normal;
+    background: #92d050;
+    position: relative;
+    padding: 10px;
+}
+:focus{outline: none;}
+
+/* necessary to give position: relative to parent. */
+input[type="text"]{font: 15px/24px 'Muli', sans-serif; color: #333; width: 100%; box-sizing: border-box; letter-spacing: 1px;}
+
+:focus{outline: none;}
+
+.col-3{float: left; width: 27.33%; margin: 40px 3%; position: relative;} /* necessary to give position: relative to parent. */
+input[type="text"]{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width: 100%; box-sizing: border-box; letter-spacing: 1px;}
+
+.effect-1, 
+.effect-2, 
+.effect-3{border: 0; padding: 7px 0; border-bottom: 1px solid #ccc;}
+
+.effect-1 ~ .focus-border{position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: #4caf50; transition: 0.4s;}
+.effect-1:focus ~ .focus-border{width: 100%; transition: 0.4s;}
+
+.effect-2 ~ .focus-border{position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background-color: #4caf50; transition: 0.4s;}
+.effect-2:focus ~ .focus-border{width: 100%; transition: 0.4s; left: 0;}
+
+.effect-3 ~ .focus-border{position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; z-index: 99;}
+.effect-3 ~ .focus-border:before, 
+.effect-3 ~ .focus-border:after{content: ""; position: absolute; bottom: 0; left: 0; width: 0; height: 100%; background-color: #4caf50; transition: 0.4s;}
+.effect-3 ~ .focus-border:after{left: auto; right: 0;}
+.effect-3:focus ~ .focus-border:before, 
+.effect-3:focus ~ .focus-border:after{width: 50%; transition: 0.4s;}
+
+.effect-4,
+.effect-5,
+.effect-6{border: 0; padding: 5px 0 7px; border: 1px solid transparent; border-bottom-color: #ccc; transition: 0.4s;}
+
+.effect-4:focus,
+.effect-5:focus,
+.effect-6:focus{padding: 5px 14px 7px; transition: 0.4s;}
+
+.effect-4 ~ .focus-border{position: absolute; height: 0; bottom: 0; left: 0; width: 100%; transition: 0.4s; z-index: -1;}
+.effect-4:focus ~ .focus-border{transition: 0.4s; height: 36px; border: 2px solid #4caf50; z-index: 1;}
+
+.effect-5 ~ .focus-border{position: absolute; height: 36px; bottom: 0; left: 0; width: 0; transition: 0.4s;}
+.effect-5:focus ~ .focus-border{width: 100%; transition: 0.4s; border: 2px solid #4caf50;}
+
+.effect-6 ~ .focus-border{position: absolute; height: 36px; bottom: 0; right: 0; width: 0; transition: 0.4s;}
+.effect-6:focus ~ .focus-border{width: 100%; transition: 0.4s; border: 2px solid #4caf50;}
+
+.effect-7,
+.effect-8,
+.effect-9{border: 1px solid #ccc; padding: 7px 14px 9px; transition: 0.4s;}
+
+.effect-7 ~ .focus-border:before,
+.effect-7 ~ .focus-border:after{content: ""; position: absolute; top: 0; left: 50%; width: 0; height: 2px; background-color: #4caf50; transition: 0.4s;}
+.effect-7 ~ .focus-border:after{top: auto; bottom: 0;}
+.effect-7 ~ .focus-border i:before,
+.effect-7 ~ .focus-border i:after{content: ""; position: absolute; top: 50%; left: 0; width: 2px; height: 0; background-color: #4caf50; transition: 0.6s;}
+.effect-7 ~ .focus-border i:after{left: auto; right: 0;}
+.effect-7:focus ~ .focus-border:before,
+.effect-7:focus ~ .focus-border:after{left: 0; width: 100%; transition: 0.4s;}
+.effect-7:focus ~ .focus-border i:before,
+.effect-7:focus ~ .focus-border i:after{top: 0; height: 100%; transition: 0.6s;}
+
+.effect-8 ~ .focus-border:before,
+.effect-8 ~ .focus-border:after{content: ""; position: absolute; top: 0; left: 0; width: 0; height: 2px; background-color: #4caf50; transition: 0.3s;}
+.effect-8 ~ .focus-border:after{top: auto; bottom: 0; left: auto; right: 0;}
+.effect-8 ~ .focus-border i:before,
+.effect-8 ~ .focus-border i:after{content: ""; position: absolute; top: 0; left: 0; width: 2px; height: 0; background-color: #4caf50; transition: 0.4s;}
+.effect-8 ~ .focus-border i:after{left: auto; right: 0; top: auto; bottom: 0;}
+.effect-8:focus ~ .focus-border:before,
+.effect-8:focus ~ .focus-border:after{width: 100%; transition: 0.3s;}
+.effect-8:focus ~ .focus-border i:before,
+.effect-8:focus ~ .focus-border i:after{height: 100%; transition: 0.4s;}
+
+.effect-9 ~ .focus-border:before,
+.effect-9 ~ .focus-border:after{content: ""; position: absolute; top: 0; right: 0; width: 0; height: 2px; background-color: #4caf50; transition: 0.2s; transition-delay: 0.2s;}
+.effect-9 ~ .focus-border:after{top: auto; bottom: 0; right: auto; left: 0; transition-delay: 0.6s;}
+.effect-9 ~ .focus-border i:before,
+.effect-9 ~ .focus-border i:after{content: ""; position: absolute; top: 0; left: 0; width: 2px; height: 0; background-color: #4caf50; transition: 0.2s;}
+.effect-9 ~ .focus-border i:after{left: auto; right: 0; top: auto; bottom: 0; transition-delay: 0.4s;}
+.effect-9:focus ~ .focus-border:before,
+.effect-9:focus ~ .focus-border:after{width: 100%; transition: 0.2s; transition-delay: 0.6s;}
+.effect-9:focus ~ .focus-border:after{transition-delay: 0.2s;}
+.effect-9:focus ~ .focus-border i:before,
+.effect-9:focus ~ .focus-border i:after{height: 100%; transition: 0.2s;}
+.effect-9:focus ~ .focus-border i:after{transition-delay: 0.4s;}
+
+.effect-10, 
+.effect-11, 
+.effect-12,
+.effect-13,
+.effect-14,
+.effect-15{border: 0; padding: 7px 15px; border: 1px solid #ccc; position: relative; background: transparent;}
+
+.effect-10 ~ .focus-bg{position: absolute; left: 0; top: 0; width: 100%; height: 100%; background-color: #ededed; opacity: 0; transition: 0.5s; z-index: -1;}
+.effect-10:focus ~ .focus-bg{transition: 0.5s; opacity: 1;}
+
+.effect-11 ~ .focus-bg{position: absolute; left: 0; top: 0; width: 0; height: 100%; background-color: #ededed; transition: 0.3s; z-index: -1;}
+.effect-11:focus ~ .focus-bg{transition: 0.3s; width: 100%;}
+
+.effect-12 ~ .focus-bg{position: absolute; left: 50%; top: 0; width: 0; height: 100%; background-color: #ededed; transition: 0.3s; z-index: -1;}
+.effect-12:focus ~ .focus-bg{transition: 0.3s; width: 100%; left: 0;}
+
+.effect-13 ~ .focus-bg:before,
+.effect-13 ~ .focus-bg:after{content: ""; position: absolute; left: 0; top: 0; width: 0; height: 100%; background-color: #ededed; transition: 0.3s; z-index: -1;}
+.effect-13:focus ~ .focus-bg:before{transition: 0.3s; width: 50%;}
+.effect-13 ~ .focus-bg:after{left: auto; right: 0;}
+.effect-13:focus ~ .focus-bg:after{transition: 0.3s; width: 50%;}
+
+.effect-14 ~ .focus-bg:before,
+.effect-14 ~ .focus-bg:after{content: ""; position: absolute; left: 0; top: 0; width: 0; height: 0; background-color: #ededed; transition: 0.3s; z-index: -1;}
+.effect-14:focus ~ .focus-bg:before{transition: 0.3s; width: 50%; height: 100%;}
+.effect-14 ~ .focus-bg:after{left: auto; right: 0; top: auto; bottom: 0;}
+.effect-14:focus ~ .focus-bg:after{transition: 0.3s; width: 50%; height: 100%;}
+
+.effect-15 ~ .focus-bg:before,
+.effect-15 ~ .focus-bg:after{content: ""; position: absolute; left: 50%; top: 50%; width: 0; height: 0; background-color: #ededed; transition: 0.3s; z-index: -1;}
+.effect-15:focus ~ .focus-bg:before{transition: 0.3s; width: 50%; left: 0; top: 0; height: 100%;}
+.effect-15 ~ .focus-bg:after{left: auto; right: 50%; top: auto; bottom: 50%;}
+.effect-15:focus ~ .focus-bg:after{transition: 0.3s; width: 50%; height: 100%; bottom: 0; right: 0;}
+
+
+.effect-16, 
+.effect-17, 
+.effect-18{border: 0; padding: 4px 0; border-bottom: 1px solid #ccc; background-color: transparent;}
+
+.effect-16 ~ .focus-border{position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: #4caf50; transition: 0.4s;}
+.effect-16:focus ~ .focus-border,
+.has-content.effect-16 ~ .focus-border{width: 100%; transition: 0.4s;}
+.effect-16 ~ label{position: absolute; left: 0; width: 100%; top: 9px; color: #aaa; transition: 0.3s; z-index: -1; letter-spacing: 0.5px;}
+.effect-16:focus ~ label, .has-content.effect-16 ~ label{top: -16px; font-size: 12px; color: #4caf50; transition: 0.3s;}
+
+.effect-17 ~ .focus-border{position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background-color: #4caf50; transition: 0.4s;}
+.effect-17:focus ~ .focus-border,
+.has-content.effect-17 ~ .focus-border{width: 100%; transition: 0.4s; left: 0;}
+.effect-17 ~ label{position: absolute; left: 0; width: 100%; top: 9px; color: #aaa; transition: 0.3s; z-index: -1; letter-spacing: 0.5px;}
+.effect-17:focus ~ label, .has-content.effect-17 ~ label{top: -16px; font-size: 12px; color: #4caf50; transition: 0.3s;}
+
+.effect-18 ~ .focus-border{position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; z-index: 99;}
+.effect-18 ~ .focus-border:before, 
+.effect-18 ~ .focus-border:after{content: ""; position: absolute; bottom: 0; left: 0; width: 0; height: 100%; background-color: #4caf50; transition: 0.4s;}
+.effect-18 ~ .focus-border:after{left: auto; right: 0;}
+.effect-18:focus ~ .focus-border:before, 
+.effect-18:focus ~ .focus-border:after,
+.has-content.effect-18 ~ .focus-border:before,
+.has-content.effect-18 ~ .focus-border:after{width: 50%; transition: 0.4s;}
+.effect-18 ~ label{position: absolute; left: 0; width: 100%; top: 9px; color: #aaa; transition: 0.3s; z-index: -1; letter-spacing: 0.5px;}
+.effect-18:focus ~ label, .has-content.effect-18 ~ label{top: -16px; font-size: 12px; color: #4caf50; transition: 0.3s;}
+
+.effect-19,
+.effect-20,
+.effect-21{border: 1px solid #ccc; padding: 7px 14px; transition: 0.4s; background: transparent;}
+
+.effect-19 ~ .focus-border:before,
+.effect-19 ~ .focus-border:after{content: ""; position: absolute; top: -1px; left: 50%; width: 0; height: 2px; background-color: #4caf50; transition: 0.4s;}
+.effect-19 ~ .focus-border:after{top: auto; bottom: 0;}
+.effect-19 ~ .focus-border i:before,
+.effect-19 ~ .focus-border i:after{content: ""; position: absolute; top: 50%; left: 0; width: 2px; height: 0; background-color: #4caf50; transition: 0.6s;}
+.effect-19 ~ .focus-border i:after{left: auto; right: 0;}
+.effect-19:focus ~ .focus-border:before,
+.effect-19:focus ~ .focus-border:after,
+.has-content.effect-19 ~ .focus-border:before,
+.has-content.effect-19 ~ .focus-border:after{left: 0; width: 100%; transition: 0.4s;}
+.effect-19:focus ~ .focus-border i:before,
+.effect-19:focus ~ .focus-border i:after,
+.has-content.effect-19 ~ .focus-border i:before,
+.has-content.effect-19 ~ .focus-border i:after{top: -1px; height: 100%; transition: 0.6s;}
+.effect-19 ~ label{position: absolute; left: 14px; width: 100%; top: 10px; color: #aaa; transition: 0.3s; z-index: -1; letter-spacing: 0.5px;}
+.effect-19:focus ~ label, .has-content.effect-19 ~ label{top: -18px; left: 0; font-size: 12px; color: #4caf50; transition: 0.3s;}
+
+.effect-20 ~ .focus-border:before,
+.effect-20 ~ .focus-border:after{content: ""; position: absolute; top: 0; left: 0; width: 0; height: 2px; background-color: #4caf50; transition: 0.3s;}
+.effect-20 ~ .focus-border:after{top: auto; bottom: 0; left: auto; right: 0;}
+.effect-20 ~ .focus-border i:before,
+.effect-20 ~ .focus-border i:after{content: ""; position: absolute; top: 0; left: 0; width: 2px; height: 0; background-color: #4caf50; transition: 0.4s;}
+.effect-20 ~ .focus-border i:after{left: auto; right: 0; top: auto; bottom: 0;}
+.effect-20:focus ~ .focus-border:before,
+.effect-20:focus ~ .focus-border:after,
+.has-content.effect-20 ~ .focus-border:before,
+.has-content.effect-20 ~ .focus-border:after{width: 100%; transition: 0.3s;}
+.effect-20:focus ~ .focus-border i:before,
+.effect-20:focus ~ .focus-border i:after,
+.has-content.effect-20 ~ .focus-border i:before,
+.has-content.effect-20 ~ .focus-border i:after{height: 100%; transition: 0.4s;}
+.effect-20 ~ label{position: absolute; left: 14px; width: 100%; top: 10px; color: #aaa; transition: 0.3s; z-index: -1; letter-spacing: 0.5px;}
+.effect-20:focus ~ label, .has-content.effect-20 ~ label{top: -18px; left: 0; font-size: 12px; color: #4caf50; transition: 0.3s;}
+
+.effect-21 ~ .focus-border:before,
+.effect-21 ~ .focus-border:after{content: ""; position: absolute; top: 0; right: 0; width: 0; height: 2px; background-color: #4caf50; transition: 0.2s; transition-delay: 0.2s;}
+.effect-21 ~ .focus-border:after{top: auto; bottom: 0; right: auto; left: 0; transition-delay: 0.6s;}
+.effect-21 ~ .focus-border i:before,
+.effect-21 ~ .focus-border i:after{content: ""; position: absolute; top: 0; left: 0; width: 2px; height: 0; background-color: #4caf50; transition: 0.2s;}
+.effect-21 ~ .focus-border i:after{left: auto; right: 0; top: auto; bottom: 0; transition-delay: 0.4s;}
+.effect-21:focus ~ .focus-border:before,
+.effect-21:focus ~ .focus-border:after,
+.has-content.effect-21 ~ .focus-border:before,
+.has-content.effect-21 ~ .focus-border:after{width: 100%; transition: 0.2s; transition-delay: 0.6s;}
+.effect-21:focus ~ .focus-border:after,
+.has-content.effect-21 ~ .focus-border:after{transition-delay: 0.2s;}
+.effect-21:focus ~ .focus-border i:before,
+.effect-21:focus ~ .focus-border i:after,
+.has-content.effect-21 ~ .focus-border i:before,
+.has-content.effect-21 ~ .focus-border i:after{height: 100%; transition: 0.2s;}
+.effect-21:focus ~ .focus-border i:after,
+.has-conten.effect-21 ~ .focus-border i:after{transition-delay: 0.4s;}
+.effect-21 ~ label{position: absolute; left: 14px; width: 100%; top: 10px; color: #aaa; transition: 0.3s; z-index: -1; letter-spacing: 0.5px;}
+.effect-21:focus ~ label, .has-content.effect-21 ~ label{top: -18px; left: 0; font-size: 12px; color: #4caf50; transition: 0.3s;}
+
+.effect-22, 
+.effect-23, 
+.effect-24{border: 0; padding: 7px 15px; border: 1px solid #ccc; position: relative; background: transparent;}
+
+.effect-22 ~ .focus-bg{position: absolute; left: 0; top: 0; width: 0; height: 100%; background-color: transparent; transition: 0.4s; z-index: -1;}
+.effect-22:focus ~ .focus-bg, 
+.has-content.effect-22 ~ .focus-bg{transition: 0.4s; width: 100%; background-color: #ededed;}
+.effect-22 ~ label{position: absolute; left: 14px; width: 100%; top: 10px; color: #aaa; transition: 0.3s; z-index: -1; letter-spacing: 0.5px;}
+.effect-22:focus ~ label, .has-content.effect-22 ~ label{top: -18px; left: 0; font-size: 12px; color: #333; transition: 0.3s;}
+
+.effect-23 ~ .focus-bg:before,
+.effect-23 ~ .focus-bg:after{content: ""; position: absolute; left: 0; top: 0; width: 0; height: 0; background-color: #ededed; transition: 0.3s; z-index: -1;}
+.effect-23:focus ~ .focus-bg:before,
+.has-content.effect-23 ~ .focus-bg:before{transition: 0.3s; width: 50%; height: 100%;}
+.effect-23 ~ .focus-bg:after{left: auto; right: 0; top: auto; bottom: 0;}
+.effect-23:focus ~ .focus-bg:after,
+.has-content.effect-23 ~ .focus-bg:after{transition: 0.3s; width: 50%; height: 100%;}
+.effect-23 ~ label{position: absolute; left: 14px; width: 100%; top: 10px; color: #aaa; transition: 0.3s; z-index: -1; letter-spacing: 0.5px;}
+.effect-23:focus ~ label, .has-content.effect-23 ~ label{top: -18px; left: 0; font-size: 12px; color: #333; transition: 0.3s;}
+
+.effect-24 ~ .focus-bg:before,
+.effect-24 ~ .focus-bg:after{content: ""; position: absolute; left: 50%; top: 50%; width: 0; height: 0; background-color: #ededed; transition: 0.3s; z-index: -1;}
+.effect-24:focus ~ .focus-bg:before,
+.has-content.effect-24 ~ .focus-bg:before{transition: 0.3s; width: 50%; left: 0; top: 0; height: 100%;}
+.effect-24 ~ .focus-bg:after{left: auto; right: 50%; top: auto; bottom: 50%;}
+.effect-24:focus ~ .focus-bg:after,
+.has-content.effect-24 ~ .focus-bg:after{transition: 0.3s; width: 50%; height: 100%; bottom: 0; right: 0;}
+.effect-24 ~ label{position: absolute; left: 14px; width: 100%; top: 10px; color: #aaa; transition: 0.3s; z-index: -1; letter-spacing: 0.5px;}
+.effect-24:focus ~ label, .has-content.effect-24 ~ label{top: -18px; left: 0; font-size: 12px; color: #333; transition: 0.3s;}
+
+
+@media (max-width: 600px) {
+    .table thead th{
+        font-size: 12px !important;
+        vertical-align: center;
+    }
+    .table thead th:nth-child(1){
+        text-align: left !important;
+    }
+    .table td{
+        vertical-align: middle;
+        min-width: 60px;
+    }
+    .table td span{
+        display: block;
+        font-size: 11px;
+        color: #414950;
+    }
+    .table td:nth-child(1){
+        text-align: left;
+    }
+}

@@ -1,0 +1,950 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,600;0,700;1,500;1,600;1,700&family=Montserrat+Alternates:ital,wght@0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700&family=Montserrat:ital,wght@0,100;0,200;0,300;0,900;1,100;1,200&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://secureservercdn.net/166.62.108.139/wbh.ddd.myftpupload.com/wp-content/uploads/2022/08/Zuume-Regular-1.ttf" />
+    <!-- <link
+        href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,600;0,700;1,500;1,600;1,700&family=Montserrat+Alternates:ital,wght@0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+        rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row marginTopBottom">
+            <div class="col-md-12">
+
+                <div class="text-center">
+                    <img
+                        src="https://static.wixstatic.com/media/ae69b3_334c9f3be5624ece906f57a04a25fccd~mv2.jpg/v1/fill/w_240,h_120,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/boc%20letter%20logo-01.jpg" />
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-12 paddingZeroOnDesktop marginBottom">
+
+                        <div class="cardOne py-4 p-3">
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="heading">
+                                        <h2>INSTRUCTIONS</h2>
+                                        <h4>The BOC Calculator is to be used with</h4>
+                                        <p><span>STEP 1:</span> Please key in the eye keratometry data , the Flat K and
+                                            Steep K either in <b>mm or diopter</b> , then select your closest diameter (
+                                            *Closest diameter selection is based on 95% of HVID)</p>
+                                        <p><span>STEP 2:</span> Please key in the spectacle refraction data.The click
+                                            [Calculate]</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-12">
+
+                                    <div class="mobileTextCenter">
+                                        <h2>STEP 1 </h2>
+                                        <h6>KERATOMETRY INFORMATION (MM/D)</h6>
+                                    </div>
+
+                                    <ul class="responsive-table">
+                                        <li class="table-header">
+                                            <div class="col">&nbsp;</div>
+                                            <div class="col">RE (OD)</div>
+                                            <div class="col">&nbsp;</div>
+                                            <div class="col">LE (OS)</div>
+                                            <div class="col">&nbsp;</div>
+                                        </li>
+                                        <li class="table-row">
+                                            <div class="col">FC or BC (mm)</div>
+                                            <div class="col">BC (mm)</div>
+                                            <div class="col">Dioptre (D)</div>
+                                            <div class="col">BC (mm)</div>
+                                            <div class="col">Dioptre (D)</div>
+                                        </li>
+                                        <li class="table-row">
+                                            <div class="col">Flat K</div>
+                                            <div class="col">
+                                                <input id="cell_c3" onchange="onchangeValueFormat(this);"
+                                                    oninput="Calculation();resetField('cell_c3Purple')" type="text"
+                                                    value="" class="form-control decimal-input" />
+                                                <span id="FlatKErrorRE"
+                                                style="color: red; font-size: 10px;display: none;"
+                                                title="FLAT K is greater than number in STEEP K">Invalid key
+                                                in</span>
+                                                </div>
+                                            <div class="col">
+                                                <input id="cell_c3Purple" type="text"
+                                                    oninput="inputValueFunc('cell_c3Purple', 'cell_c3')"
+                                                    onchange="inputValueFunc('cell_c3Purple', 'cell_c3')" value=""
+                                                    class="form-control decimal-input" />
+                                                <span id="FlatKErrorRE_Dioptre"
+                                                style="color: red; font-size: 10px;display: none;"
+                                                title="FLAT K is greater than number in STEEP K">Invalid key
+                                                in</span>
+                                                </div>
+                                            <div class="col"><input id="cell_d3" onchange="onchangeValueFormat(this)"
+                                                    oninput="Calculation();resetField('cell_d3Purple')" type="text"
+                                                    value="" class="form-control decimal-input" />
+                                                    <span id="FlatKErrorLE"
+                                                    style="color: red; font-size: 10px;display: none;"
+                                                    title="FLAT K is greater than number in STEEP K">Invalid key
+                                                    in</span></div>
+                                            <div class="col"><input id="cell_d3Purple" type="text"
+                                                    oninput="inputValueFunc('cell_d3Purple', 'cell_d3')"
+                                                    onchange="inputValueFunc('cell_d3Purple', 'cell_d3')" value=""
+                                                    class="form-control decimal-input" />
+                                                    <span id="FlatKErrorLE_Dioptre"
+                                                    style="color: red; font-size: 10px;display: none;"
+                                                    title="FLAT K is greater than number in STEEP K">Invalid key
+                                                    in</span></div>
+                                        </li>
+                                        <li class="table-row">
+                                            <div class="col">Flat K Axis</div>
+                                            <div class="col"><input id="cell_c4" onchange="Calculation()"
+                                                    oninput="Calculation()" type="text" value="" class="form-control" />
+                                            </div>
+                                            <div class="col">&nbsp;</div>
+                                            <div class="col"><input id="cell_d4" onchange="Calculation()"
+                                                    oninput="Calculation()" type="text" value="" class="form-control" />
+                                            </div>
+                                            <div class="col">&nbsp;</div>
+                                        </li>
+                                        <li class="table-row">
+                                            <div class="col">Steep K </div>
+                                            <div class="col"><input id="cell_c5" type="text" value=""
+                                                    class="form-control decimal-input" onchange="Calculation();"
+                                                    oninput="Calculation();resetField('cell_c5Purple')" />
+                                                    <span id="STEEPKErrorRE"
+                                                    style="color: red; font-size: 10px;display: none;"
+                                                    title="FLAT K is smaller than number in STEEP K">Invalid key
+                                                    in</span>
+                                                </div>
+                                            <div class="col"><input id="cell_c5Purple" type="text"
+                                                    oninput="inputValueFunc('cell_c5Purple', 'cell_c5')"
+                                                    onchange="inputValueFunc('cell_c5Purple', 'cell_c5')" value=""
+                                                    class="form-control decimal-input" />
+                                                    <span id="STEEPKErrorRE_Diopter"
+                                                    style="color: red; font-size: 10px;display: none;"
+                                                    title="FLAT K is smaller than number in STEEP K">Invalid key
+                                                    in</span></div>
+                                            <div class="col"><input id="cell_d5" type="text" onchange="Calculation()"
+                                                    oninput="Calculation();resetField('cell_d5Purple')" value=""
+                                                    class="form-control decimal-input" />
+                                                    <span id="STEEPKErrorLE"
+                                                    style="color: red; font-size: 10px;display: none;"
+                                                    title="FLAT K is smaller than number in STEEP K">Invalid key
+                                                    in</span></div>
+                                            <div class="col"><input id="cell_d5Purple" type="text"
+                                                    oninput="inputValueFunc('cell_d5Purple', 'cell_d5')"
+                                                    onchange="inputValueFunc('cell_d5Purple', 'cell_d5')" value=""
+                                                    class="form-control decimal-input" />
+                                                    <span id="STEEPKErrorLE_Diopter"
+                                                    style="color: red; font-size: 10px;display: none;"
+                                                    title="FLAT K is smaller than number in STEEP K">Invalid key
+                                                    in</span></div>
+                                        </li>
+                                        <li class="table-row">
+                                            <div class="col">Steep K Axis</div>
+                                            <div class="col"><input id="cell_c6" type="text" onchange="Calculation()"
+                                                    oninput="Calculation()" value="" class="form-control" /></div>
+                                            <div class="col">&nbsp;</div>
+                                            <div class="col"><input id="cell_d6" type="text" onchange="Calculation()"
+                                                    oninput="Calculation()" value="" class="form-control" /></div>
+                                            <div class="col">&nbsp;</div>
+
+                                        </li>
+                                        <li class="table-row">
+                                            <div class="col">Average K</div>
+                                            <div class="col"><span id="cell_c7"></span></div>
+                                            <div class="col"><span id="cell_c7Purple"></span></div>
+                                            <div class="col"><span id="cell_d7"></span></div>
+                                            <div class="col"><span id="cell_d7Purple"></span></div>
+                                        </li>
+                                        <li class="table-row">
+                                            <div class="col">Closest Diameter</div>
+                                            <div class="col">
+                                                <select id="cell_c8" class="form-control" onchange="Calculation()">
+                                                    <option value="10.2">10.2</option>
+                                                    <option selected value="10.6">10.6</option>
+                                                    <option value="11.0">11.0</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">&nbsp;</div>
+                                            <div class="col">
+                                                <select id="cell_d8" class="form-control form-select"
+                                                    onchange="Calculation()">
+                                                    <option value="10.2">10.2</option>
+                                                    <option selected value="10.6">10.6</option>
+                                                    <option value="11.0">11.0</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">&nbsp;</div>
+                                        </li>
+                                    </ul>
+                                    
+                                    <div class="text-center" id="validationFlatSteepK" style="font-size: 12px;color: red;display: none;">Please check your Flat K and Steep K entry</div>
+
+                                </div>
+
+                                <div class="col-lg-6 col-md-12">
+
+                                    <div class="mobileTextCenter">
+                                        <h2>STEP 2</h2>
+                                        <h6>REFRACTION POWER (Dioptre)</h6>
+                                    </div>
+
+                                    <ul class="responsive-table">
+                                        <li class="table-header">
+                                            <div class="col col-4">Refraction</div>
+                                            <div class="col col-4">RE (OD)</div>
+                                            <div class="col col-4">LE (OS)</div>
+                                        </li>
+                                        <li class="table-row">
+                                            <div class="col col-4">Sphere</div>
+                                            <div class="col col-4">
+                                                <select id="cell_c11" class="form-control form-select"
+                                                    onchange="Calculation()">
+                                                    <option selected value="0.00">0.00</option>
+                                                    <option value="-0.25">-0.25</option>
+                                                    <option value="-0.50">-0.50</option>
+                                                    <option value="-0.75">-0.75</option>
+                                                    <option value="-1.00">-1.00</option>
+                                                    <option value="-1.25">-1.25</option>
+                                                    <option value="-1.50">-1.50</option>
+                                                    <option value="-1.75">-1.75</option>
+                                                    <option value="-2.00">-2.00</option>
+                                                    <option value="-2.25">-2.25</option>
+                                                    <option value="-2.50">-2.50</option>
+                                                    <option value="-2.75">-2.75</option>
+                                                    <option value="-3.00">-3.00</option>
+                                                    <option value="-3.25">-3.25</option>
+                                                    <option value="-3.50">-3.50</option>
+                                                    <option value="-3.75">-3.75</option>
+                                                    <option value="-4.00">-4.00</option>
+                                                    <option value="-4.25">-4.25</option>
+                                                    <option value="-4.50">-4.50</option>
+                                                    <option value="-4.75">-4.75</option>
+                                                    <option value="-5.00">-5.00</option>
+                                                    <option value="-5.25">-5.25</option>
+                                                    <option value="-5.50">-5.50</option>
+                                                    <option value="-5.75">-5.75</option>
+                                                    <option value="-6.00">-6.00</option>
+                                                    <option value="-6.25">-6.25</option>
+                                                    <option value="-6.50">-6.50</option>
+                                                    <option value="-6.75">-6.75</option>
+                                                    <option value="-7.00">-7.00</option>
+                                                    <option value="-7.25">-7.25</option>
+                                                    <option value="-7.50">-7.50</option>
+                                                    <option value="-7.75">-7.75</option>
+                                                    <option value="-8.00">-8.00</option>
+                                                    <option value="-8.25">-8.25</option>
+                                                    <option value="-8.50">-8.50</option>
+                                                    <option value="-8.75">-8.75</option>
+                                                    <option value="-9.00">-9.00</option>
+                                                    <option value="-9.25">-9.25</option>
+                                                    <option value="-9.50">-9.50</option>
+                                                    <option value="-9.75">-9.75</option>
+                                                    <option value="-10.00">-10.00</option>
+                                                </select>
+                                            </div>
+                                            <div class="col col-4">
+                                                <select id="cell_d11" class="form-control form-select"
+                                                    onchange="Calculation()">
+                                                    <option selected value="0.00">0.00</option>
+                                                    <option value="-0.25">-0.25</option>
+                                                    <option value="-0.50">-0.50</option>
+                                                    <option value="-0.75">-0.75</option>
+                                                    <option value="-1.00">-1.00</option>
+                                                    <option value="-1.25">-1.25</option>
+                                                    <option value="-1.50">-1.50</option>
+                                                    <option value="-1.75">-1.75</option>
+                                                    <option value="-2.00">-2.00</option>
+                                                    <option value="-2.25">-2.25</option>
+                                                    <option value="-2.50">-2.50</option>
+                                                    <option value="-2.75">-2.75</option>
+                                                    <option value="-3.00">-3.00</option>
+                                                    <option value="-3.25">-3.25</option>
+                                                    <option value="-3.50">-3.50</option>
+                                                    <option value="-3.75">-3.75</option>
+                                                    <option value="-4.00">-4.00</option>
+                                                    <option value="-4.25">-4.25</option>
+                                                    <option value="-4.50">-4.50</option>
+                                                    <option value="-4.75">-4.75</option>
+                                                    <option value="-5.00">-5.00</option>
+                                                    <option value="-5.25">-5.25</option>
+                                                    <option value="-5.50">-5.50</option>
+                                                    <option value="-5.75">-5.75</option>
+                                                    <option value="-6.00">-6.00</option>
+                                                    <option value="-6.25">-6.25</option>
+                                                    <option value="-6.50">-6.50</option>
+                                                    <option value="-6.75">-6.75</option>
+                                                    <option value="-7.00">-7.00</option>
+                                                    <option value="-7.25">-7.25</option>
+                                                    <option value="-7.50">-7.50</option>
+                                                    <option value="-7.75">-7.75</option>
+                                                    <option value="-8.00">-8.00</option>
+                                                    <option value="-8.25">-8.25</option>
+                                                    <option value="-8.50">-8.50</option>
+                                                    <option value="-8.75">-8.75</option>
+                                                    <option value="-9.00">-9.00</option>
+                                                    <option value="-9.25">-9.25</option>
+                                                    <option value="-9.50">-9.50</option>
+                                                    <option value="-9.75">-9.75</option>
+                                                    <option value="-10.00">-10.00</option>
+                                                </select>
+                                            </div>
+                                        </li>
+                                        <li class="table-row">
+                                            <div class="col col-4">Cylinder</div>
+                                            <div class="col col-4">
+                                                <select id="cell_c12" class="form-control form-select"
+                                                    onchange="Calculation()">
+                                                    <option selected value="0.00">0.00</option>
+                                                    <option value="-0.25">-0.25</option>
+                                                    <option value="-0.50">-0.50</option>
+                                                    <option value="-0.75">-0.75</option>
+                                                    <option value="-1.00">-1.00</option>
+                                                    <option value="-1.25">-1.25</option>
+                                                    <option value="-1.50">-1.50</option>
+                                                    <option value="-1.75">-1.75</option>
+                                                    <option value="-2.00">-2.00</option>
+                                                    <option value="-2.25">-2.25</option>
+                                                    <option value="-2.50">-2.50</option>
+                                                    <option value="-2.75">-2.75</option>
+                                                    <option value="-3.00">-3.00</option>
+                                                    <option value="-3.25">-3.25</option>
+                                                    <option value="-3.50">-3.50</option>
+                                                    <option value="-3.75">-3.75</option>
+                                                    <option value="-4.00">-4.00</option>
+                                                    <option value="-4.25">-4.25</option>
+                                                    <option value="-4.50">-4.50</option>
+                                                    <option value="-4.75">-4.75</option>
+                                                    <option value="-5.00">-5.00</option>
+                                                    <option value="-5.25">-5.25</option>
+                                                    <option value="-5.50">-5.50</option>
+                                                    <option value="-5.75">-5.75</option>
+                                                    <option value="-6.00">-6.00</option>
+
+                                                </select>
+                                            </div>
+                                            <div class="col col-4">
+                                                <select id="cell_d12" class="form-control form-select"
+                                                    onchange="Calculation()">
+                                                    <option selected value="0.00">0.00</option>
+                                                    <option value="-0.25">-0.25</option>
+                                                    <option value="-0.50">-0.50</option>
+                                                    <option value="-0.75">-0.75</option>
+                                                    <option value="-1.00">-1.00</option>
+                                                    <option value="-1.25">-1.25</option>
+                                                    <option value="-1.50">-1.50</option>
+                                                    <option value="-1.75">-1.75</option>
+                                                    <option value="-2.00">-2.00</option>
+                                                    <option value="-2.25">-2.25</option>
+                                                    <option value="-2.50">-2.50</option>
+                                                    <option value="-2.75">-2.75</option>
+                                                    <option value="-3.00">-3.00</option>
+                                                    <option value="-3.25">-3.25</option>
+                                                    <option value="-3.50">-3.50</option>
+                                                    <option value="-3.75">-3.75</option>
+                                                    <option value="-4.00">-4.00</option>
+                                                    <option value="-4.25">-4.25</option>
+                                                    <option value="-4.50">-4.50</option>
+                                                    <option value="-4.75">-4.75</option>
+                                                    <option value="-5.00">-5.00</option>
+                                                    <option value="-5.25">-5.25</option>
+                                                    <option value="-5.50">-5.50</option>
+                                                    <option value="-5.75">-5.75</option>
+                                                    <option value="-6.00">-6.00</option>
+                                                </select>
+                                            </div>
+                                        </li>
+                                        <li class="table-row">
+                                            <div class="col col-4">Axis</div>
+                                            <div class="col col-4">
+                                                <input id="cell_c13" onchange="Calculation()" oninput="Calculation()"
+                                                    value="" type="text" class="form-control" />
+                                            </div>
+                                            <div class="col col-4">
+                                                <input id="cell_d13" onchange="Calculation()" oninput="Calculation()"
+                                                    value="" type="text" class="form-control" />
+                                            </div>
+                                        </li>
+                                        <li class="table-row">
+                                            <div class="col col-4">VA</div>
+                                            <div class="col col-4">
+                                                <input id="cell_c14" value="" type="text" class="form-control" />
+                                            </div>
+                                            <div class="col col-4">
+                                                <input id="cell_d14" value="" type="text" class="form-control" />
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <div class="mt-4">
+                                        <div class="table-responsive tableParent" id="screening_Table">
+                                            <div>
+                                                <h6>Shape of Cornea Effectiveness (Flattest K -Target Power)		
+                                                </h6>
+                                            </div>
+                                            <table class="table table table-striped">
+                                                <thead class="table-dark">
+                                                    <tr><th></th>
+                                                    <th>RE (OD)</th>
+                                                    <th>LE (OS)</th>
+                                                </tr></thead>
+
+                                                <tbody>
+
+                                                    <tr>
+                                                        <td>Screening => 39</td>
+                                                        <td id="screening_result_RE"></td>
+                                                        <td id="screening_result_LE"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Suitability</td>
+                                                        <td id="screening_result_suitability_RE"></td>
+                                                        <td id="screening_result_suitability_LE"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Reason</td>
+                                                        <td id="screening_result_reason_RE"></td>
+                                                        <td id="screening_result_reason_LE"></td>
+                                                    </tr>
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="d-flex alignSet">
+                                        <div class="buttonStyle">
+                                            <button onclick="Calculation(true)" id="calculateButton">Calculate</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display:none;" class="mt-5" id="hideResults">
+                                <div class="row mt-4">
+
+                                    <div class="col-12">
+
+                                        <div class="table-responsive tableParent" id="purple_table_part_2">
+                                            <div class="text-center">
+                                                <h5> KERATOMETRY INFORMATION (Dioptre)</h5>
+                                            </div>
+                                            <table class="table table table-striped">
+                                                <thead class="table-dark">
+                                                    <th>Fitting Curve (D) </th>
+                                                    <th>RE (OD)</th>
+                                                    <th>LE (OS)</th>
+                                                </thead>
+
+                                                <tbody>
+
+                                                    <tr>
+                                                        <td>Flat K</td>
+                                                        <td id="cell_g3"></td>
+                                                        <td id="cell_h3"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Flat K Axis</td>
+                                                        <td id="cell_g4"></td>
+                                                        <td id="cell_h4"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Steep K</td>
+                                                        <td id="cell_g5"></td>
+                                                        <td id="cell_h5"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Steep K Axis</td>
+                                                        <td id="cell_g6"></td>
+                                                        <td id="cell_h6"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Cylinder</td>
+                                                        <td style="color: red !important;" id="cell_g7"></td>
+                                                        <td style="color: red !important;" id="cell_h7"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Ave K</td>
+                                                        <td id="cell_g8"></td>
+                                                        <td id="cell_h8"></td>
+                                                    </tr>
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div style="display: none;" class="table-responsive tableParent" id="purple_table_part_2">
+                                            <div class="text-center">
+                                                <h5>KERATOMETRY INFORMATION (Metre)</h5>
+                                            </div>
+                                            <table class="table table table-striped">
+                                                <thead class="table-dark">
+                                                    <th>Conversion</th>
+                                                    <th>RE (OD)</th>
+                                                    <th>LE (OS)</th>
+                                                </thead>
+
+                                                <tbody>
+
+                                                    <tr>
+                                                        <td>Flat K</td>
+                                                        <td id="cell_j3"></td>
+                                                        <td id="cell_k3"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Steep K</td>
+                                                        <td id="cell_j5"></td>
+                                                        <td id="cell_k5"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Cylinder</td>
+                                                        <td id="cell_j7"></td>
+                                                        <td id="cell_k7"></td>
+                                                    </tr>
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="row mt-4">
+
+                                    <div class="col-12">
+                                        <div class="table-responsive tableParent" id="blue_table">
+                                            <div class="text-center">
+                                                <h5>BOC STD ( 1ST Trial Lens )</h5>
+                                            </div>
+                                            <table class="table table table-striped">
+                                                <thead class="table-dark">
+                                                    <th>BOC SPHERE </th>
+                                                    <th>RE (OD)</th>
+                                                    <th>LE (OS)</th>
+                                                </thead>
+
+                                                <tbody>
+
+                                                    <tr>
+                                                        <td>FT ( Fitting Curve)</td>
+                                                        <td id="cell_c17"></td>
+                                                        <td id="cell_d17"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>TP ( Target Power)</td>
+                                                        <td id="cell_c18"></td>
+                                                        <td id="cell_d18"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Closest Diameter (mm)</td>
+                                                        <td id="cell_c19"></td>
+                                                        <td id="cell_d19"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Suitability</td>
+                                                        <td id="cell_c22_sut"></td>
+                                                        <td id="cell_d22_sut"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Reason</td>
+                                                        <td id="cell_c23_rea"></td>
+                                                        <td id="cell_d23_rea"></td>
+                                                    </tr>
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div style="display: none;" class="table-responsive tableParent" id="blue_table_part2">
+                                            <div class="text-center">
+                                                <h5>&nbsp;</h5>
+                                            </div>
+                                            <table class="table table table-striped">
+                                                <thead class="table-dark">
+                                                    <th>BOC SPHERE CALCULATION</th>
+                                                    <th>RE (OD)</th>
+                                                    <th>LE (OS)</th>
+                                                </thead>
+
+                                                <tbody>
+
+                                                    <tr>
+                                                        <td>FT : 39.00D ~ 47.00D <span>(0.25D increment)</span></td>
+                                                        <td id="cell_g17"></td>
+                                                        <td id="cell_h17"></td>
+                                                    </tr>
+
+
+                                                    <tr>
+                                                        <td>TP : -1.00D ~ -4.00D <span>(0.25D increment)</span></td>
+                                                        <td id="cell_g18"></td>
+                                                        <td id="cell_h18"></td>
+                                                    </tr>
+
+
+                                                    <tr>
+                                                        <td>CYL : -0.25/ -0.50 / -0.75 / -1.00 <span>(0.25D
+                                                                increment)</span></td>
+                                                        <td id="cell_g_std_cyl"></td>
+                                                        <td id="cell_h_std_cyl"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>DIA 10.2/ 10.6 /11.0 <span>(0.4mm increment)</span></td>
+                                                        <td id="cell_g19"></td>
+                                                        <td id="cell_h19"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Screening => 39 </td>
+                                                        <td id="cell_g20"></td>
+                                                        <td id="cell_h20"></td>
+                                                    </tr>
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row mt-4">
+
+                                    <div class="col-md-12 text-center">
+                                        <div>
+                                            <h5>&nbsp;</h5>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="table-responsive tableParent" id="purple_table">
+                                            <div class="text-center">
+                                                <h5>BOC HD ( 1ST Trial Lens )</h5>
+                                            </div>
+                                            <table class="table table table-striped">
+
+                                                <thead style="background-color: purple;" class="table-dark">
+                                                    <th>BOC HD SPHERE </th>
+                                                    <th>RE (OD)</th>
+                                                    <th>LE (OS)</th>
+                                                </thead>
+
+                                                <tbody>
+                                                    <tr>
+                                                        <td>FT ( Fitting Curve)</td>
+                                                        <td id="cell_c23"></td>
+                                                        <td id="cell_d23"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>TP ( Target Power)</td>
+                                                        <td id="cell_c24"></td>
+                                                        <td id="cell_d24"></td>
+                                                    </tr>
+
+
+                                                    <tr>
+                                                        <td>Closest Diameter (mm)</td>
+                                                        <td id="cell_c25"></td>
+                                                        <td id="cell_d25"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Suitability</td>
+                                                        <td id="cell_c29_sut"></td>
+                                                        <td id="cell_d29_sut"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Reason</td>
+                                                        <td id="cell_c30_rea"></td>
+                                                        <td id="cell_d30_rea"></td>
+                                                    </tr>
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div style="display: none;" class="table-responsive tableParent" id="purple_table_part_2">
+                                            <div class="text-center">
+                                                <h5>&nbsp;</h5>
+                                            </div>
+                                            <table class="table table table-striped">
+                                                <thead class="table-dark">
+                                                    <th>BOC HD SPHERE CALCULATION</th>
+                                                    <th>RE (OD)</th>
+                                                    <th>LE (OS)</th>
+                                                </thead>
+
+                                                <tbody>
+
+                                                    <tr>
+                                                        <td>FT : 39.00D ~ 47.00D <span>(0.25D increment)</span></td>
+                                                        <td id="cell_g23"></td>
+                                                        <td id="cell_h23"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>TP : -4.25D ~ -8.00D <span>(0.25D increment)</span></td>
+                                                        <td id="cell_g24"></td>
+                                                        <td id="cell_h24"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>CYL : -1.00/-1.50/-2.00/-2.50/-3.00 <span>(0.50D
+                                                                increment)</span></td>
+                                                        <td id="cell_g_hd_cyl"></td>
+                                                        <td id="cell_h_hd_cyl"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>DIA 10.2/ 10.6 /11.0 <span>(0.4mm increment)</span></td>
+                                                        <td id="cell_g25"></td>
+                                                        <td id="cell_h25"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Screening => 39</td>
+                                                        <td id="cell_g26"></td>
+                                                        <td id="cell_h26"></td>
+                                                    </tr>
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div>
+                                            <p>Those who have a high pressure on the cornea
+                                                <br> (Uncomfortable wear/onset of SPK)
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="mt-4">
+                                    <!-- <h5 class="text-center">BOC TD 1st BOC TD Trial  </h5> -->
+                                    <h5 class="text-center">&nbsp;</h5>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-12">
+                                        <div class="table-responsive tableParent" id="green_table">
+                                            <div class="text-center">
+                                                <h5>BOC TD ( 1ST Trial Lens )</h5>
+                                            </div>
+                                            <table class="table table table-striped">
+                                                <thead class="table-dark">
+                                                    <th>BOC TD</th>
+                                                    <th>RE (OD)</th>
+                                                    <th>LE (OS)</th>
+                                                </thead>
+
+                                                <tbody>
+
+                                                    <tr>
+                                                        <td>FT ( Fitting Curve)</td>
+                                                        <td id="cell_c29"></td>
+                                                        <td id="cell_d29"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>TP ( Target Power)</td>
+                                                        <td id="cell_c30"></td>
+                                                        <td id="cell_d30"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>CYL (Cylinder)</td>
+                                                        <td id="cell_c31"></td>
+                                                        <td id="cell_d31"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Closest Diameter (mm)</td>
+                                                        <td id="cell_c32"></td>
+                                                        <td id="cell_d32"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Suitability</td>
+                                                        <td id="cell_c37"></td>
+                                                        <td id="cell_d37"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Reason</td>
+                                                        <td id="cell_c38"></td>
+                                                        <td id="cell_d38"></td>
+                                                    </tr>
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="table-responsive tableParent" id="green_table_part2">
+                                            <div class="text-center">
+                                                <h5>&nbsp;</h5>
+                                            </div>
+                                            <table style="display: none;" class="table table table-striped">
+                                                <thead class="table-dark">
+                                                    <th>BOC TD CALCULATION</th>
+                                                    <th>RE (OD)</th>
+                                                    <th>LE (OS)</th>
+                                                </thead>
+
+                                                <tbody>
+
+                                                    <tr>
+                                                        <td>FT : 39.00D ~ 47.00D <span>(0.25D increment)</span></td>
+                                                        <td id="cell_g29"></td>
+                                                        <td id="cell_h29"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>TP : -1.00D ~ -8.00D <span>(0.25D increment)</span></td>
+                                                        <td id="cell_g30"></td>
+                                                        <td id="cell_h30"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>CYL : -1.00/-1.50/-2.00/-2.50/-3.00 <span>(0.50D
+                                                                increment)</span></td>
+                                                        <td id="cell_g31"></td>
+                                                        <td id="cell_h31"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>DIA 10.2/ 10.6 /11.0 <span>(0.4mm increment)</span></td>
+                                                        <td id="cell_g32"></td>
+                                                        <td id="cell_h32"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Screening Cyl < 3.50</td>
+                                                        <td id="cell_g33"></td>
+                                                        <td id="cell_h33"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Screening => 39</td>
+                                                        <td id="cell_g34"></td>
+                                                        <td id="cell_h34"></td>
+                                                    </tr>
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="d-flex alignSet">
+                                            <div class="buttonStyle">
+                                                <button onclick="downloadPDF(false)">Simple Report</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <div class="row"></div>
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="heading">
+                                        <h2>Disclaimer</h2>
+                                        <p>1) This calculator is not intended to determine the final lens specifications, as it does not take into account any topography images reflecting the actual eye condition before or after fitting BOC Ortho-K lenses.</p>
+                                        <p>2) This calculator is solely for selecting the initial trial lenses to be fitted on the patient. Further adjustments to the lens parameters will be necessary if the initial trial lens is deemed unsuitable after the fitting process.</p>
+                                        <p>3) No data storage, capture, or screenshots are performed for any data entries. No information is saved on any server or location.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- </div> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+    <script type="text/javascript" src="./assets/js/iframeResizer.contentWindow.min.js"></script>
+    <script type="text/javascript" src="./assets/js/iframeresizer.js"></script>
+    <script src="./assets/js/script.js"></script>
+    <script src="./assets/js/pdf.js"></script>
+</body>
+
+</html>
