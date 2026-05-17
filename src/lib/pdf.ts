@@ -19,6 +19,8 @@ import bocLogo from "@/assets/boc-logo.jpg";
 export interface GenerateReportArgs {
   mode: "simple" | "detailed";
   unit: Unit;
+  /** Match the /simple page: omit screening, dioptre, and Average K. */
+  simple: boolean;
   /** Eye inputs with K values expressed in millimetres. */
   re: EyeInput;
   le: EyeInput;
@@ -164,19 +166,24 @@ function keratometryInputRows(
   result: CalcResult,
   reActive: boolean,
   leActive: boolean,
+  simple: boolean,
 ): RowInput[] {
-  return [
+  const rows: RowInput[] = [
     ["Flat K (mm)", num2(re.flatK), num2(le.flatK)],
     ["Flat K Axis", orDash(re.flatAxis), orDash(le.flatAxis)],
     ["Steep K (mm)", num2(re.steepK), num2(le.steepK)],
     ["Steep K Axis", orDash(re.steepAxis), orDash(le.steepAxis)],
-    [
+  ];
+  // Average K mirrors the Fitting Curve Basis card — hidden on /simple.
+  if (!simple) {
+    rows.push([
       "Average K (mm)",
       reActive ? d2(result.re.avgKmm) : "-",
       leActive ? d2(result.le.avgKmm) : "-",
-    ],
-    ["Closest Diameter (mm)", re.diameter, le.diameter],
-  ];
+    ]);
+  }
+  rows.push(["Closest Diameter (mm)", re.diameter, le.diameter]);
+  return rows;
 }
 
 function refractionInputRows(re: EyeInput, le: EyeInput): RowInput[] {
@@ -301,6 +308,7 @@ function hybridTdRows(result: CalcResult): RowInput[] {
 
 export async function generateReport({
   mode,
+  simple,
   re,
   le,
   result,
@@ -343,7 +351,7 @@ export async function generateReport({
       doc,
       y + 2.5,
       "Measurement",
-      keratometryInputRows(re, le, result, reActive, leActive),
+      keratometryInputRows(re, le, result, reActive, leActive, simple),
     ) + 8;
 
   // ---- Refraction input -----------------------------------------------
@@ -351,17 +359,19 @@ export async function generateReport({
   y = eyeTable(doc, y + 2.5, "Measurement", refractionInputRows(re, le)) + 8;
 
   // ---- Screening -------------------------------------------------------
-  sectionTitle(doc, "Shape of Cornea Effectiveness", y);
-  y =
-    eyeTable(
-      doc,
-      y + 2.5,
-      "Screening",
-      gate(screeningRows(result), reActive, leActive),
-    ) + 8;
+  if (!simple) {
+    sectionTitle(doc, "Shape of Cornea Effectiveness", y);
+    y =
+      eyeTable(
+        doc,
+        y + 2.5,
+        "Screening",
+        gate(screeningRows(result), reActive, leActive),
+      ) + 8;
+  }
 
   // ---- Keratometry in dioptre (detailed only) --------------------------
-  if (detailed) {
+  if (detailed && !simple) {
     sectionTitle(doc, "Keratometry Information — Dioptre", y);
     y =
       eyeTable(
@@ -508,5 +518,11 @@ export async function generateReport({
     dy += lines.length * 3.6 + 1.5;
   });
 
-  doc.save(detailed ? "boc-detailed-report.pdf" : "boc-report.pdf");
+  doc.save(
+    simple
+      ? "boc-report.pdf"
+      : detailed
+        ? "boc-detailed-report.pdf"
+        : "boc-report.pdf",
+  );
 }

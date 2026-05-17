@@ -92,6 +92,7 @@ export function Calculator({ simple = false }: { simple?: boolean }) {
     await generateReport({
       mode: "detailed",
       unit,
+      simple,
       re: eyeInMm(re, unit),
       le: eyeInMm(le, unit),
       result,
