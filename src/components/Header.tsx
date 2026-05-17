@@ -22,8 +22,8 @@ export function Header({ dateLabel }: { dateLabel: string }) {
             className="h-9 w-auto sm:h-[42px]"
           />
         </div>
-        <div>
-          <h1 className="font-display text-lg font-bold leading-tight tracking-[-0.015em] sm:text-[22px]">
+        <div className="min-w-0">
+          <h1 className="font-display text-base font-bold leading-tight tracking-[-0.015em] break-words sm:text-[22px]">
             <span className="print:hidden">Ortho-K Trial Lens Calculator</span>
             <span className="hidden print:inline">
               SEED BOC Ortho-K Trial Lens Recommendation
