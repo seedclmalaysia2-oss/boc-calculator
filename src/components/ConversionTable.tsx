@@ -1,5 +1,6 @@
 import type { CalcResult, EyeResult } from "@/lib/types";
 import { fmt, fmtAxis } from "@/lib/format";
+import { useT } from "@/lib/i18n";
 
 const HEAD =
   "border border-tablehead bg-tablehead px-2.5 py-2 text-[10.5px] font-semibold uppercase tracking-[0.06em] text-white";
@@ -14,34 +15,35 @@ export function ConversionTable({
   reActive: boolean;
   leActive: boolean;
 }) {
+  const T = useT();
   const rows: {
     label: string;
     value: (r: EyeResult) => string;
     danger?: boolean;
   }[] = [
-    { label: "Flat K", value: (r) => fmt(r.flatKd) },
-    { label: "Flat K Axis", value: (r) => fmtAxis(r.flatAxis) },
-    { label: "Steep K", value: (r) => fmt(r.steepKd) },
-    { label: "Steep K Axis", value: (r) => fmtAxis(r.steepAxis) },
-    { label: "Cylinder", value: (r) => fmt(r.cornealCyl), danger: true },
-    { label: "Average K", value: (r) => fmt(r.avgKd) },
+    { label: T.flatK, value: (r) => fmt(r.flatKd) },
+    { label: T.flatKAxis, value: (r) => fmtAxis(r.flatAxis) },
+    { label: T.steepK, value: (r) => fmt(r.steepKd) },
+    { label: T.steepKAxis, value: (r) => fmtAxis(r.steepAxis) },
+    { label: T.cylinder, value: (r) => fmt(r.cornealCyl), danger: true },
+    { label: T.averageK, value: (r) => fmt(r.avgKd) },
   ];
 
   return (
     <div className="mt-3.5 overflow-hidden rounded-[13px] border border-line bg-surface">
       <div className="flex items-center gap-2.5 border-b border-hairline bg-tint px-[22px] py-[11px] font-display text-xs font-bold uppercase tracking-[0.1em] text-brand">
         <span className="h-[3px] w-4 rounded-sm bg-gold" />
-        Keratometry Information — Dioptre
+        {T.conversionTitle}
       </div>
       <div className="px-[22px] pb-[18px] pt-3.5">
         <table className="w-full border-collapse">
           <thead>
             <tr>
               <th className={`${HEAD} text-left text-[#dce5f3]`}>
-                Fitting Curve (D)
+                {T.fittingCurveD}
               </th>
-              <th className={`${HEAD} whitespace-nowrap`}>RE · OD</th>
-              <th className={`${HEAD} whitespace-nowrap`}>LE · OS</th>
+              <th className={`${HEAD} whitespace-nowrap`}>{T.reOd}</th>
+              <th className={`${HEAD} whitespace-nowrap`}>{T.leOs}</th>
             </tr>
           </thead>
           <tbody>

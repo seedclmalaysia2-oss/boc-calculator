@@ -1,11 +1,8 @@
 import type { LensResult } from "@/lib/types";
 import { fmt } from "@/lib/format";
+import { useT } from "@/lib/i18n";
 
 const DASH = "—";
-
-function cylText(lens: LensResult): string {
-  return lens.cylOutOfRange ? "Out of range" : fmt(lens.cyl);
-}
 
 function ValueRow({
   code,
@@ -56,14 +53,19 @@ function SuitabilityRow({
   active: boolean;
   lens: LensResult;
 }) {
+  const T = useT();
   const tone = !active
     ? "bg-line2 text-ink3"
     : lens.suitable
       ? "bg-ok-soft text-ok"
       : "bg-no-soft text-no";
   const dot = !active ? "bg-ink3" : lens.suitable ? "bg-ok" : "bg-no";
-  const label = !active ? "Not entered" : lens.suitable ? "Suitable" : "Not Suitable";
-  const reason = active ? lens.reason : "No data entered for this eye.";
+  const label = !active
+    ? T.notEntered
+    : lens.suitable
+      ? T.suitable
+      : T.notSuitable;
+  const reason = active ? lens.reason : T.noDataEye;
   return (
     <div className="flex items-start gap-2.5 py-2">
       <span className="flex w-[52px] flex-none items-center gap-1.5 pt-0.5 text-[10px] font-bold uppercase tracking-[0.08em] text-ink3">
@@ -99,6 +101,9 @@ export function LensResultCard({
   reActive: boolean;
   leActive: boolean;
 }) {
+  const T = useT();
+  const cylText = (lens: LensResult): string =>
+    lens.cylOutOfRange ? T.outOfRange : fmt(lens.cyl);
   const reVal = (s: string) => (reActive ? s : DASH);
   const leVal = (s: string) => (leActive ? s : DASH);
   const headDot = (active: boolean, suitable: boolean) =>
@@ -110,7 +115,7 @@ export function LensResultCard({
         <div className="font-display text-base font-bold">
           {name}
           <small className="mt-0.5 block text-[9px] font-semibold uppercase tracking-[0.13em] text-[#aebfdc]">
-            1st Trial Lens
+            {T.firstTrialLens}
           </small>
         </div>
         <div className="flex gap-1.5">
@@ -123,28 +128,28 @@ export function LensResultCard({
         <div className="grid grid-cols-[1fr_auto_auto] gap-2 border-b border-line2 py-[9px]">
           <span aria-hidden />
           <span className="w-[62px] text-right text-[9.5px] font-bold tracking-[0.09em] text-ink3">
-            RE
+            {T.reShort}
           </span>
           <span className="w-[62px] text-right text-[9.5px] font-bold tracking-[0.09em] text-ink3">
-            LE
+            {T.leShort}
           </span>
         </div>
         <ValueRow
           code="FT"
-          name="Fitting Curve"
+          name={T.fittingCurve}
           re={reVal(fmt(re.ft))}
           le={leVal(fmt(le.ft))}
         />
         <ValueRow
           code="TP"
-          name="Target Power"
+          name={T.targetPower}
           re={reVal(fmt(re.tp))}
           le={leVal(fmt(le.tp))}
         />
         {toric && (
           <ValueRow
             code="CYL"
-            name="Cylinder"
+            name={T.cylinder}
             re={reVal(cylText(re))}
             le={leVal(cylText(le))}
             reBad={reActive && re.cylOutOfRange}
@@ -153,14 +158,14 @@ export function LensResultCard({
         )}
         <ValueRow
           code="DIA"
-          name="Diameter"
+          name={T.diameter}
           re={reVal(fmt(re.diameter))}
           le={leVal(fmt(le.diameter))}
         />
 
         <div className="mt-1.5 border-t border-line2 pt-1">
-          <SuitabilityRow eye="RE·OD" dotClass="bg-brand" active={reActive} lens={re} />
-          <SuitabilityRow eye="LE·OS" dotClass="bg-gold" active={leActive} lens={le} />
+          <SuitabilityRow eye={T.reOd} dotClass="bg-brand" active={reActive} lens={re} />
+          <SuitabilityRow eye={T.leOs} dotClass="bg-gold" active={leActive} lens={le} />
         </div>
       </div>
     </article>

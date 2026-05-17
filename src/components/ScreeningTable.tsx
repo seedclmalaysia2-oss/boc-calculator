@@ -1,5 +1,6 @@
 import type { CalcResult, EyeResult } from "@/lib/types";
 import { fmt } from "@/lib/format";
+import { useT } from "@/lib/i18n";
 
 function Tag({ ok, children }: { ok: boolean; children: React.ReactNode }) {
   return (
@@ -42,26 +43,27 @@ export function ScreeningTable({
   reActive: boolean;
   leActive: boolean;
 }) {
+  const T = useT();
   const rows: {
     label: string;
     render: (r: EyeResult) => React.ReactNode;
   }[] = [
     {
-      label: "Screening ≥ 39",
+      label: T.screeningRow,
       render: (r) => (
         <span className="font-mono font-semibold">{fmt(r.screeningValue)}</span>
       ),
     },
     {
-      label: "Suitability",
+      label: T.suitability,
       render: (r) => (
         <Tag ok={r.screeningSuitable}>
-          {r.screeningSuitable ? "Yes" : "No"}
+          {r.screeningSuitable ? T.yes : T.no}
         </Tag>
       ),
     },
     {
-      label: "Reason",
+      label: T.reason,
       render: (r) => (
         <Tag ok={r.screeningSuitable}>
           {r.screeningSuitable ? "≥ 39.00" : "< 39.00"}
@@ -74,16 +76,16 @@ export function ScreeningTable({
     <div className="mt-[18px]">
       <div className="mb-2 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.06em] text-ink2">
         <span className="h-[3px] w-3.5 rounded-sm bg-gold" />
-        Shape of Cornea Effectiveness
+        {T.screeningTableTitle}
       </div>
       <table className="w-full border-collapse">
         <thead>
           <tr>
             <th className={`${HEAD} text-left text-[#dce5f3]`}>
-              Flattest K − Target Power
+              {T.screeningHead}
             </th>
-            <th className={`${HEAD} whitespace-nowrap`}>RE · OD</th>
-            <th className={`${HEAD} whitespace-nowrap`}>LE · OS</th>
+            <th className={`${HEAD} whitespace-nowrap`}>{T.reOd}</th>
+            <th className={`${HEAD} whitespace-nowrap`}>{T.leOs}</th>
           </tr>
         </thead>
         <tbody>

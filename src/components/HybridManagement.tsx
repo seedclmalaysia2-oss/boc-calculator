@@ -1,5 +1,6 @@
 import type { CalcResult, HybridLensOption, HybridPlan } from "@/lib/types";
 import { fmt } from "@/lib/format";
+import { Rich, useT } from "@/lib/i18n";
 
 const DASH = "—";
 
@@ -15,6 +16,7 @@ function ContextStrip({
   reScreen: number;
   leScreen: number;
 }) {
+  const T = useT();
   const cell = (
     label: string,
     dot: string,
@@ -28,29 +30,26 @@ function ContextStrip({
       </div>
       {h ? (
         <p className="mt-1 text-[11.5px] text-ink2">
-          Screening{" "}
+          {T.hybridCtxScreening}{" "}
           <span className="font-mono font-semibold text-no">
             {fmt(screen)}
-          </span>{" "}
-          — {fmt(h.screeningShortfall)} D below the 39.00 minimum. Residual
-          myopia{" "}
+          </span>
+          {T.hybridCtxMid(fmt(h.screeningShortfall))}
           <span className="font-mono font-semibold text-ink">
             {fmt(h.residualSphere)} D
           </span>
-          .
+          {T.hybridCtxEnd}
         </p>
       ) : (
-        <p className="mt-1 text-[11.5px] text-ink3">
-          Not screening-limited — no hybrid plan needed.
-        </p>
+        <p className="mt-1 text-[11.5px] text-ink3">{T.hybridNotLimited}</p>
       )}
     </div>
   );
 
   return (
     <div className="grid grid-cols-1 overflow-hidden rounded-[10px] border border-line bg-surface sm:grid-cols-2 sm:divide-x sm:divide-line">
-      {cell("RE · OD", "bg-brand", reH, reScreen)}
-      {cell("LE · OS", "bg-gold", leH, leScreen)}
+      {cell(T.reOd, "bg-brand", reH, reScreen)}
+      {cell(T.leOs, "bg-gold", leH, leScreen)}
     </div>
   );
 }
@@ -77,6 +76,7 @@ function HybridCard({
   leRx: string;
   notes: React.ReactNode;
 }) {
+  const T = useT();
   return (
     <article className="overflow-hidden rounded-[13px] border border-line bg-surface">
       <div className="bg-[linear-gradient(120deg,#2a5193,#21437c)] px-4 py-3 text-white">
@@ -90,10 +90,10 @@ function HybridCard({
         <div className="grid grid-cols-[1fr_auto_auto] gap-2 border-b border-line2 py-[9px]">
           <span aria-hidden />
           <span className="w-[74px] text-right text-[9.5px] font-bold tracking-[0.09em] text-ink3">
-            RE · OD
+            {T.reOd}
           </span>
           <span className="w-[74px] text-right text-[9.5px] font-bold tracking-[0.09em] text-ink3">
-            LE · OS
+            {T.leOs}
           </span>
         </div>
 
@@ -116,12 +116,12 @@ function HybridCard({
 
         <div className="mt-3 rounded-lg bg-gold-soft p-2.5">
           <div className="mb-1 text-[10px] font-bold uppercase tracking-[0.09em] text-ink3">
-            Spectacle Top-up
+            {T.spectacleTopup}
           </div>
           <div className="flex items-center justify-between gap-2 py-[3px]">
             <span className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.08em] text-ink3">
               <i className="h-[6px] w-[6px] rounded-full bg-brand" />
-              RE · OD
+              {T.reOd}
             </span>
             <span className="font-mono text-[13px] font-bold text-ink">
               {reRx}
@@ -130,7 +130,7 @@ function HybridCard({
           <div className="flex items-center justify-between gap-2 py-[3px]">
             <span className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.08em] text-ink3">
               <i className="h-[6px] w-[6px] rounded-full bg-gold" />
-              LE · OS
+              {T.leOs}
             </span>
             <span className="font-mono text-[13px] font-bold text-ink">
               {leRx}
@@ -168,6 +168,7 @@ function NoteLine({
 
 /** Collapsible explainer: why the hybrid target power is capped. */
 function TargetPowerExplainer() {
+  const T = useT();
   return (
     <details className="group mt-3.5 overflow-hidden rounded-[13px] border border-line bg-surface">
       <summary className="flex cursor-pointer select-none list-none items-center gap-2.5 px-[22px] py-3 [&::-webkit-details-marker]:hidden">
@@ -189,7 +190,7 @@ function TargetPowerExplainer() {
           <circle cx="7.5" cy="4.2" r="1" fill="currentColor" />
         </svg>
         <span className="font-display text-[12.5px] font-bold uppercase tracking-[0.1em] text-brand">
-          Understanding the Best Target Power
+          {T.understandingTargetPower}
         </span>
         <svg
           className="ml-auto flex-none text-ink3 transition-transform duration-200 group-open:rotate-180"
@@ -210,52 +211,30 @@ function TargetPowerExplainer() {
       </summary>
       <div className="space-y-3 border-t border-line2 px-[22px] py-4 text-[12px] leading-relaxed text-ink2">
         <p>
-          The ortho-K{" "}
-          <strong className="font-semibold text-ink">target power</strong>{" "}
-          shown is the maximum the cornea can safely take — not a limit of the
-          calculator.
+          <Rich segs={T.explainerP1} bold="font-semibold text-ink" />
         </p>
         <div className="rounded-lg border border-hairline bg-tint px-4 py-2.5 text-center font-mono text-[12.5px] font-semibold text-brand">
-          Screening value = Flat K (D) + Target Power
+          {T.explainerFormula}
         </div>
         <p>
-          The cornea can only be flattened until the screening value reaches
-          its{" "}
-          <strong className="font-semibold text-ink">39.00 minimum</strong>;
-          the target power is capped exactly there.
+          <Rich segs={T.explainerP2} bold="font-semibold text-ink" />
         </p>
         <div>
           <h4 className="mb-1 flex items-center gap-2 text-[10.5px] font-bold uppercase tracking-[0.08em] text-gold">
             <span className="h-[2px] w-3 rounded-sm bg-gold" />
-            Why not a deeper target power?
+            {T.explainerWhyNotDeeper}
           </h4>
           <p>
-            A deeper (more-minus) target power drops the screening value below
-            39.00 — over-flattening the cornea. The screening rule exists to
-            prevent that: over-flattening risks{" "}
-            <strong className="font-semibold text-ink">
-              high corneal pressure, SPK (superficial punctate keratitis), and
-              poor lens wear
-            </strong>
-            . A deeper target power does not give &ldquo;free&rdquo;
-            correction — it only moves the fit into unsafe territory.
+            <Rich segs={T.explainerP3} bold="font-semibold text-ink" />
           </p>
         </div>
         <div>
           <h4 className="mb-1 flex items-center gap-2 text-[10.5px] font-bold uppercase tracking-[0.08em] text-gold">
             <span className="h-[2px] w-3 rounded-sm bg-gold" />
-            Why do the glasses carry so much?
+            {T.explainerWhyGlasses}
           </h4>
           <p>
-            A large spectacle residual means the cornea is{" "}
-            <strong className="font-semibold text-ink">flat</strong> — not that
-            the calculator fell short. A flat cornea (low Flat K) has little
-            room to be flattened further, so the ortho-K&rsquo;s share is
-            small. To reduce the spectacle power you would need a{" "}
-            <strong className="font-semibold text-ink">
-              steeper cornea (higher Flat K)
-            </strong>
-            , not a deeper target power.
+            <Rich segs={T.explainerP4} bold="font-semibold text-ink" />
           </p>
         </div>
       </div>
@@ -272,6 +251,7 @@ export function HybridManagement({
   reActive: boolean;
   leActive: boolean;
 }) {
+  const T = useT();
   const reH = reActive ? result.re.hybrid : null;
   const leH = leActive ? result.le.hybrid : null;
   if (!reH && !leH) return null;
@@ -279,7 +259,7 @@ export function HybridManagement({
   const td = (s: string) => `${s} D`;
   /** Ortho-K target power, or "Not orderable" when below the −1.00 D floor. */
   const orthoKTp = (opt: HybridLensOption | null | undefined): string =>
-    !opt ? DASH : opt.orderable ? td(fmt(opt.targetPower)) : "Not orderable";
+    !opt ? DASH : opt.orderable ? td(fmt(opt.targetPower)) : T.notOrderable;
   /** Spectacle top-up Rx; blank when the lens is not orderable. */
   const hybridRx = (opt: HybridLensOption | null | undefined): string =>
     opt && opt.orderable ? opt.glassesRx : DASH;
@@ -287,7 +267,7 @@ export function HybridManagement({
   // ---- BOC STD card ----
   const stdRows: CardRow[] = [
     {
-      label: "Ortho-K Target Power",
+      label: T.orthoKTargetPower,
       re: reH ? orthoKTp(reH.std) : DASH,
       le: leH ? orthoKTp(leH.std) : DASH,
     },
@@ -297,12 +277,12 @@ export function HybridManagement({
   // ---- BOC TD card ----
   const tdRows: CardRow[] = [
     {
-      label: "Ortho-K Target Power",
+      label: T.orthoKTargetPower,
       re: orthoKTp(reH?.td),
       le: orthoKTp(leH?.td),
     },
     {
-      label: "Toric Lens Cylinder",
+      label: T.toricLensCylinder,
       re: reH?.td && reH.td.orderable ? td(fmt(reH.td.fittedCyl)) : DASH,
       le: leH?.td && leH.td.orderable ? td(fmt(leH.td.fittedCyl)) : DASH,
     },
@@ -317,15 +297,11 @@ export function HybridManagement({
     <section className="mt-8">
       <div className="mb-1.5 flex items-center gap-3.5">
         <h2 className="whitespace-nowrap font-display text-[15px] font-extrabold uppercase tracking-[0.1em] text-brand">
-          Hybrid Myopia Management
+          {T.hybridTitle}
         </h2>
         <span className="h-0.5 flex-1 rounded-sm bg-hairline" />
       </div>
-      <p className="mb-3.5 text-[12px] text-ink3">
-        For screening-limited candidates — each BOC lens is fitted to the
-        maximum it can correct; the residual is carried by the spectacle
-        top-up at the steep-K axis.
-      </p>
+      <p className="mb-3.5 text-[12px] text-ink3">{T.hybridIntro}</p>
 
       <ContextStrip
         reH={reH}
@@ -337,7 +313,7 @@ export function HybridManagement({
       <div className="print-2col mt-3.5 grid gap-3.5 md:grid-cols-2">
         <HybridCard
           name="BOC STD"
-          subtitle="Hybrid Plan · Spherical"
+          subtitle={T.hybridPlanSpherical}
           rows={stdRows}
           reRx={hybridRx(reH?.std)}
           leRx={hybridRx(leH?.std)}
@@ -345,7 +321,7 @@ export function HybridManagement({
         />
         <HybridCard
           name="BOC TD"
-          subtitle="Hybrid Plan · Toric"
+          subtitle={T.hybridPlanToric}
           rows={tdRows}
           reRx={hybridRx(reH?.td)}
           leRx={hybridRx(leH?.td)}
@@ -353,14 +329,14 @@ export function HybridManagement({
             <>
               {reTdNote && (
                 <NoteLine
-                  eye={oneEye ? undefined : "RE"}
+                  eye={oneEye ? undefined : T.reShort}
                   dot="bg-brand"
                   text={reTdNote}
                 />
               )}
               {leTdNote && (
                 <NoteLine
-                  eye={oneEye ? undefined : "LE"}
+                  eye={oneEye ? undefined : T.leShort}
                   dot="bg-gold"
                   text={leTdNote}
                 />

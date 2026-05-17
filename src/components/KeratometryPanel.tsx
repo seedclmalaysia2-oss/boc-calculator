@@ -1,6 +1,7 @@
 import type { CalcResult, Eye, EyeInput, Unit } from "@/lib/types";
 import { DIAMETERS } from "@/lib/constants";
 import { fmt } from "@/lib/format";
+import { useT } from "@/lib/i18n";
 import { Panel } from "./Panel";
 import { EyeColumnHeader, FieldRow, InputCell, SelectCell } from "./fields";
 
@@ -13,6 +14,7 @@ function UnitToggle({
   onUnit: (u: Unit) => void;
   disabled?: boolean;
 }) {
+  const T = useT();
   const opt = (u: Unit, label: string) => (
     <button
       type="button"
@@ -31,7 +33,7 @@ function UnitToggle({
   return (
     <div className="ml-auto inline-flex gap-0.5 rounded-lg border border-hairline bg-surface p-[3px]">
       {opt("mm", "mm")}
-      {opt("d", "Dioptre")}
+      {opt("d", T.unitDioptre)}
     </div>
   );
 }
@@ -113,15 +115,17 @@ export function KeratometryPanel({
   onUnit: (u: Unit) => void;
   onAdoptUnit: (u: Unit) => void;
 }) {
+  const T = useT();
   const eyes: { key: Eye; data: EyeInput }[] = [
     { key: "re", data: re },
     { key: "le", data: le },
   ];
   const invalidEye = (key: Eye) => !result[key].valid;
+  const sideLabel = (key: Eye) => (key === "re" ? T.rightEye : T.leftEye);
 
   const kCell = (key: Eye, field: "flatK" | "steepK", label: string) => (
     <InputCell
-      ariaLabel={`${label} ${key === "re" ? "right eye" : "left eye"}`}
+      ariaLabel={`${label} ${sideLabel(key)}`}
       value={eyes.find((e) => e.key === key)!.data[field]}
       tone={invalidEye(key) ? "invalid" : "default"}
       disabled={locked}
@@ -131,7 +135,7 @@ export function KeratometryPanel({
 
   const axisCell = (key: Eye, field: "flatAxis" | "steepAxis", label: string) => (
     <InputCell
-      ariaLabel={`${label} ${key === "re" ? "right eye" : "left eye"}`}
+      ariaLabel={`${label} ${sideLabel(key)}`}
       inputMode="numeric"
       value={eyes.find((e) => e.key === key)!.data[field]}
       disabled={locked}
@@ -142,42 +146,48 @@ export function KeratometryPanel({
   const unitMismatch =
     looksLikeWrongUnit(re, unit) || looksLikeWrongUnit(le, unit);
   const otherUnit: Unit = unit === "mm" ? "d" : "mm";
-  const otherUnitLabel = unit === "mm" ? "Dioptre" : "mm";
-  const currentUnitLabel = unit === "mm" ? "mm" : "Dioptre";
+  const otherUnitLabel = unit === "mm" ? T.unitDioptre : "mm";
+  const currentUnitLabel = unit === "mm" ? "mm" : T.unitDioptre;
+  const invalidEyes =
+    !result.re.valid && !result.le.valid
+      ? T.bothEyes
+      : !result.re.valid
+        ? T.rightEye
+        : T.leftEye;
 
   return (
     <Panel
       step={1}
-      title="Keratometry"
+      title={T.keratometryTitle}
       headerRight={<UnitToggle unit={unit} onUnit={onUnit} disabled={locked} />}
     >
       <EyeColumnHeader />
 
       <FieldRow
-        label="Flat K"
-        re={kCell("re", "flatK", "Flat K")}
-        le={kCell("le", "flatK", "Flat K")}
+        label={T.flatK}
+        re={kCell("re", "flatK", T.flatK)}
+        le={kCell("le", "flatK", T.flatK)}
       />
       <FieldRow
-        label="Flat K Axis"
-        re={axisCell("re", "flatAxis", "Flat K axis")}
-        le={axisCell("le", "flatAxis", "Flat K axis")}
+        label={T.flatKAxis}
+        re={axisCell("re", "flatAxis", T.flatKAxis)}
+        le={axisCell("le", "flatAxis", T.flatKAxis)}
       />
       <FieldRow
-        label="Steep K"
-        re={kCell("re", "steepK", "Steep K")}
-        le={kCell("le", "steepK", "Steep K")}
+        label={T.steepK}
+        re={kCell("re", "steepK", T.steepK)}
+        le={kCell("le", "steepK", T.steepK)}
       />
       <FieldRow
-        label="Steep K Axis"
-        re={axisCell("re", "steepAxis", "Steep K axis")}
-        le={axisCell("le", "steepAxis", "Steep K axis")}
+        label={T.steepKAxis}
+        re={axisCell("re", "steepAxis", T.steepKAxis)}
+        le={axisCell("le", "steepAxis", T.steepKAxis)}
       />
       <FieldRow
-        label="Closest Diameter"
+        label={T.closestDiameter}
         re={
           <SelectCell
-            ariaLabel="Closest diameter right eye"
+            ariaLabel={`${T.closestDiameter} ${T.rightEye}`}
             value={re.diameter}
             options={DIAMETERS}
             disabled={locked}
@@ -186,7 +196,7 @@ export function KeratometryPanel({
         }
         le={
           <SelectCell
-            ariaLabel="Closest diameter left eye"
+            ariaLabel={`${T.closestDiameter} ${T.leftEye}`}
             value={le.diameter}
             options={DIAMETERS}
             disabled={locked}
@@ -200,18 +210,18 @@ export function KeratometryPanel({
           <div className="flex items-center gap-1.5 border-b border-hairline px-3 py-[7px]">
             <span aria-hidden className="h-[3px] w-3.5 rounded-sm bg-gold" />
             <h3 className="text-[9.5px] font-bold uppercase tracking-[0.12em] text-ink3">
-              Fitting Curve Basis
+              {T.fittingCurveBasis}
             </h3>
           </div>
           <div className="divide-y divide-hairline">
             <BasisRow
-              kLabel="Average K"
+              kLabel={T.averageK}
               lenses="BOC STD"
               re={avgKValue(re, result.re.avgKmm, result.re.avgKd, unit)}
               le={avgKValue(le, result.le.avgKmm, result.le.avgKd, unit)}
             />
             <BasisRow
-              kLabel="Flat K"
+              kLabel={T.flatK}
               lenses="BOC TD"
               re={flatKValue(re, result.re.flatKmm, result.re.flatKd, unit)}
               le={flatKValue(le, result.le.flatKmm, result.le.flatKd, unit)}
@@ -223,9 +233,7 @@ export function KeratometryPanel({
       {unitMismatch ? (
         <div className="mt-3 rounded-lg border border-gold/40 bg-gold-soft px-3 py-2.5 text-center">
           <p className="text-[12px] font-semibold text-ink2">
-            These readings look like{" "}
-            <strong className="font-bold text-ink">{otherUnitLabel}</strong>{" "}
-            values, but the unit is set to {currentUnitLabel}.
+            {T.unitMismatch(otherUnitLabel, currentUnitLabel)}
           </p>
           <button
             type="button"
@@ -233,7 +241,7 @@ export function KeratometryPanel({
             disabled={locked}
             className="mt-2 rounded-md bg-gold px-3 py-[5px] font-display text-[11px] font-bold text-white transition-[filter] hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            Switch to {otherUnitLabel} — keep these numbers
+            {T.switchUnit(otherUnitLabel)}
           </button>
         </div>
       ) : !result.valid ? (
@@ -241,14 +249,7 @@ export function KeratometryPanel({
           role="alert"
           className="mt-3 rounded-lg border border-no-line bg-no-soft px-3 py-2 text-center text-[12px] font-semibold text-no"
         >
-          Flat K must not be {unit === "mm" ? "less" : "greater"} than Steep K —
-          please check the{" "}
-          {!result.re.valid && !result.le.valid
-            ? "right and left eye"
-            : !result.re.valid
-              ? "right eye"
-              : "left eye"}{" "}
-          entry.
+          {T.validation(unit === "mm" ? T.cmpLess : T.cmpGreater, invalidEyes)}
         </p>
       ) : null}
     </Panel>

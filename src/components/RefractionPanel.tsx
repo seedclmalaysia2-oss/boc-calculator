@@ -1,5 +1,6 @@
 import type { CalcResult, Eye, EyeInput } from "@/lib/types";
 import { CYLINDER_OPTIONS, SPHERE_OPTIONS } from "@/lib/constants";
+import { useT } from "@/lib/i18n";
 import { Panel } from "./Panel";
 import { EyeColumnHeader, FieldRow, InputCell, SelectCell } from "./fields";
 import { ScreeningTable } from "./ScreeningTable";
@@ -23,8 +24,9 @@ export function RefractionPanel({
   simple: boolean;
   onField: (eye: Eye, field: keyof EyeInput, value: string) => void;
 }) {
+  const T = useT();
   const eyeData = (key: Eye) => (key === "re" ? re : le);
-  const sideLabel = (key: Eye) => (key === "re" ? "right eye" : "left eye");
+  const sideLabel = (key: Eye) => (key === "re" ? T.rightEye : T.leftEye);
 
   const select = (
     key: Eye,
@@ -54,34 +56,34 @@ export function RefractionPanel({
   return (
     <Panel
       step={2}
-      title="Refraction"
+      title={T.refractionTitle}
       headerRight={
         <span className="ml-auto text-[10.5px] font-bold uppercase tracking-[0.12em] text-ink3">
-          Dioptre
+          {T.unitDioptre}
         </span>
       }
     >
       <EyeColumnHeader />
 
       <FieldRow
-        label="Sphere"
-        re={select("re", "sphere", "Sphere", SPHERE_OPTIONS)}
-        le={select("le", "sphere", "Sphere", SPHERE_OPTIONS)}
+        label={T.sphere}
+        re={select("re", "sphere", T.sphere, SPHERE_OPTIONS)}
+        le={select("le", "sphere", T.sphere, SPHERE_OPTIONS)}
       />
       <FieldRow
-        label="Cylinder"
-        re={select("re", "cylinder", "Cylinder", CYLINDER_OPTIONS)}
-        le={select("le", "cylinder", "Cylinder", CYLINDER_OPTIONS)}
+        label={T.cylinder}
+        re={select("re", "cylinder", T.cylinder, CYLINDER_OPTIONS)}
+        le={select("le", "cylinder", T.cylinder, CYLINDER_OPTIONS)}
       />
       <FieldRow
-        label="Axis"
-        re={input("re", "refAxis", "Refraction axis")}
-        le={input("le", "refAxis", "Refraction axis")}
+        label={T.axis}
+        re={input("re", "refAxis", T.refractionAxis)}
+        le={input("le", "refAxis", T.refractionAxis)}
       />
       <FieldRow
-        label="VA"
-        re={input("re", "va", "Visual acuity")}
-        le={input("le", "va", "Visual acuity")}
+        label={T.va}
+        re={input("re", "va", T.visualAcuity)}
+        le={input("le", "va", T.visualAcuity)}
       />
 
       {!simple && (

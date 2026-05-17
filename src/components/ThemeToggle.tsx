@@ -1,5 +1,7 @@
 "use client";
 
+import { useT } from "@/lib/i18n";
+
 /**
  * Light/dark theme switch. The `.dark` class on <html> is the source of
  * truth — set pre-paint by the init script in the root layout and flipped
@@ -7,6 +9,7 @@
  * button renders identically on the server and client (no hydration flash).
  */
 export function ThemeToggle() {
+  const T = useT();
   function toggle() {
     const isDark = document.documentElement.classList.toggle("dark");
     try {
@@ -20,8 +23,8 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      aria-label="Toggle dark mode"
-      title="Toggle dark mode"
+      aria-label={T.toggleDarkMode}
+      title={T.toggleDarkMode}
       className="grid h-9 w-9 flex-none place-items-center rounded-full border border-white/25 bg-white/10 text-white transition-colors hover:bg-white/20"
     >
       {/* Moon — shown in light mode (click switches to dark). */}

@@ -1,17 +1,14 @@
-const ITEMS = [
-  "This calculator is not intended to determine final lens specifications; it does not account for topography images reflecting the actual eye condition before or after fitting BOC Ortho-K lenses.",
-  "It is solely for selecting initial trial lenses. Further parameter adjustments are necessary if the initial trial lens is unsuitable after the fitting process.",
-  "No data is stored, captured, or screenshotted. No information is saved on any server or location.",
-];
+import { useT } from "@/lib/i18n";
 
 export function Disclaimer() {
+  const T = useT();
   return (
     <section className="mt-6 rounded-[13px] border border-line bg-surface px-[22px] py-[18px]">
       <h3 className="mb-2.5 font-display text-[11px] font-bold uppercase tracking-[0.14em] text-ink3">
-        Disclaimer
+        {T.disclaimerTitle}
       </h3>
       <ol className="space-y-1.5">
-        {ITEMS.map((text, i) => (
+        {T.disclaimerItems.map((text, i) => (
           <li
             key={i}
             className="flex gap-2.5 text-[11.5px] leading-relaxed text-ink3"

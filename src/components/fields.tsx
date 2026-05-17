@@ -1,3 +1,5 @@
+import { useT } from "@/lib/i18n";
+
 type CellTone = "default" | "invalid";
 
 const cellBase =
@@ -89,16 +91,17 @@ export function SelectCell({
 
 /** Three-column header row: spacer, RE·OD, LE·OS. */
 export function EyeColumnHeader() {
+  const T = useT();
   return (
     <div className="mb-2 grid grid-cols-[104px_minmax(0,1fr)_minmax(0,1fr)] gap-2.5 sm:grid-cols-[116px_minmax(0,1fr)_minmax(0,1fr)]">
       <span aria-hidden />
       <span className="flex items-center justify-center gap-1.5 whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.11em] text-ink3">
         <i className="h-[7px] w-[7px] rounded-full bg-brand" />
-        RE · OD
+        {T.reOd}
       </span>
       <span className="flex items-center justify-center gap-1.5 whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.11em] text-ink3">
         <i className="h-[7px] w-[7px] rounded-full bg-gold" />
-        LE · OS
+        {T.leOs}
       </span>
     </div>
   );

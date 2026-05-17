@@ -1,5 +1,6 @@
 import type { CalcResult } from "@/lib/types";
 import { SHOW_BOC_HD } from "@/lib/constants";
+import { useT } from "@/lib/i18n";
 import { LensResultCard } from "./LensResultCard";
 import { FittingReference } from "./FittingReference";
 import { HybridManagement } from "./HybridManagement";
@@ -17,6 +18,7 @@ export function ResultsSection({
   onDownload: () => void;
   onPrint: () => void;
 }) {
+  const T = useT();
   const cards: {
     name: string;
     toric: boolean;
@@ -43,7 +45,7 @@ export function ResultsSection({
     <section className="mt-8">
       <div className="mb-3.5 flex items-center gap-3.5">
         <h2 className="whitespace-nowrap font-display text-[15px] font-extrabold uppercase tracking-[0.1em] text-brand">
-          Trial Lens Results
+          {T.trialLensResults}
         </h2>
         <span className="h-0.5 flex-1 rounded-sm bg-hairline" />
       </div>
@@ -95,7 +97,7 @@ export function ResultsSection({
             <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
             <rect x="6" y="14" width="12" height="8" />
           </svg>
-          Print Page
+          {T.printPage}
         </button>
         <button
           type="button"
@@ -111,7 +113,7 @@ export function ResultsSection({
               strokeLinejoin="round"
             />
           </svg>
-          Download PDF
+          {T.downloadPdf}
         </button>
       </div>
     </section>

@@ -7,19 +7,19 @@ const themeInit = `try{var t=localStorage.getItem('theme');if(t==='dark'||(t!=='
 
 const archivo = Archivo({
   variable: "--font-archivo",
-  subsets: ["latin"],
+  subsets: ["latin", "vietnamese"],
   weight: ["500", "600", "700", "800"],
 });
 
 const hanken = Hanken_Grotesk({
   variable: "--font-hanken",
-  subsets: ["latin"],
+  subsets: ["latin", "vietnamese"],
   weight: ["400", "500", "600", "700"],
 });
 
 const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
-  subsets: ["latin"],
+  subsets: ["latin", "vietnamese"],
   weight: ["400", "500", "600"],
 });
 

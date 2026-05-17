@@ -8,6 +8,10 @@ import type {
 } from "./types";
 import { formatGlassesRx, formatSigned } from "./format";
 import { isStdOrderable, stdTargetPowerRange } from "./stdRange";
+import { STRINGS, type Dict, type Lang } from "./i18n";
+
+/** Translated reason / note strings for the active language. */
+type CalcStrings = Dict["calc"];
 
 /** Keratometric index used to convert corneal radius to refractive power. */
 const KERATOMETRIC_INDEX = 1.3375;
@@ -35,7 +39,7 @@ const MIN_SCREENING = 39;
 
 const fmt = (n: number) => n.toFixed(2);
 
-function computeEye(input: EyeInput): EyeResult {
+function computeEye(input: EyeInput, C: CalcStrings): EyeResult {
   const flatKmm = num(input.flatK);
   const steepKmm = num(input.steepK);
   const flatAxis = num(input.flatAxis);
@@ -90,7 +94,15 @@ function computeEye(input: EyeInput): EyeResult {
     cylOutOfRange: false,
     diameter,
     suitable: stdSuitable,
-    reason: stdReason(screeningSuitable, screeningValue, fitCurve, stdTp, cylInWindow, stdSuitable),
+    reason: stdReason(
+      screeningSuitable,
+      screeningValue,
+      fitCurve,
+      stdTp,
+      cylInWindow,
+      stdSuitable,
+      C,
+    ),
   };
 
   // ---- BOC HD ----------------------------------------------------------
@@ -107,7 +119,14 @@ function computeEye(input: EyeInput): EyeResult {
     cylOutOfRange: false,
     diameter,
     suitable: hdSuitable,
-    reason: hdReason(screeningSuitable, screeningValue, hdInRange, cylInWindow, hdSuitable),
+    reason: hdReason(
+      screeningSuitable,
+      screeningValue,
+      hdInRange,
+      cylInWindow,
+      hdSuitable,
+      C,
+    ),
   };
 
   // ---- BOC TD ----------------------------------------------------------
@@ -136,6 +155,7 @@ function computeEye(input: EyeInput): EyeResult {
       tdTpInRange,
       tdTp,
       tdSuitable,
+      C,
     ),
   };
 
@@ -155,8 +175,7 @@ function computeEye(input: EyeInput): EyeResult {
       const axis = input.steepAxis.trim();
       // Full spectacle correction — used when a lens cannot be ordered.
       const fullSphere = mRound(sphere, 0.25);
-      const notOrderableNote =
-        "Cornea too flat to reach the −1.00 D minimum ortho-K power — lens not orderable; full correction by spectacles.";
+      const notOrderableNote = C.notOrderableNote;
 
       // BOC STD hybrid option.
       const stdTargetPower = mRound(flatKd - avgKd + orthoKSphere, 0.25);
@@ -171,9 +190,7 @@ function computeEye(input: EyeInput): EyeResult {
           cornealCyl,
           axis,
         ),
-        note: stdOrderable
-          ? "Spherical lens — corrects sphere only; the full corneal cylinder is carried in the spectacle top-up."
-          : notOrderableNote,
+        note: stdOrderable ? C.stdSphericalNote : notOrderableNote,
       };
       // BOC TD is a toric lens — only indicated when the cornea carries at
       // least its -1.00 D minimum cylinder. Below that, BOC STD only.
@@ -196,11 +213,17 @@ function computeEye(input: EyeInput): EyeResult {
             ? formatGlassesRx(residualSphere, tdResidualCyl, axis)
             : formatGlassesRx(fullSphere, cornealCyl, axis),
           note: tdOrderable
-            ? tdHybridNote(cornealCyl, tdFittedCyl, tdResidualCyl, tdClamped)
+            ? tdHybridNote(
+                cornealCyl,
+                tdFittedCyl,
+                tdResidualCyl,
+                tdClamped,
+                C,
+              )
             : notOrderableNote,
         };
       } else {
-        tdUnavailableNote = `Corneal cylinder ${formatSigned(cornealCyl)} D is below the BOC TD minimum (−1.00 D) — the cornea is too spherical for a toric lens; BOC STD only.`;
+        tdUnavailableNote = C.tdUnavailableNote(formatSigned(cornealCyl));
       }
       hybrid = {
         screeningShortfall: parseFloat(fmt(MIN_SCREENING - screeningValue)),
@@ -231,8 +254,8 @@ function computeEye(input: EyeInput): EyeResult {
   };
 }
 
-function screeningMsg(value: number) {
-  return `Screening value ${fmt(value)} is below 39.00.`;
+function screeningMsg(value: number, C: CalcStrings) {
+  return C.screeningBelow(fmt(value));
 }
 
 /** Explain how BOC TD is fitted in the hybrid plan and what residual remains. */
@@ -241,14 +264,14 @@ function tdHybridNote(
   fittedCyl: number,
   residualCyl: number,
   clamped: boolean,
+  C: CalcStrings,
 ): string {
-  const fit = `Toric lens fitted at ${formatSigned(fittedCyl)} D cylinder`;
-  if (Math.abs(residualCyl) < 1e-9)
-    return `${fit} — corneal cylinder fully corrected.`;
-  const residual = `${formatSigned(residualCyl)} D residual cylinder is carried in the spectacle top-up`;
+  const fit = C.toricFit(formatSigned(fittedCyl));
+  if (Math.abs(residualCyl) < 1e-9) return C.toricFullyCorrected(fit);
+  const residual = C.toricResidual(formatSigned(residualCyl));
   return clamped
-    ? `Corneal cylinder ${formatSigned(cornealCyl)} D is beyond the BOC TD range; ${fit} and the ${residual}.`
-    : `${fit}; the ${residual}.`;
+    ? C.toricNoteClamped(formatSigned(cornealCyl), fit, residual)
+    : C.toricNotePlain(fit, residual);
 }
 
 function stdReason(
@@ -258,17 +281,21 @@ function stdReason(
   tp: number,
   cylInWindow: boolean,
   suitable: boolean,
+  C: CalcStrings,
 ): string {
-  if (suitable) return "All parameters within range.";
-  if (!screeningOk) return screeningMsg(screeningValue);
+  if (suitable) return C.allWithinRange;
+  if (!screeningOk) return screeningMsg(screeningValue, C);
   const range = stdTargetPowerRange(fitCurve);
-  if (!range)
-    return `Fitting curve ${fmt(fitCurve)} D is outside the STD range (39.00 to 47.00 D).`;
+  if (!range) return C.stdFitOutside(fmt(fitCurve));
   if (tp < range.min - 1e-9 || tp > range.max + 1e-9)
-    return `Target power ${fmt(tp)} D is outside the STD order range for a ${fmt(fitCurve)} D fitting curve (${fmt(range.max)} to ${fmt(range.min)} D).`;
-  if (!cylInWindow)
-    return "Corneal cylinder outside the STD range (−0.25 to −0.75 D).";
-  return "Out of range.";
+    return C.stdTpOutside(
+      fmt(tp),
+      fmt(fitCurve),
+      fmt(range.max),
+      fmt(range.min),
+    );
+  if (!cylInWindow) return C.stdCylOutside;
+  return C.outOfRange;
 }
 
 function hdReason(
@@ -277,14 +304,13 @@ function hdReason(
   tpInRange: boolean,
   cylInWindow: boolean,
   suitable: boolean,
+  C: CalcStrings,
 ): string {
-  if (suitable) return "All parameters within range.";
-  if (!screeningOk) return screeningMsg(screeningValue);
-  if (!tpInRange)
-    return "Target power outside the HD range (−4.25 to −8.00 D).";
-  if (!cylInWindow)
-    return "Corneal cylinder outside the HD range (−0.25 to −0.75 D).";
-  return "Out of range.";
+  if (suitable) return C.allWithinRange;
+  if (!screeningOk) return screeningMsg(screeningValue, C);
+  if (!tpInRange) return C.hdTpOutside;
+  if (!cylInWindow) return C.hdCylOutside;
+  return C.outOfRange;
 }
 
 function tdReason(
@@ -294,20 +320,24 @@ function tdReason(
   tpInRange: boolean,
   tp: number,
   suitable: boolean,
+  C: CalcStrings,
 ): string {
-  if (suitable) return "All parameters within range.";
-  if (!screeningOk) return screeningMsg(screeningValue);
-  if (!tpInRange)
-    return `Target power ${fmt(tp)} D is outside the TD range (−1.00 D or more minus).`;
-  if (!cylValid)
-    return "Cylinder outside the TD range (−1.00 to −3.00 D).";
-  return "Out of range.";
+  if (suitable) return C.allWithinRange;
+  if (!screeningOk) return screeningMsg(screeningValue, C);
+  if (!tpInRange) return C.tdTpOutside(fmt(tp));
+  if (!cylValid) return C.tdCylOutside;
+  return C.outOfRange;
 }
 
 /** Compute trial-lens recommendations for both eyes. */
-export function compute(re: EyeInput, le: EyeInput): CalcResult {
-  const reResult = computeEye(re);
-  const leResult = computeEye(le);
+export function compute(
+  re: EyeInput,
+  le: EyeInput,
+  lang: Lang = "en",
+): CalcResult {
+  const C = STRINGS[lang].calc;
+  const reResult = computeEye(re, C);
+  const leResult = computeEye(le, C);
   return {
     re: reResult,
     le: leResult,

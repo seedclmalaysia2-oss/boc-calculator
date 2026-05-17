@@ -5,15 +5,7 @@ import type { Eye, EyeInput, Unit } from "@/lib/types";
 import { EMPTY_EYE } from "@/lib/constants";
 import { compute } from "@/lib/calculator";
 import { convertK } from "@/lib/format";
-
-/** Date the report is generated. Differs server/client — see suppressHydrationWarning. */
-function formatToday(): string {
-  return new Date().toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-}
+import { LangProvider, formatDate, useLang, useT, type Lang } from "@/lib/i18n";
 import { Header } from "./Header";
 import { InstructionsCard } from "./InstructionsCard";
 import { KeratometryPanel } from "./KeratometryPanel";
@@ -40,17 +32,33 @@ const hasAnyK = (eye: EyeInput) =>
 const hasBothK = (eye: EyeInput) =>
   eye.flatK.trim() !== "" && eye.steepK.trim() !== "";
 
-export function Calculator({ simple = false }: { simple?: boolean }) {
+export function Calculator({
+  simple = false,
+  lang = "en",
+}: {
+  simple?: boolean;
+  lang?: Lang;
+}) {
+  return (
+    <LangProvider lang={lang}>
+      <CalculatorBody simple={simple} />
+    </LangProvider>
+  );
+}
+
+function CalculatorBody({ simple }: { simple: boolean }) {
+  const lang = useLang();
+  const T = useT();
   const [re, setRe] = useState<EyeInput>(EMPTY_EYE);
   const [le, setLe] = useState<EyeInput>(EMPTY_EYE);
   const [unit, setUnit] = useState<Unit>("mm");
   const [hasCalculated, setHasCalculated] = useState(false);
-  const reportDate = formatToday();
+  const reportDate = formatDate(lang);
   const mainRef = useRef<HTMLElement>(null);
 
   const result = useMemo(
-    () => compute(eyeInMm(re, unit), eyeInMm(le, unit)),
-    [re, le, unit],
+    () => compute(eyeInMm(re, unit), eyeInMm(le, unit), lang),
+    [re, le, unit, lang],
   );
 
   const reActive = hasBothK(re);
@@ -93,6 +101,7 @@ export function Calculator({ simple = false }: { simple?: boolean }) {
       mode: "detailed",
       unit,
       simple,
+      lang,
       re: eyeInMm(re, unit),
       le: eyeInMm(le, unit),
       result,
@@ -227,11 +236,9 @@ export function Calculator({ simple = false }: { simple?: boolean }) {
                 <path d="M12 20h9" />
                 <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z" />
               </svg>
-              Amend Inputs
+              {T.amendInputs}
             </button>
-            <p className="text-[11.5px] text-ink3">
-              Inputs are locked — tap to edit and recalculate.
-            </p>
+            <p className="text-[11.5px] text-ink3">{T.inputsLocked}</p>
           </>
         ) : (
           <button
@@ -244,7 +251,7 @@ export function Calculator({ simple = false }: { simple?: boolean }) {
               aria-hidden
               className="h-3.5 w-3.5 rounded-full border-2 border-gold border-r-transparent"
             />
-            Calculate
+            {T.calculate}
           </button>
         )}
       </div>
