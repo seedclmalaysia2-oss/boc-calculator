@@ -35,18 +35,33 @@ const hasBothK = (eye: EyeInput) =>
 export function Calculator({
   simple = false,
   lang = "en",
+  switcher = false,
 }: {
   simple?: boolean;
   lang?: Lang;
+  /** Show an in-header EN/VN/ID language switcher; `lang` is the start value. */
+  switcher?: boolean;
 }) {
+  const [activeLang, setActiveLang] = useState<Lang>(lang);
   return (
-    <LangProvider lang={lang}>
-      <CalculatorBody simple={simple} />
+    <LangProvider lang={switcher ? activeLang : lang}>
+      <CalculatorBody
+        simple={simple}
+        langControl={
+          switcher ? { lang: activeLang, setLang: setActiveLang } : null
+        }
+      />
     </LangProvider>
   );
 }
 
-function CalculatorBody({ simple }: { simple: boolean }) {
+function CalculatorBody({
+  simple,
+  langControl,
+}: {
+  simple: boolean;
+  langControl: { lang: Lang; setLang: (l: Lang) => void } | null;
+}) {
   const lang = useLang();
   const T = useT();
   const [re, setRe] = useState<EyeInput>(EMPTY_EYE);
@@ -184,7 +199,7 @@ function CalculatorBody({ simple }: { simple: boolean }) {
       ref={mainRef}
       className="mx-auto max-w-[1090px] px-4 py-7 sm:px-5 sm:py-[30px]"
     >
-      <Header dateLabel={reportDate} />
+      <Header dateLabel={reportDate} langControl={langControl} />
 
       <div className="mt-[15px]">
         <InstructionsCard />

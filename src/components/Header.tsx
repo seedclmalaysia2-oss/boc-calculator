@@ -1,9 +1,55 @@
 import Image from "next/image";
 import bocLogo from "@/assets/boc-logo.jpg";
-import { useT } from "@/lib/i18n";
+import { useT, type Lang } from "@/lib/i18n";
 import { ThemeToggle } from "./ThemeToggle";
 
-export function Header({ dateLabel }: { dateLabel: string }) {
+type LangControl = { lang: Lang; setLang: (lang: Lang) => void } | null;
+
+/** In-header EN/VN/ID language switcher. */
+function LanguageSwitcher({
+  lang,
+  setLang,
+}: {
+  lang: Lang;
+  setLang: (lang: Lang) => void;
+}) {
+  const opts: { code: Lang; label: string }[] = [
+    { code: "en", label: "EN" },
+    { code: "vi", label: "VN" },
+    { code: "id", label: "ID" },
+  ];
+  return (
+    <div
+      role="group"
+      aria-label="Language"
+      className="inline-flex gap-0.5 rounded-full border border-white/25 bg-white/10 p-[3px]"
+    >
+      {opts.map((o) => (
+        <button
+          key={o.code}
+          type="button"
+          onClick={() => setLang(o.code)}
+          aria-pressed={lang === o.code}
+          className={`rounded-full px-2 py-1 font-mono text-[11px] font-semibold leading-none tracking-[0.04em] transition-colors ${
+            lang === o.code
+              ? "bg-white text-[#234780]"
+              : "text-white/70 hover:text-white"
+          }`}
+        >
+          {o.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+export function Header({
+  dateLabel,
+  langControl = null,
+}: {
+  dateLabel: string;
+  langControl?: LangControl;
+}) {
   const T = useT();
   return (
     <header className="relative flex flex-col gap-4 overflow-hidden rounded-2xl bg-[linear-gradient(115deg,#2a5193_0%,#234780_55%,#1b3866_100%)] px-5 py-5 text-white shadow-[0_12px_30px_-14px_rgba(31,61,112,0.55)] sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:px-8 sm:py-6">
@@ -46,7 +92,13 @@ export function Header({ dateLabel }: { dateLabel: string }) {
             {dateLabel}
           </div>
         </div>
-        <div className="print:hidden">
+        <div className="flex items-center gap-2 print:hidden">
+          {langControl && (
+            <LanguageSwitcher
+              lang={langControl.lang}
+              setLang={langControl.setLang}
+            />
+          )}
           <ThemeToggle />
         </div>
       </div>
