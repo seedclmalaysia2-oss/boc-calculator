@@ -11,5 +11,5 @@ export const metadata: Metadata = {
  * hidden. Not linked from the main page.
  */
 export default function SimplePage() {
-  return <Calculator simple />;
+  return <Calculator simple switcher />;
 }
