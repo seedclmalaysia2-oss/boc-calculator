@@ -54,7 +54,7 @@ export function SelectCell({
         aria-label={ariaLabel}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className={`${cellBase} ${toneClass("default")} cursor-pointer pr-6`}
+        className={`${cellBase} ${toneClass("default")} cursor-pointer pr-[18px] sm:pr-6`}
       >
         {options.map((opt) => (
           <option key={opt} value={opt}>
@@ -63,7 +63,7 @@ export function SelectCell({
         ))}
       </select>
       <svg
-        className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-ink3"
+        className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 text-ink3 sm:right-2.5"
         width="10"
         height="6"
         viewBox="0 0 10 6"
@@ -84,7 +84,7 @@ export function SelectCell({
 /** Three-column header row: spacer, RE·OD, LE·OS. */
 export function EyeColumnHeader() {
   return (
-    <div className="mb-2 grid grid-cols-[116px_1fr_1fr] gap-2.5">
+    <div className="mb-2 grid grid-cols-[104px_1fr_1fr] gap-2.5 sm:grid-cols-[116px_1fr_1fr]">
       <span aria-hidden />
       <span className="flex items-center justify-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.11em] text-ink3">
         <i className="h-[7px] w-[7px] rounded-full bg-brand" />
@@ -109,7 +109,7 @@ export function FieldRow({
   le: React.ReactNode;
 }) {
   return (
-    <div className="mb-2.5 grid grid-cols-[116px_1fr_1fr] items-center gap-2.5">
+    <div className="mb-2.5 grid grid-cols-[104px_1fr_1fr] items-center gap-2.5 sm:grid-cols-[116px_1fr_1fr]">
       <label className="text-[12.5px] font-semibold text-ink2">{label}</label>
       {re}
       {le}

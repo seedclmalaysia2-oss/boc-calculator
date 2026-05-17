@@ -17,14 +17,19 @@ export function ResultsSection({
   onDownload: () => void;
   onPrint: () => void;
 }) {
-  const cards: { name: string; re: CalcResult["re"]["std"]; le: CalcResult["le"]["std"] }[] = [
-    { name: "BOC STD", re: result.re.std, le: result.le.std },
+  const cards: {
+    name: string;
+    toric: boolean;
+    re: CalcResult["re"]["std"];
+    le: CalcResult["le"]["std"];
+  }[] = [
+    { name: "BOC STD", toric: false, re: result.re.std, le: result.le.std },
   ];
   if (SHOW_BOC_HD) {
-    cards.push({ name: "BOC HD", re: result.re.hd, le: result.le.hd });
+    cards.push({ name: "BOC HD", toric: false, re: result.re.hd, le: result.le.hd });
   }
   if (!result.hideTd) {
-    cards.push({ name: "BOC TD", re: result.re.td, le: result.le.td });
+    cards.push({ name: "BOC TD", toric: true, re: result.re.td, le: result.le.td });
   }
 
   // The fitting reference applies once a BOC STD or BOC TD lens is fittable.
@@ -52,6 +57,7 @@ export function ResultsSection({
           <LensResultCard
             key={c.name}
             name={c.name}
+            toric={c.toric}
             re={c.re}
             le={c.le}
             reActive={reActive}

@@ -85,12 +85,15 @@ function SuitabilityRow({
 
 export function LensResultCard({
   name,
+  toric,
   re,
   le,
   reActive,
   leActive,
 }: {
   name: string;
+  /** True only for the toric BOC TD lens; STD / HD are spherical (no cylinder). */
+  toric: boolean;
   re: LensResult;
   le: LensResult;
   reActive: boolean;
@@ -138,14 +141,16 @@ export function LensResultCard({
           re={reVal(fmt(re.tp))}
           le={leVal(fmt(le.tp))}
         />
-        <ValueRow
-          code="CYL"
-          name="Cylinder"
-          re={reVal(cylText(re))}
-          le={leVal(cylText(le))}
-          reBad={reActive && re.cylOutOfRange}
-          leBad={leActive && le.cylOutOfRange}
-        />
+        {toric && (
+          <ValueRow
+            code="CYL"
+            name="Cylinder"
+            re={reVal(cylText(re))}
+            le={leVal(cylText(le))}
+            reBad={reActive && re.cylOutOfRange}
+            leBad={leActive && le.cylOutOfRange}
+          />
+        )}
         <ValueRow
           code="DIA"
           name="Diameter"

@@ -298,8 +298,20 @@
 
   @media(max-width:880px){
     .grid,.ins-body,.lens-grid{grid-template-columns:1fr;}
-    .topbar{flex-direction:column;align-items:flex-start;gap:16px;}
-    .meta{text-align:left;}
+    .lens.hd{display:none;}
+
+    /* header stacks vertically on phones */
+    .topbar{flex-direction:column;align-items:stretch;gap:16px;padding:20px;}
+    .topbar::after{display:none;}
+    .brand{gap:14px;}
+    .brand .titles h1{font-size:18px;line-height:1.25;}
+    .logo-chip{padding:6px 10px;}
+    .logo-chip img{height:36px;}
+    .meta{text-align:left;border-top:1px solid rgba(255,255,255,.12);padding-top:14px;}
+
+    /* tighter field columns so inputs/selects are not cramped */
+    .colhead,.field,.readout{grid-template-columns:104px 1fr 1fr;}
+    select.cell{padding-right:18px;background-position:right 7px center;}
   }
 </style>
 </head>
@@ -435,7 +447,7 @@
       </div>
     </article>
 
-    <article class="lens">
+    <article class="lens hd">
       <div class="lens-top">
         <div class="name">BOC HD<small>1st Trial Lens</small></div>
         <div class="badge no"><span class="d"></span>Not Suitable</div>

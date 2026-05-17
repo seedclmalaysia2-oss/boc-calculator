@@ -214,19 +214,29 @@ function screeningRows(result: CalcResult): RowInput[] {
   ];
 }
 
-function lensRows(re: LensResult, le: LensResult): RowInput[] {
-  return [
+function lensRows(
+  re: LensResult,
+  le: LensResult,
+  toric: boolean,
+): RowInput[] {
+  const rows: RowInput[] = [
     ["Fitting Curve (D)", d2(re.ft), d2(le.ft)],
     ["Target Power (D)", d2(re.tp), d2(le.tp)],
-    [
+  ];
+  // Only the toric BOC TD lens has a cylinder; BOC STD / HD are spherical.
+  if (toric) {
+    rows.push([
       "Cylinder (D)",
       re.cylOutOfRange ? "Out of range" : d2(re.cyl),
       le.cylOutOfRange ? "Out of range" : d2(le.cyl),
-    ],
+    ]);
+  }
+  rows.push(
     ["Diameter (mm)", d2(re.diameter), d2(le.diameter)],
     ["Suitability", suitabilityCell(re.suitable), suitabilityCell(le.suitable)],
     ["Reason", ascii(re.reason), ascii(le.reason)],
-  ];
+  );
+  return rows;
 }
 
 /** Per-eye one-line hybrid screening context. */
@@ -366,12 +376,23 @@ export async function generateReport({
   sectionTitle(doc, "Trial Lens Results", y);
   y += 2.5;
 
-  const lenses: { name: string; re: LensResult; le: LensResult }[] = [
-    { name: "BOC STD — 1st Trial Lens", re: result.re.std, le: result.le.std },
+  const lenses: {
+    name: string;
+    toric: boolean;
+    re: LensResult;
+    le: LensResult;
+  }[] = [
+    {
+      name: "BOC STD — 1st Trial Lens",
+      toric: false,
+      re: result.re.std,
+      le: result.le.std,
+    },
   ];
   if (SHOW_BOC_HD) {
     lenses.push({
       name: "BOC HD — 1st Trial Lens",
+      toric: false,
       re: result.re.hd,
       le: result.le.hd,
     });
@@ -379,6 +400,7 @@ export async function generateReport({
   if (!result.hideTd) {
     lenses.push({
       name: "BOC TD — 1st Trial Lens",
+      toric: true,
       re: result.re.td,
       le: result.le.td,
     });
@@ -389,7 +411,7 @@ export async function generateReport({
         doc,
         y,
         lens.name,
-        gate(lensRows(lens.re, lens.le), reActive, leActive),
+        gate(lensRows(lens.re, lens.le, lens.toric), reActive, leActive),
       ) + 6;
   }
 
