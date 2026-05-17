@@ -84,14 +84,21 @@ function arrayBufferToBase64(buf: ArrayBuffer): string {
 }
 
 /**
- * Embed Be Vietnam Pro so the report can render Vietnamese text — jsPDF's
- * built-in fonts only cover WinAnsi. Returns false if the fonts cannot be
- * fetched, so the caller can fall back to the core font.
+ * Embed a Unicode-capable TTF (regular + bold) so the report can render
+ * non-WinAnsi text — jsPDF's built-in fonts only cover WinAnsi. Used for
+ * Vietnamese (Be Vietnam Pro) and Japanese (Noto Sans JP). Returns false
+ * if the fonts cannot be fetched, so the caller can fall back to the core
+ * font.
  */
-async function registerVietnameseFont(doc: jsPDF): Promise<boolean> {
+async function registerEmbeddedFont(
+  doc: jsPDF,
+  family: string,
+  regularUrl: string,
+  boldUrl: string,
+): Promise<boolean> {
   const variants: { url: string; style: "normal" | "bold" }[] = [
-    { url: "/fonts/BeVietnamPro-Regular.ttf", style: "normal" },
-    { url: "/fonts/BeVietnamPro-Bold.ttf", style: "bold" },
+    { url: regularUrl, style: "normal" },
+    { url: boldUrl, style: "bold" },
   ];
   try {
     for (const { url, style } of variants) {
@@ -99,7 +106,7 @@ async function registerVietnameseFont(doc: jsPDF): Promise<boolean> {
       if (!res.ok) return false;
       const file = url.split("/").pop()!;
       doc.addFileToVFS(file, arrayBufferToBase64(await res.arrayBuffer()));
-      doc.addFont(file, "BeVietnamPro", style);
+      doc.addFont(file, family, style);
     }
     return true;
   } catch {
@@ -381,10 +388,29 @@ export async function generateReport({
   const reActive = hasK(re);
   const leActive = hasK(le);
 
-  // Vietnamese needs a Unicode font; fall back to the core font on failure.
+  // Vietnamese and Japanese need a Unicode font; fall back to the core
+  // font on failure.
   let font = "helvetica";
-  if (lang === "vi" && (await registerVietnameseFont(doc))) {
+  if (
+    lang === "vi" &&
+    (await registerEmbeddedFont(
+      doc,
+      "BeVietnamPro",
+      "/fonts/BeVietnamPro-Regular.ttf",
+      "/fonts/BeVietnamPro-Bold.ttf",
+    ))
+  ) {
     font = "BeVietnamPro";
+  } else if (
+    lang === "ja" &&
+    (await registerEmbeddedFont(
+      doc,
+      "NotoSansJP",
+      "/fonts/NotoSansJP-Regular.ttf",
+      "/fonts/NotoSansJP-Bold.ttf",
+    ))
+  ) {
+    font = "NotoSansJP";
   }
 
   // ---- Header ----------------------------------------------------------

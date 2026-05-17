@@ -5,7 +5,7 @@ import { ThemeToggle } from "./ThemeToggle";
 
 type LangControl = { lang: Lang; setLang: (lang: Lang) => void } | null;
 
-/** In-header EN/VN/ID language switcher. */
+/** In-header EN/VN/ID/JP language switcher. */
 function LanguageSwitcher({
   lang,
   setLang,
@@ -17,6 +17,7 @@ function LanguageSwitcher({
     { code: "en", label: "EN" },
     { code: "vi", label: "VN" },
     { code: "id", label: "ID" },
+    { code: "ja", label: "JP" },
   ];
   return (
     <div

@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react";
 
-export type Lang = "en" | "vi" | "id";
+export type Lang = "en" | "vi" | "id" | "ja";
 
 /** A run of text in a paragraph; `b` marks the run as bold. */
 export interface Seg {
@@ -705,12 +705,242 @@ const id: Dict = {
   },
 };
 
-export const STRINGS: Record<Lang, Dict> = { en, vi, id };
+/**
+ * Japanese strings. Clinical product names (BOC STD / TD / HD), the OD/OS
+ * Latin abbreviations, "SPK" and "HVID" are kept as-is — they are used
+ * untranslated in Japanese optometry practice. "Ortho-K" is rendered
+ * オルソK, keratometry ケラトメトリー, and "K" stays Latin.
+ */
+const ja: Dict = {
+  appTitle: "オルソK トライアルレンズ計算ツール",
+  printTitle: "SEED BOC オルソK トライアルレンズ推奨レポート",
+  appSubtitle: "初期レンズ選択ツール",
+  reportDate: "レポート日付",
+
+  instructionsTitle: "操作手順",
+  step1Label: "ステップ 1",
+  step2Label: "ステップ 2",
+  step1: [
+    { t: "ケラトメトリーデータを入力します — フラットKとスティープKを" },
+    { t: "mm またはジオプター", b: true },
+    {
+      t: " で入力し、最も近い直径（HVID の 95% に基づく）を選択します。",
+    },
+  ] as Seg[],
+  step2: [
+    { t: "眼鏡の屈折データを入力し、" },
+    { t: "計算", b: true },
+    { t: " を押すと推奨トライアルレンズが表示されます。" },
+  ] as Seg[],
+
+  keratometryTitle: "ケラトメトリー",
+  refractionTitle: "屈折",
+
+  unitDioptre: "ジオプター",
+
+  flatK: "フラットK",
+  flatKAxis: "フラットK 軸",
+  steepK: "スティープK",
+  steepKAxis: "スティープK 軸",
+  closestDiameter: "最も近い直径",
+  fittingCurveBasis: "フィッティングカーブの基準",
+  averageK: "平均K",
+
+  rightEye: "右眼",
+  leftEye: "左眼",
+  bothEyes: "右眼と左眼",
+  reOd: "右眼 · OD",
+  leOs: "左眼 · OS",
+  reShort: "右眼",
+  leShort: "左眼",
+
+  unitMismatch: (other: string, current: string) =>
+    `これらの測定値は ${other} の値のようですが、単位は ${current} に設定されています。`,
+  switchUnit: (other: string) =>
+    `${other} に切り替える — これらの数値を保持`,
+  cmpLess: "小さい",
+  cmpGreater: "大きい",
+  validation: (cmp: string, eyes: string) =>
+    `フラットKがスティープKより${cmp}ようです — ${eyes}の入力をご確認ください。`,
+
+  sphere: "球面",
+  cylinder: "円柱",
+  axis: "軸",
+  va: "視力",
+  visualAcuity: "視力",
+  refractionAxis: "屈折軸",
+
+  conversionTitle: "ケラトメトリー情報 — ジオプター",
+  fittingCurveD: "フィッティングカーブ (D)",
+
+  screeningTableTitle: "角膜形状の有効性",
+  screeningRow: "スクリーニング ≥ 39",
+  suitability: "適合性",
+  reason: "理由",
+  screeningHead: "最もフラットなK − 目標度数",
+  yes: "はい",
+  no: "いいえ",
+
+  amendInputs: "入力を修正",
+  inputsLocked: "入力はロックされています — タップして編集・再計算します。",
+  calculate: "計算",
+
+  trialLensResults: "トライアルレンズの結果",
+  printPage: "ページを印刷",
+  downloadPdf: "PDF をダウンロード",
+
+  firstTrialLens: "第1トライアルレンズ",
+  fittingCurve: "フィッティングカーブ",
+  targetPower: "目標度数",
+  diameter: "直径",
+  outOfRange: "範囲外",
+  notEntered: "未入力",
+  suitable: "適合",
+  notSuitable: "不適合",
+  noDataEye: "この眼のデータが入力されていません。",
+
+  fittingReferenceTitle: "フィッティングリファレンス",
+  fittingReferenceCaption: [
+    { t: "推奨される" },
+    { t: "第1トライアルレンズ", b: true },
+    {
+      t: "（BOC STD または BOC TD）を装用し、フルオレセイン下で評価した場合、正しいフィッティングは図に示すパターンに似ているはずです。レンズが角膜上で良好にセンタリングされ、明確な中央トリートメントゾーンと均一な中間周辺リングが見られます。この画像を理想的な初期フィッティングの基準としてご使用ください。",
+    },
+  ] as Seg[],
+
+  hybridTitle: "ハイブリッド近視管理",
+  hybridIntro:
+    "スクリーニングにより制限される症例向け — 各 BOC レンズは矯正できる最大限までフィッティングされ、残余はスティープK軸での眼鏡による追加矯正で補われます。",
+  hybridCtxScreening: "スクリーニング",
+  hybridCtxMid: (shortfall: string) =>
+    ` — 39.00 の最小値を ${shortfall} D 下回っています。残余近視 `,
+  hybridCtxEnd: "。",
+  hybridNotLimited:
+    "スクリーニングによる制限なし — ハイブリッドプランは不要です。",
+  spectacleTopup: "眼鏡による追加矯正",
+  orthoKTargetPower: "オルソK 目標度数",
+  toricLensCylinder: "トーリックレンズ円柱",
+  notOrderable: "発注不可",
+  hybridPlanSpherical: "ハイブリッドプラン · 球面",
+  hybridPlanToric: "ハイブリッドプラン · トーリック",
+  understandingTargetPower: "最適な目標度数について",
+  explainerP1: [
+    { t: "" },
+    { t: "目標度数", b: true },
+    {
+      t: " として表示されるオルソKの値は、角膜が安全に受け入れられる最大限であり、計算ツールの限界ではありません。",
+    },
+  ] as Seg[],
+  explainerFormula: "スクリーニング値 = フラットK (D) + 目標度数",
+  explainerP2: [
+    {
+      t: "角膜は、スクリーニング値が",
+    },
+    { t: "39.00 の最小値", b: true },
+    { t: "に達するまでしか平坦化できません。目標度数はちょうどその点で制限されます。" },
+  ] as Seg[],
+  explainerWhyNotDeeper: "なぜより深い目標度数にしないのですか？",
+  explainerP3: [
+    {
+      t: "より深い（よりマイナスの）目標度数はスクリーニング値を 39.00 未満に下げ、角膜を過度に平坦化します。スクリーニングのルールはそれを防ぐために存在します。過度の平坦化は、",
+    },
+    {
+      t: "高い角膜圧、SPK（点状表層角膜炎）、レンズ装用不良",
+      b: true,
+    },
+    {
+      t: "のリスクを伴います。より深い目標度数で矯正量が「無償で」増えるわけではなく、フィッティングを安全でない領域へ移すだけです。",
+    },
+  ] as Seg[],
+  explainerWhyGlasses: "なぜ眼鏡がこれほど多くを負担するのですか？",
+  explainerP4: [
+    { t: "眼鏡の残余が大きいということは、角膜が" },
+    { t: "平坦", b: true },
+    {
+      t: "であることを意味し、計算ツールが不足したわけではありません。平坦な角膜（低いフラットK）はさらに平坦化する余地がほとんどないため、オルソKが担う割合は小さくなります。眼鏡度数を減らすには、より深い目標度数ではなく、",
+    },
+    { t: "よりスティープな角膜（より高いフラットK）", b: true },
+    { t: "が必要です。" },
+  ] as Seg[],
+
+  disclaimerTitle: "免責事項",
+  disclaimerItems: [
+    "この計算ツールは最終的なレンズ仕様を決定することを目的としたものではなく、BOC オルソKレンズのフィッティング前後の実際の眼の状態を反映するトポグラフィー画像を考慮していません。",
+    "本ツールは初期トライアルレンズの選択のみを目的としています。フィッティングの過程で初期トライアルレンズが不適合であった場合は、さらなるパラメータの調整が必要です。",
+    "データの保存、取得、スクリーンショットは一切行われません。情報がサーバーやいかなる場所にも保存されることはありません。",
+  ],
+
+  toggleDarkMode: "ダークモードの切り替え",
+
+  calc: {
+    allWithinRange: "すべてのパラメータが範囲内です。",
+    outOfRange: "範囲外です。",
+    screeningBelow: (v: string) =>
+      `スクリーニング値 ${v} が 39.00 を下回っています。`,
+    stdFitOutside: (ft: string) =>
+      `フィッティングカーブ ${ft} D は STD の範囲（39.00〜47.00 D）外です。`,
+    stdTpOutside: (tp: string, ft: string, max: string, min: string) =>
+      `目標度数 ${tp} D は、フィッティングカーブ ${ft} D の STD 発注範囲（${max}〜${min} D）外です。`,
+    stdCylOutside:
+      "角膜円柱が STD の範囲（−0.25〜−0.75 D）外です。",
+    hdTpOutside: "目標度数が HD の範囲（−4.25〜−8.00 D）外です。",
+    hdCylOutside: "角膜円柱が HD の範囲（−0.25〜−0.75 D）外です。",
+    tdTpOutside: (tp: string) =>
+      `目標度数 ${tp} D は TD の範囲（−1.00 D 以上のマイナス）外です。`,
+    tdCylOutside: "円柱が TD の範囲（−1.00〜−3.00 D）外です。",
+    notOrderableNote:
+      "角膜が平坦すぎてオルソKの最小度数 −1.00 D に達しません — レンズは発注できません。完全な矯正は眼鏡で行います。",
+    stdSphericalNote:
+      "球面レンズ — 球面のみを矯正します。角膜円柱の全量は眼鏡による追加矯正で補われます。",
+    tdUnavailableNote: (cyl: string) =>
+      `角膜円柱 ${cyl} D は BOC TD の最小値（−1.00 D）を下回っています — 角膜が球面に近すぎてトーリックレンズには適しません。BOC STD のみとなります。`,
+    toricFit: (cyl: string) => `トーリックレンズを円柱 ${cyl} D でフィッティング`,
+    toricFullyCorrected: (fit: string) =>
+      `${fit} — 角膜円柱は完全に矯正されました。`,
+    toricResidual: (cyl: string) =>
+      `残余円柱 ${cyl} D は眼鏡による追加矯正で補われます`,
+    toricNoteClamped: (cornealCyl: string, fit: string, residual: string) =>
+      `角膜円柱 ${cornealCyl} D は BOC TD の範囲を超えています。${fit}、${residual}。`,
+    toricNotePlain: (fit: string, residual: string) => `${fit}。${residual}。`,
+  },
+
+  pdf: {
+    detailedReport: "詳細レポート",
+    report: "レポート",
+    measurement: "測定値",
+    screening: "スクリーニング",
+    assessment: "評価",
+    hybridPlan: "ハイブリッドプラン",
+    notIndicated: "適用外",
+    screeningValue: "スクリーニング値",
+    suitabilityGte: "適合性 (>= 39.00)",
+    bestTargetPower: "最適な目標度数",
+    targetExplainer:
+      "目標度数は角膜が安全に受け入れられる最大限であり、スクリーニング値が 39.00 の最小値に達する点で制限されます（スクリーニング = フラットK + 目標度数）。より深い目標度数は角膜を過度に平坦化し、高い角膜圧、SPK、レンズ装用不良のリスクを伴います。眼鏡の残余が大きいことは角膜が平坦であることを反映しており、計算ツールの限界ではありません。残余を減らすにはより深い目標度数ではなく、よりスティープな角膜が必要です。",
+    fittingCaption:
+      "推奨される第1トライアルレンズ（BOC STD または BOC TD）を装用し、フルオレセイン下で評価した場合、正しいフィッティングは画像に似ているはずです。レンズが角膜上で良好にセンタリングされ、明確な中央トリートメントゾーンと均一な中間周辺リングが見られます。理想的な初期フィッティングの基準としてご使用ください。",
+    hybridContext: (
+      label: string,
+      screen: string,
+      shortfall: string,
+      residual: string,
+    ) =>
+      `${label}: スクリーニング ${screen}（39.00 を ${shortfall} D 下回る）、残余近視 ${residual} D。`,
+  },
+};
+
+export const STRINGS: Record<Lang, Dict> = { en, vi, id, ja };
 
 /** Format the report date in the locale matching the language. */
 export function formatDate(lang: Lang): string {
   const locale =
-    lang === "vi" ? "vi-VN" : lang === "id" ? "id-ID" : "en-GB";
+    lang === "vi"
+      ? "vi-VN"
+      : lang === "id"
+        ? "id-ID"
+        : lang === "ja"
+          ? "ja-JP"
+          : "en-GB";
   return new Date().toLocaleDateString(locale, {
     day: "2-digit",
     month: lang === "vi" ? "2-digit" : "short",
