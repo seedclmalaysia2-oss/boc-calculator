@@ -49,7 +49,7 @@ export function ResultsSection({
       </div>
 
       <div
-        className={`grid gap-3.5 md:grid-cols-2 ${
+        className={`print-2col grid gap-3.5 md:grid-cols-2 ${
           cards.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"
         }`}
       >

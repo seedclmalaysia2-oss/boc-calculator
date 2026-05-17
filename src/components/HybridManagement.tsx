@@ -334,7 +334,7 @@ export function HybridManagement({
         leScreen={result.le.screeningValue}
       />
 
-      <div className="mt-3.5 grid gap-3.5 md:grid-cols-2">
+      <div className="print-2col mt-3.5 grid gap-3.5 md:grid-cols-2">
         <HybridCard
           name="BOC STD"
           subtitle="Hybrid Plan · Spherical"

@@ -103,9 +103,26 @@ select {
 }
 
 /*
+ * Print-fit: added to <main> by the Print handler (and to its
+ * off-screen measurement clone). Pins the report to the A4 printable
+ * width and collapses every responsive grid to a fixed two-column
+ * layout, so the printed height is deterministic. `zoom` — set as
+ * --print-zoom by the handler — then shrinks the whole report to fit
+ * within exactly two A4 pages.
+ */
+.print-fit {
+  width: 703px !important;
+  max-width: 703px !important;
+  zoom: var(--print-zoom, 1);
+}
+
+.print-fit .print-2col {
+  grid-template-columns: 1fr 1fr !important;
+}
+
+/*
  * Print: the report is the page itself. Buttons carry `print:hidden`;
- * here we force the light theme, print background fills faithfully, and
- * keep cards intact across page breaks.
+ * here we force the light theme and print background fills faithfully.
  */
 @media print {
   .dark {
@@ -149,9 +166,8 @@ select {
     print-color-adjust: exact;
   }
 
-  article,
-  details,
-  table,
+  /* Only table rows stay intact; larger blocks may split across the
+     page break so the two-page fit is never bumped to a third page. */
   tr {
     break-inside: avoid;
   }

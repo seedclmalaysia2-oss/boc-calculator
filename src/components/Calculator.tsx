@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Eye, EyeInput, Unit } from "@/lib/types";
 import { EMPTY_EYE } from "@/lib/constants";
 import { compute } from "@/lib/calculator";
@@ -46,6 +46,7 @@ export function Calculator() {
   const [unit, setUnit] = useState<Unit>("mm");
   const [hasCalculated, setHasCalculated] = useState(false);
   const reportDate = formatToday();
+  const mainRef = useRef<HTMLElement>(null);
 
   const result = useMemo(
     () => compute(eyeInMm(re, unit), eyeInMm(le, unit)),
@@ -97,20 +98,80 @@ export function Calculator() {
     });
   }
 
-  /** Print the on-screen page (buttons are hidden via the print stylesheet). */
+  /** Print the on-screen report — scaling happens in the effect below. */
   function onPrint() {
     window.print();
   }
 
+  /*
+   * Constrain the printout to exactly two A4 pages. Right before the
+   * browser prints, we measure the report off-screen at its true
+   * printed width (responsive grids collapsed, non-printing controls
+   * hidden, collapsible explainers expanded), then set a `zoom` factor
+   * so the content can never spill onto a third page. Covers both the
+   * Print button and the browser's own Ctrl/Cmd+P.
+   */
+  useEffect(() => {
+    // A4 @ 96dpi with 12mm page margins → 1032px printable per page.
+    const TWO_PAGES = 2064;
+    const SAFETY = 60;
+
+    function beforePrint() {
+      const main = mainRef.current;
+      if (!main) return;
+
+      const clone = main.cloneNode(true) as HTMLElement;
+      clone.classList.add("print-fit");
+      clone
+        .querySelectorAll('[class~="print:hidden"]')
+        .forEach((el) => {
+          (el as HTMLElement).style.display = "none";
+        });
+      clone.querySelectorAll("details").forEach((d) => {
+        d.open = true;
+      });
+      Object.assign(clone.style, {
+        position: "fixed",
+        left: "-10000px",
+        top: "0",
+        visibility: "hidden",
+      });
+      document.body.appendChild(clone);
+      const height = clone.getBoundingClientRect().height;
+      document.body.removeChild(clone);
+
+      const zoom = Math.min(1, (TWO_PAGES - SAFETY) / height);
+      main.style.setProperty("--print-zoom", String(zoom));
+      main.classList.add("print-fit");
+    }
+
+    function afterPrint() {
+      const main = mainRef.current;
+      if (!main) return;
+      main.classList.remove("print-fit");
+      main.style.removeProperty("--print-zoom");
+    }
+
+    window.addEventListener("beforeprint", beforePrint);
+    window.addEventListener("afterprint", afterPrint);
+    return () => {
+      window.removeEventListener("beforeprint", beforePrint);
+      window.removeEventListener("afterprint", afterPrint);
+    };
+  }, []);
+
   return (
-    <main className="mx-auto max-w-[1090px] px-4 py-7 sm:px-5 sm:py-[30px]">
+    <main
+      ref={mainRef}
+      className="mx-auto max-w-[1090px] px-4 py-7 sm:px-5 sm:py-[30px]"
+    >
       <Header dateLabel={reportDate} />
 
       <div className="mt-[15px]">
         <InstructionsCard />
       </div>
 
-      <div className="mt-[15px] grid gap-[15px] md:grid-cols-2">
+      <div className="print-2col mt-[15px] grid gap-[15px] md:grid-cols-2">
         <KeratometryPanel
           re={re}
           le={le}

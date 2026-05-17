@@ -20,7 +20,7 @@ export function InstructionsCard() {
         </svg>
         Instructions
       </div>
-      <div className="grid gap-4 px-[22px] py-4 md:grid-cols-2">
+      <div className="print-2col grid gap-4 px-[22px] py-4 md:grid-cols-2">
         <StepNote step="STEP 1">
           Key in keratometry data — Flat K and Steep K in{" "}
           <strong className="font-bold text-ink">mm or dioptre</strong> — then
