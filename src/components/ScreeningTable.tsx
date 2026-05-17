@@ -82,8 +82,8 @@ export function ScreeningTable({
             <th className={`${HEAD} text-left text-[#dce5f3]`}>
               Flattest K − Target Power
             </th>
-            <th className={HEAD}>RE · OD</th>
-            <th className={HEAD}>LE · OS</th>
+            <th className={`${HEAD} whitespace-nowrap`}>RE · OD</th>
+            <th className={`${HEAD} whitespace-nowrap`}>LE · OS</th>
           </tr>
         </thead>
         <tbody>

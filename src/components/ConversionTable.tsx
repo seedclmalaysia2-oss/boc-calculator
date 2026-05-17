@@ -40,8 +40,8 @@ export function ConversionTable({
               <th className={`${HEAD} text-left text-[#dce5f3]`}>
                 Fitting Curve (D)
               </th>
-              <th className={HEAD}>RE · OD</th>
-              <th className={HEAD}>LE · OS</th>
+              <th className={`${HEAD} whitespace-nowrap`}>RE · OD</th>
+              <th className={`${HEAD} whitespace-nowrap`}>LE · OS</th>
             </tr>
           </thead>
           <tbody>

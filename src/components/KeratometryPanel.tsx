@@ -72,7 +72,7 @@ function BasisRow({
   le: string;
 }) {
   return (
-    <div className="grid grid-cols-[104px_1fr_1fr] items-center gap-2.5 px-3 py-2 sm:grid-cols-[116px_1fr_1fr]">
+    <div className="grid grid-cols-[104px_minmax(0,1fr)_minmax(0,1fr)] items-center gap-2.5 px-3 py-2 sm:grid-cols-[116px_minmax(0,1fr)_minmax(0,1fr)]">
       <div className="leading-tight">
         <div className="text-[12.5px] font-bold text-ink">{kLabel}</div>
         <div className="mt-[3px] text-[9px] font-semibold uppercase tracking-[0.07em] text-ink3">

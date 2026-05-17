@@ -84,13 +84,13 @@ export function SelectCell({
 /** Three-column header row: spacer, RE·OD, LE·OS. */
 export function EyeColumnHeader() {
   return (
-    <div className="mb-2 grid grid-cols-[104px_1fr_1fr] gap-2.5 sm:grid-cols-[116px_1fr_1fr]">
+    <div className="mb-2 grid grid-cols-[104px_minmax(0,1fr)_minmax(0,1fr)] gap-2.5 sm:grid-cols-[116px_minmax(0,1fr)_minmax(0,1fr)]">
       <span aria-hidden />
-      <span className="flex items-center justify-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.11em] text-ink3">
+      <span className="flex items-center justify-center gap-1.5 whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.11em] text-ink3">
         <i className="h-[7px] w-[7px] rounded-full bg-brand" />
         RE · OD
       </span>
-      <span className="flex items-center justify-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.11em] text-ink3">
+      <span className="flex items-center justify-center gap-1.5 whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.11em] text-ink3">
         <i className="h-[7px] w-[7px] rounded-full bg-gold" />
         LE · OS
       </span>
@@ -109,7 +109,7 @@ export function FieldRow({
   le: React.ReactNode;
 }) {
   return (
-    <div className="mb-2.5 grid grid-cols-[104px_1fr_1fr] items-center gap-2.5 sm:grid-cols-[116px_1fr_1fr]">
+    <div className="mb-2.5 grid grid-cols-[104px_minmax(0,1fr)_minmax(0,1fr)] items-center gap-2.5 sm:grid-cols-[116px_minmax(0,1fr)_minmax(0,1fr)]">
       <label className="text-[12.5px] font-semibold text-ink2">{label}</label>
       {re}
       {le}
