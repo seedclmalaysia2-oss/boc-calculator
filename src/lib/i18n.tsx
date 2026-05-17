@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react";
 
-export type Lang = "en" | "vi";
+export type Lang = "en" | "vi" | "id";
 
 /** A run of text in a paragraph; `b` marks the run as bold. */
 export interface Seg {
@@ -480,21 +480,242 @@ const vi: Dict = {
   },
 };
 
-export const STRINGS: Record<Lang, Dict> = { en, vi };
+/**
+ * Indonesian strings. Clinical product names (BOC STD / TD / HD), the OD/OS
+ * Latin abbreviations, "Ortho-K", "fluorescein", "SPK", "HVID", "toric" and
+ * "K" are kept as-is — they are used untranslated in Indonesian optometry
+ * practice.
+ */
+const id: Dict = {
+  appTitle: "Kalkulator Lensa Coba Ortho-K",
+  printTitle: "Rekomendasi Lensa Coba Ortho-K SEED BOC",
+  appSubtitle: "Alat Pemilihan Lensa Awal",
+  reportDate: "Tanggal Laporan",
+
+  instructionsTitle: "Petunjuk",
+  step1Label: "LANGKAH 1",
+  step2Label: "LANGKAH 2",
+  step1: [
+    { t: "Masukkan data keratometri — K Datar dan K Curam dalam " },
+    { t: "mm atau dioptri", b: true },
+    {
+      t: " — lalu pilih diameter terdekat (berdasarkan 95% HVID).",
+    },
+  ] as Seg[],
+  step2: [
+    { t: "Masukkan data refraksi kacamata, lalu tekan " },
+    { t: "Hitung", b: true },
+    { t: " untuk melihat lensa coba yang direkomendasikan." },
+  ] as Seg[],
+
+  keratometryTitle: "Keratometri",
+  refractionTitle: "Refraksi",
+
+  unitDioptre: "Dioptri",
+
+  flatK: "K Datar",
+  flatKAxis: "Aksis K Datar",
+  steepK: "K Curam",
+  steepKAxis: "Aksis K Curam",
+  closestDiameter: "Diameter Terdekat",
+  fittingCurveBasis: "Dasar Kurva Fitting",
+  averageK: "K Rata-rata",
+
+  rightEye: "mata kanan",
+  leftEye: "mata kiri",
+  bothEyes: "mata kanan dan kiri",
+  reOd: "OD",
+  leOs: "OS",
+  reShort: "OD",
+  leShort: "OS",
+
+  unitMismatch: (other: string, current: string) =>
+    `Pembacaan ini terlihat seperti nilai ${other}, tetapi satuannya diatur ke ${current}.`,
+  switchUnit: (other: string) =>
+    `Beralih ke ${other} — pertahankan angka ini`,
+  cmpLess: "lebih kecil",
+  cmpGreater: "lebih besar",
+  validation: (cmp: string, eyes: string) =>
+    `K Datar tidak boleh ${cmp} dari K Curam — silakan periksa entri ${eyes}.`,
+
+  sphere: "Sferis",
+  cylinder: "Silinder",
+  axis: "Aksis",
+  va: "Visus",
+  visualAcuity: "Ketajaman Penglihatan",
+  refractionAxis: "Aksis Refraksi",
+
+  conversionTitle: "Informasi Keratometri — Dioptri",
+  fittingCurveD: "Kurva Fitting (D)",
+
+  screeningTableTitle: "Efektivitas Bentuk Kornea",
+  screeningRow: "Skrining ≥ 39",
+  suitability: "Kesesuaian",
+  reason: "Alasan",
+  screeningHead: "K Terdatar − Daya Target",
+  yes: "Ya",
+  no: "Tidak",
+
+  amendInputs: "Ubah Data",
+  inputsLocked: "Data terkunci — ketuk untuk mengedit dan menghitung ulang.",
+  calculate: "Hitung",
+
+  trialLensResults: "Hasil Lensa Coba",
+  printPage: "Cetak Halaman",
+  downloadPdf: "Unduh PDF",
+
+  firstTrialLens: "Lensa Coba ke-1",
+  fittingCurve: "Kurva Fitting",
+  targetPower: "Daya Target",
+  diameter: "Diameter",
+  outOfRange: "Di luar rentang",
+  notEntered: "Belum dimasukkan",
+  suitable: "Sesuai",
+  notSuitable: "Tidak Sesuai",
+  noDataEye: "Tidak ada data untuk mata ini.",
+
+  fittingReferenceTitle: "Referensi Fitting",
+  fittingReferenceCaption: [
+    { t: "Ketika " },
+    { t: "lensa coba ke-1", b: true },
+    {
+      t: " yang direkomendasikan — BOC STD atau BOC TD — dipasang dan dinilai di bawah fluorescein, fitting yang benar akan menyerupai pola yang ditunjukkan: lensa terpusat dengan baik pada kornea, dengan zona perawatan sentral yang jelas dan cincin mid-perifer yang merata. Gunakan gambar ini sebagai referensi untuk fitting awal yang ideal.",
+    },
+  ] as Seg[],
+
+  hybridTitle: "Manajemen Miopia Hibrida",
+  hybridIntro:
+    "Untuk kandidat yang dibatasi skrining — setiap lensa BOC dipasang pada maksimum yang dapat dikoreksinya; sisanya ditanggung oleh tambahan kacamata pada aksis K Curam.",
+  hybridCtxScreening: "Skrining",
+  hybridCtxMid: (shortfall: string) =>
+    ` — ${shortfall} D di bawah minimum 39.00. Miopia sisa `,
+  hybridCtxEnd: ".",
+  hybridNotLimited:
+    "Tidak dibatasi skrining — tidak perlu rencana hibrida.",
+  spectacleTopup: "Tambahan Kacamata",
+  orthoKTargetPower: "Daya Target Ortho-K",
+  toricLensCylinder: "Silinder Lensa Toric",
+  notOrderable: "Tidak dapat dipesan",
+  hybridPlanSpherical: "Rencana Hibrida · Sferis",
+  hybridPlanToric: "Rencana Hibrida · Toric",
+  understandingTargetPower: "Memahami Daya Target Terbaik",
+  explainerP1: [
+    { t: "" },
+    { t: "Daya target", b: true },
+    {
+      t: " ortho-K yang ditampilkan adalah maksimum yang dapat ditanggung kornea dengan aman — bukan batas kalkulator.",
+    },
+  ] as Seg[],
+  explainerFormula: "Nilai skrining = K Datar (D) + Daya Target",
+  explainerP2: [
+    {
+      t: "Kornea hanya dapat didatarkan hingga nilai skrining mencapai ",
+    },
+    { t: "minimum 39.00", b: true },
+    { t: "; daya target dibatasi tepat di titik itu." },
+  ] as Seg[],
+  explainerWhyNotDeeper: "Mengapa tidak daya target yang lebih dalam?",
+  explainerP3: [
+    {
+      t: "Daya target yang lebih dalam (lebih minus) menurunkan nilai skrining di bawah 39.00 — mendatarkan kornea secara berlebihan. Aturan skrining ada untuk mencegah hal itu: pendataran berlebihan berisiko menyebabkan ",
+    },
+    {
+      t: "tekanan kornea tinggi, SPK (superficial punctate keratitis), dan pemakaian lensa yang buruk",
+      b: true,
+    },
+    {
+      t: ". Daya target yang lebih dalam tidak memberikan koreksi “gratis” — ia hanya membawa fitting ke wilayah yang tidak aman.",
+    },
+  ] as Seg[],
+  explainerWhyGlasses: "Mengapa kacamata menanggung begitu banyak?",
+  explainerP4: [
+    { t: "Sisa kacamata yang besar berarti kornea " },
+    { t: "datar", b: true },
+    {
+      t: " — bukan karena kalkulator kurang. Kornea datar (K Datar rendah) memiliki sedikit ruang untuk didatarkan lebih lanjut, sehingga porsi ortho-K kecil. Untuk mengurangi daya kacamata, Anda memerlukan ",
+    },
+    { t: "kornea yang lebih curam (K Datar lebih tinggi)", b: true },
+    { t: ", bukan daya target yang lebih dalam." },
+  ] as Seg[],
+
+  disclaimerTitle: "Penafian",
+  disclaimerItems: [
+    "Kalkulator ini tidak dimaksudkan untuk menentukan spesifikasi lensa akhir; kalkulator ini tidak memperhitungkan citra topografi yang mencerminkan kondisi mata sebenarnya sebelum atau sesudah pemasangan lensa Ortho-K BOC.",
+    "Alat ini hanya untuk memilih lensa coba awal. Penyesuaian parameter lebih lanjut diperlukan jika lensa coba awal tidak sesuai setelah proses fitting.",
+    "Tidak ada data yang disimpan, ditangkap, atau di-screenshot. Tidak ada informasi yang disimpan di server atau lokasi mana pun.",
+  ],
+
+  toggleDarkMode: "Alihkan mode gelap",
+
+  calc: {
+    allWithinRange: "Semua parameter dalam rentang.",
+    outOfRange: "Di luar rentang.",
+    screeningBelow: (v: string) => `Nilai skrining ${v} di bawah 39.00.`,
+    stdFitOutside: (ft: string) =>
+      `Kurva fitting ${ft} D berada di luar rentang STD (39.00 hingga 47.00 D).`,
+    stdTpOutside: (tp: string, ft: string, max: string, min: string) =>
+      `Daya target ${tp} D berada di luar rentang pemesanan STD untuk kurva fitting ${ft} D (${max} hingga ${min} D).`,
+    stdCylOutside:
+      "Silinder kornea di luar rentang STD (−0.25 hingga −0.75 D).",
+    hdTpOutside:
+      "Daya target di luar rentang HD (−4.25 hingga −8.00 D).",
+    hdCylOutside:
+      "Silinder kornea di luar rentang HD (−0.25 hingga −0.75 D).",
+    tdTpOutside: (tp: string) =>
+      `Daya target ${tp} D berada di luar rentang TD (−1.00 D atau lebih minus).`,
+    tdCylOutside: "Silinder di luar rentang TD (−1.00 hingga −3.00 D).",
+    notOrderableNote:
+      "Kornea terlalu datar untuk mencapai daya ortho-K minimum −1.00 D — lensa tidak dapat dipesan; koreksi penuh dengan kacamata.",
+    stdSphericalNote:
+      "Lensa sferis — hanya mengoreksi sferis; seluruh silinder kornea ditanggung oleh tambahan kacamata.",
+    tdUnavailableNote: (cyl: string) =>
+      `Silinder kornea ${cyl} D di bawah minimum BOC TD (−1.00 D) — kornea terlalu sferis untuk lensa toric; hanya BOC STD.`,
+    toricFit: (cyl: string) => `Lensa toric dipasang pada silinder ${cyl} D`,
+    toricFullyCorrected: (fit: string) =>
+      `${fit} — silinder kornea dikoreksi sepenuhnya.`,
+    toricResidual: (cyl: string) =>
+      `${cyl} D silinder sisa ditanggung oleh tambahan kacamata`,
+    toricNoteClamped: (cornealCyl: string, fit: string, residual: string) =>
+      `Silinder kornea ${cornealCyl} D melampaui rentang BOC TD; ${fit} dan ${residual}.`,
+    toricNotePlain: (fit: string, residual: string) => `${fit}; ${residual}.`,
+  },
+
+  pdf: {
+    detailedReport: "Laporan terperinci",
+    report: "Laporan",
+    measurement: "Pengukuran",
+    screening: "Skrining",
+    assessment: "Penilaian",
+    hybridPlan: "Rencana Hibrida",
+    notIndicated: "Tidak diindikasikan",
+    screeningValue: "Nilai skrining",
+    suitabilityGte: "Kesesuaian (>= 39.00)",
+    bestTargetPower: "Daya Target Terbaik",
+    targetExplainer:
+      "Daya target adalah maksimum yang dapat ditanggung kornea dengan aman - dibatasi pada titik di mana nilai skrining mencapai minimum 39.00 (Skrining = K Datar + Daya Target). Daya target yang lebih dalam akan mendatarkan kornea secara berlebihan, berisiko menyebabkan tekanan kornea tinggi, SPK, dan pemakaian lensa yang buruk. Sisa kacamata yang besar mencerminkan kornea yang datar, bukan batas kalkulator - menguranginya memerlukan kornea yang lebih curam, bukan daya target yang lebih dalam.",
+    fittingCaption:
+      "Ketika lensa coba ke-1 yang direkomendasikan (BOC STD atau BOC TD) dipasang dan dinilai di bawah fluorescein, fitting yang benar akan menyerupai gambar: lensa terpusat dengan baik pada kornea, dengan zona perawatan sentral yang jelas dan cincin mid-perifer yang merata. Gunakan sebagai referensi untuk fitting awal yang ideal.",
+    hybridContext: (
+      label: string,
+      screen: string,
+      shortfall: string,
+      residual: string,
+    ) =>
+      `${label}: skrining ${screen} (${shortfall} D di bawah 39.00); miopia sisa ${residual} D.`,
+  },
+};
+
+export const STRINGS: Record<Lang, Dict> = { en, vi, id };
 
 /** Format the report date in the locale matching the language. */
 export function formatDate(lang: Lang): string {
-  return lang === "vi"
-    ? new Date().toLocaleDateString("vi-VN", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      })
-    : new Date().toLocaleDateString("en-GB", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-      });
+  const locale =
+    lang === "vi" ? "vi-VN" : lang === "id" ? "id-ID" : "en-GB";
+  return new Date().toLocaleDateString(locale, {
+    day: "2-digit",
+    month: lang === "vi" ? "2-digit" : "short",
+    year: "numeric",
+  });
 }
 
 interface LangValue {
