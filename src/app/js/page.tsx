@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 };
 
 /**
- * Japanese simplified calculator at /jas — mirrors /simple with the
+ * Japanese simplified calculator at /js — mirrors /simple with the
  * Fitting Curve Basis, Shape of Cornea Effectiveness, and Keratometry
  * Information tables hidden. Not linked from the main page.
  */
