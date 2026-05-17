@@ -10,6 +10,7 @@ export function RefractionPanel({
   result,
   reActive,
   leActive,
+  locked,
   onField,
 }: {
   re: EyeInput;
@@ -17,6 +18,7 @@ export function RefractionPanel({
   result: CalcResult;
   reActive: boolean;
   leActive: boolean;
+  locked: boolean;
   onField: (eye: Eye, field: keyof EyeInput, value: string) => void;
 }) {
   const eyeData = (key: Eye) => (key === "re" ? re : le);
@@ -32,6 +34,7 @@ export function RefractionPanel({
       ariaLabel={`${label} ${sideLabel(key)}`}
       value={eyeData(key)[field]}
       options={options}
+      disabled={locked}
       onChange={(v) => onField(key, field, v)}
     />
   );
@@ -41,6 +44,7 @@ export function RefractionPanel({
       ariaLabel={`${label} ${sideLabel(key)}`}
       inputMode={field === "refAxis" ? "numeric" : "text"}
       value={eyeData(key)[field]}
+      disabled={locked}
       onChange={(v) => onField(key, field, v)}
     />
   );

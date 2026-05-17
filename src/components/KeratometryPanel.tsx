@@ -7,16 +7,19 @@ import { EyeColumnHeader, FieldRow, InputCell, SelectCell } from "./fields";
 function UnitToggle({
   unit,
   onUnit,
+  disabled = false,
 }: {
   unit: Unit;
   onUnit: (u: Unit) => void;
+  disabled?: boolean;
 }) {
   const opt = (u: Unit, label: string) => (
     <button
       type="button"
       onClick={() => onUnit(u)}
+      disabled={disabled}
       aria-pressed={unit === u}
-      className={`rounded-[5px] px-3 py-[5px] font-mono text-[11px] tracking-[0.03em] transition-colors ${
+      className={`rounded-[5px] px-3 py-[5px] font-mono text-[11px] tracking-[0.03em] transition-colors disabled:cursor-not-allowed ${
         unit === u
           ? "bg-brand font-semibold text-white"
           : "text-ink3 hover:text-ink2"
@@ -94,6 +97,7 @@ export function KeratometryPanel({
   le,
   unit,
   result,
+  locked,
   onField,
   onUnit,
   onAdoptUnit,
@@ -102,6 +106,7 @@ export function KeratometryPanel({
   le: EyeInput;
   unit: Unit;
   result: CalcResult;
+  locked: boolean;
   onField: (eye: Eye, field: keyof EyeInput, value: string) => void;
   onUnit: (u: Unit) => void;
   onAdoptUnit: (u: Unit) => void;
@@ -117,6 +122,7 @@ export function KeratometryPanel({
       ariaLabel={`${label} ${key === "re" ? "right eye" : "left eye"}`}
       value={eyes.find((e) => e.key === key)!.data[field]}
       tone={invalidEye(key) ? "invalid" : "default"}
+      disabled={locked}
       onChange={(v) => onField(key, field, v)}
     />
   );
@@ -126,6 +132,7 @@ export function KeratometryPanel({
       ariaLabel={`${label} ${key === "re" ? "right eye" : "left eye"}`}
       inputMode="numeric"
       value={eyes.find((e) => e.key === key)!.data[field]}
+      disabled={locked}
       onChange={(v) => onField(key, field, v)}
     />
   );
@@ -140,7 +147,7 @@ export function KeratometryPanel({
     <Panel
       step={1}
       title="Keratometry"
-      headerRight={<UnitToggle unit={unit} onUnit={onUnit} />}
+      headerRight={<UnitToggle unit={unit} onUnit={onUnit} disabled={locked} />}
     >
       <EyeColumnHeader />
 
@@ -171,6 +178,7 @@ export function KeratometryPanel({
             ariaLabel="Closest diameter right eye"
             value={re.diameter}
             options={DIAMETERS}
+            disabled={locked}
             onChange={(v) => onField("re", "diameter", v)}
           />
         }
@@ -179,6 +187,7 @@ export function KeratometryPanel({
             ariaLabel="Closest diameter left eye"
             value={le.diameter}
             options={DIAMETERS}
+            disabled={locked}
             onChange={(v) => onField("le", "diameter", v)}
           />
         }
@@ -217,7 +226,8 @@ export function KeratometryPanel({
           <button
             type="button"
             onClick={() => onAdoptUnit(otherUnit)}
-            className="mt-2 rounded-md bg-gold px-3 py-[5px] font-display text-[11px] font-bold text-white transition-[filter] hover:brightness-105"
+            disabled={locked}
+            className="mt-2 rounded-md bg-gold px-3 py-[5px] font-display text-[11px] font-bold text-white transition-[filter] hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50"
           >
             Switch to {otherUnitLabel} — keep these numbers
           </button>

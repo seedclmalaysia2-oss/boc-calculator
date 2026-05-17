@@ -116,6 +116,7 @@ export function Calculator() {
           le={le}
           unit={unit}
           result={result}
+          locked={hasCalculated}
           onField={onField}
           onUnit={onUnit}
           onAdoptUnit={onAdoptUnit}
@@ -126,23 +127,53 @@ export function Calculator() {
           result={result}
           reActive={reActive}
           leActive={leActive}
+          locked={hasCalculated}
           onField={onField}
         />
       </div>
 
-      <div className="my-[22px] flex justify-center print:hidden">
-        <button
-          type="button"
-          onClick={() => setHasCalculated(true)}
-          disabled={!canCalculate}
-          className="flex items-center gap-[11px] rounded-[10px] bg-[linear-gradient(180deg,#2f5aa0,#244784)] px-14 py-[15px] font-display text-[15px] font-bold tracking-[0.01em] text-white shadow-[0_8px_20px_-7px_rgba(31,61,112,0.6)] transition-[filter,opacity] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          <span
-            aria-hidden
-            className="h-3.5 w-3.5 rounded-full border-2 border-gold border-r-transparent"
-          />
-          Calculate
-        </button>
+      <div className="my-[22px] flex flex-col items-center gap-2 print:hidden">
+        {hasCalculated ? (
+          <>
+            <button
+              type="button"
+              onClick={() => setHasCalculated(false)}
+              className="flex items-center gap-2.5 rounded-[10px] border border-brand bg-surface px-12 py-[13px] font-display text-[15px] font-bold tracking-[0.01em] text-brand transition-colors hover:bg-tint"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden
+              >
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z" />
+              </svg>
+              Amend Inputs
+            </button>
+            <p className="text-[11.5px] text-ink3">
+              Inputs are locked — tap to edit and recalculate.
+            </p>
+          </>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setHasCalculated(true)}
+            disabled={!canCalculate}
+            className="flex items-center gap-[11px] rounded-[10px] bg-[linear-gradient(180deg,#2f5aa0,#244784)] px-14 py-[15px] font-display text-[15px] font-bold tracking-[0.01em] text-white shadow-[0_8px_20px_-7px_rgba(31,61,112,0.6)] transition-[filter,opacity] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <span
+              aria-hidden
+              className="h-3.5 w-3.5 rounded-full border-2 border-gold border-r-transparent"
+            />
+            Calculate
+          </button>
+        )}
       </div>
 
       {hasCalculated && (

@@ -1,7 +1,7 @@
 type CellTone = "default" | "invalid";
 
 const cellBase =
-  "w-full rounded-lg border bg-field px-2.5 py-2 text-center font-mono text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-field-focus focus:shadow-[0_0_0_3px_var(--focus-ring)]";
+  "w-full rounded-lg border bg-field px-2.5 py-2 text-center font-mono text-sm text-ink outline-none transition-colors focus:border-brand focus:bg-field-focus focus:shadow-[0_0_0_3px_var(--focus-ring)] disabled:cursor-not-allowed disabled:bg-tint disabled:text-ink2";
 
 function toneClass(tone: CellTone) {
   return tone === "invalid"
@@ -16,6 +16,7 @@ export function InputCell({
   placeholder,
   tone = "default",
   inputMode = "decimal",
+  disabled = false,
 }: {
   value: string;
   onChange: (value: string) => void;
@@ -23,6 +24,7 @@ export function InputCell({
   placeholder?: string;
   tone?: CellTone;
   inputMode?: "decimal" | "numeric" | "text";
+  disabled?: boolean;
 }) {
   return (
     <input
@@ -31,6 +33,7 @@ export function InputCell({
       aria-label={ariaLabel}
       value={value}
       placeholder={placeholder}
+      disabled={disabled}
       onChange={(e) => onChange(e.target.value)}
       className={`${cellBase} ${toneClass(tone)}`}
     />
@@ -42,17 +45,20 @@ export function SelectCell({
   onChange,
   options,
   ariaLabel,
+  disabled = false,
 }: {
   value: string;
   onChange: (value: string) => void;
   options: string[];
   ariaLabel: string;
+  disabled?: boolean;
 }) {
   return (
     <div className="relative">
       <select
         aria-label={ariaLabel}
         value={value}
+        disabled={disabled}
         onChange={(e) => onChange(e.target.value)}
         className={`${cellBase} ${toneClass("default")} cursor-pointer pr-[18px] sm:pr-6`}
       >
