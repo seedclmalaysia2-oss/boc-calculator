@@ -104,17 +104,23 @@ export function Calculator() {
   }
 
   /*
-   * Constrain the printout to exactly two A4 pages. Right before the
-   * browser prints, we measure the report off-screen at its true
-   * printed width (responsive grids collapsed, non-printing controls
-   * hidden, collapsible explainers expanded), then set a `zoom` factor
-   * so the content can never spill onto a third page. Covers both the
-   * Print button and the browser's own Ctrl/Cmd+P.
+   * Scale the printout to fill the page width and fit within two A4
+   * pages. Right before printing we measure the report off-screen at
+   * its natural layout width (responsive grids collapsed, non-printing
+   * controls hidden, collapsible explainers expanded), then set a
+   * `zoom` factor: it shrinks the report so its width matches the A4
+   * printable width — using the whole page, not a narrow strip — and
+   * never spills past two pages. Covers the Print button and Ctrl/Cmd+P.
    */
   useEffect(() => {
-    // A4 @ 96dpi with 12mm page margins → 1032px printable per page.
+    // A4 @ 96dpi, 12mm page margins → 703px wide, 1032px tall printable.
+    const PAGE_WIDTH = 703;
     const TWO_PAGES = 2064;
     const SAFETY = 60;
+    // The report's natural layout width — must match `.print-fit` in
+    // globals.css. The report lays out this wide, then zooms down to
+    // the page width so it prints full-width.
+    const LAYOUT_WIDTH = 1090;
 
     function beforePrint() {
       const main = mainRef.current;
@@ -140,7 +146,10 @@ export function Calculator() {
       const height = clone.getBoundingClientRect().height;
       document.body.removeChild(clone);
 
-      const zoom = Math.min(1, (TWO_PAGES - SAFETY) / height);
+      const zoom = Math.min(
+        PAGE_WIDTH / LAYOUT_WIDTH,
+        (TWO_PAGES - SAFETY) / height,
+      );
       main.style.setProperty("--print-zoom", String(zoom));
       main.classList.add("print-fit");
     }

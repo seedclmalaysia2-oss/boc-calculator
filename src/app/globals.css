@@ -104,15 +104,17 @@ select {
 
 /*
  * Print-fit: added to <main> by the Print handler (and to its
- * off-screen measurement clone). Pins the report to the A4 printable
- * width and collapses every responsive grid to a fixed two-column
- * layout, so the printed height is deterministic. `zoom` — set as
- * --print-zoom by the handler — then shrinks the whole report to fit
- * within exactly two A4 pages.
+ * off-screen measurement clone). Lays the report out at its natural
+ * wide layout width and collapses every responsive grid to a fixed
+ * two-column layout, so the printed height is deterministic. `zoom` —
+ * set as --print-zoom by the handler — then shrinks the report so its
+ * width matches the A4 printable width (full-width, not a narrow
+ * strip) and it fits within two A4 pages. The 1090px width must stay
+ * in sync with LAYOUT_WIDTH in Calculator.tsx.
  */
 .print-fit {
-  width: 703px !important;
-  max-width: 703px !important;
+  width: 1090px !important;
+  max-width: 1090px !important;
   zoom: var(--print-zoom, 1);
 }
 
