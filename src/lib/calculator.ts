@@ -52,9 +52,12 @@ function computeEye(input: EyeInput, C: CalcStrings): EyeResult {
 
   const avgKmm = (flatKmm + steepKmm) / 2;
 
-  // Radius in metres. Legacy rounds the steep meridian to 4 decimals.
+  // Radius in metres. Both meridians use full precision: a legacy
+  // 4-decimal round of the steep radius drifted 2-decimal mm inputs
+  // (e.g. 7.34 mm) by up to 0.25 D, so the steep-K dioptre disagreed
+  // with the entered value. Steep K now matches the flat-K treatment.
   const rFlat = flatKmm / 1000;
-  const rSteep = parseFloat((steepKmm / 1000).toFixed(4));
+  const rSteep = steepKmm / 1000;
 
   // Keratometry expressed in dioptre, rounded to 0.25 D.
   const flatKd = Number.isFinite(N_MINUS_1 / rFlat)
