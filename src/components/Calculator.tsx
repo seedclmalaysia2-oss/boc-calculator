@@ -281,7 +281,10 @@ function CalculatorBody({
 
       {calculated && (
         <>
-          {!simple && (
+          {/* The Keratometry Information — Dioptre table reflects only a
+              committed calculation: it clears while inputs are being
+              amended and reappears, recalculated, on the next Calculate. */}
+          {!simple && locked && (
             <ConversionTable
               result={result}
               reActive={reActive}
