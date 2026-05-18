@@ -534,31 +534,55 @@ export async function generateReport({
   }
 
   // ---- Fitting reference ----------------------------------------------
-  // Shown once a BOC STD or BOC TD lens is fittable — see public/fitting-reference.jpg.
-  const fittable = (e: EyeResult) => e.std.suitable || e.td.suitable;
-  if (
-    (reActive && fittable(result.re)) ||
-    (leActive && fittable(result.le))
-  ) {
-    const fittingImg = await loadImage("/fitting-reference.jpg");
-    if (fittingImg) {
-      const imgW = 46;
-      const props = doc.getImageProperties(fittingImg);
-      const imgH = props.width > 0 ? (props.height / props.width) * imgW : imgW;
-      if (y + imgH > 265) {
+  // A reference photo per fittable lens family — public/fitting-reference.jpg
+  // (BOC STD) and public/fitting-reference-td.jpg (BOC TD).
+  const fits = (lens: "std" | "td") =>
+    (reActive && result.re[lens].suitable) ||
+    (leActive && result.le[lens].suitable);
+  const refSpecs: { url: string; label: string }[] = [];
+  if (fits("std")) {
+    refSpecs.push({ url: "/fitting-reference.jpg", label: "BOC STD" });
+  }
+  if (fits("td")) {
+    refSpecs.push({ url: "/fitting-reference-td.jpg", label: "BOC TD" });
+  }
+  if (refSpecs.length > 0) {
+    const imgW = refSpecs.length > 1 ? 38 : 46;
+    const tiles: { data: string; label: string; h: number }[] = [];
+    for (const spec of refSpecs) {
+      const data = await loadImage(spec.url);
+      if (!data) continue;
+      const props = doc.getImageProperties(data);
+      const h = props.width > 0 ? (props.height / props.width) * imgW : imgW;
+      tiles.push({ data, label: spec.label, h });
+    }
+    if (tiles.length > 0) {
+      // Reserve space below each image for its lens label.
+      const blockH = Math.max(...tiles.map((t) => t.h)) + 4;
+      if (y + blockH > 265) {
         doc.addPage();
         y = 20;
       }
       sectionTitle(doc, P.fittingReferenceTitle, y, font);
       y += 4;
-      doc.addImage(fittingImg, "JPEG", MARGIN, y, imgW, imgH);
-      const capX = MARGIN + imgW + 6;
+      let x = MARGIN;
+      for (const t of tiles) {
+        // Detect JPEG/PNG from the data URL so either save format works.
+        const fmt = t.data.substring(11, t.data.indexOf(";")).toUpperCase();
+        doc.addImage(t.data, fmt, x, y, imgW, t.h);
+        doc.setFont(font, "bold");
+        doc.setFontSize(7);
+        doc.setTextColor(...BLUE);
+        doc.text(t.label, x + imgW / 2, y + t.h + 3, { align: "center" });
+        x += imgW + 5;
+      }
+      const capX = x + 2;
       doc.setFont(font, "normal");
       doc.setFontSize(8);
       doc.setTextColor(...INK);
       const lines = doc.splitTextToSize(P.pdf.fittingCaption, RIGHT - capX);
       doc.text(lines, capX, y + 4);
-      y += Math.max(imgH, lines.length * 3.8) + 8;
+      y += Math.max(blockH, lines.length * 3.8) + 8;
     }
   }
 

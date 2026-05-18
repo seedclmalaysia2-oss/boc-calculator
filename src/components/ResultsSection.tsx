@@ -34,12 +34,15 @@ export function ResultsSection({
     cards.push({ name: "BOC TD", toric: true, re: result.re.td, le: result.le.td });
   }
 
-  // The fitting reference applies once a BOC STD or BOC TD lens is fittable.
-  const fitsStdOrTd = (eye: CalcResult["re"]) =>
-    eye.std.suitable || eye.td.suitable;
-  const showFittingReference =
-    (reActive && fitsStdOrTd(result.re)) ||
-    (leActive && fitsStdOrTd(result.le));
+  // A fitting-reference photo is shown per fittable lens family — the BOC
+  // STD photo when a BOC STD lens is fittable, the BOC TD photo when a BOC
+  // TD lens is fittable (an eye may fit one or the other).
+  const fits = (lens: "std" | "td") =>
+    (reActive && result.re[lens].suitable) ||
+    (leActive && result.le[lens].suitable);
+  const showStd = fits("std");
+  const showTd = fits("td");
+  const showFittingReference = showStd || showTd;
 
   return (
     <section className="mt-8">
@@ -68,7 +71,9 @@ export function ResultsSection({
         ))}
       </div>
 
-      {showFittingReference && <FittingReference />}
+      {showFittingReference && (
+        <FittingReference showStd={showStd} showTd={showTd} />
+      )}
 
       <HybridManagement
         result={result}
