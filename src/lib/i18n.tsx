@@ -144,6 +144,20 @@ const en = {
   notOrderable: "Not orderable",
   hybridPlanSpherical: "Hybrid Plan · Spherical",
   hybridPlanToric: "Hybrid Plan · Toric",
+  hybridGlassesCautionTitle: "Before Prescribing the Spectacle Top-up",
+  hybridGlassesCaution: [
+    {
+      t: "The spectacle top-up above is a planning estimate, not a final prescription. ",
+    },
+    { t: "Every patient responds to ortho-K differently", b: true },
+    {
+      t: ", so prescribing glasses strictly to these figures can over- or under-correct the patient and backfire. Add the spectacle top-up ",
+    },
+    { t: "only after at least 2 weeks of ortho-K wear", b: true },
+    {
+      t: ", once the cornea and vision have stabilised — then confirm the power with a fresh over-refraction before dispensing.",
+    },
+  ] as Seg[],
   understandingTargetPower: "Understanding the Best Target Power",
   explainerP1: [
     { t: "The ortho-K " },
@@ -373,6 +387,20 @@ const vi: Dict = {
   notOrderable: "Không thể đặt",
   hybridPlanSpherical: "Kế hoạch kết hợp · Cầu",
   hybridPlanToric: "Kế hoạch kết hợp · Toric",
+  hybridGlassesCautionTitle: "Trước khi kê đơn kính gọng bổ sung",
+  hybridGlassesCaution: [
+    {
+      t: "Phần bổ sung bằng kính gọng ở trên là ước tính để lập kế hoạch, không phải đơn kính cuối cùng. ",
+    },
+    { t: "Mỗi bệnh nhân đáp ứng với ortho-K một cách khác nhau", b: true },
+    {
+      t: ", nên việc kê đơn kính gọng đúng y theo các số liệu này có thể khiến bệnh nhân bị quá hoặc thiếu điều chỉnh và gây phản tác dụng. Chỉ bổ sung kính gọng ",
+    },
+    { t: "sau khi đã đeo ortho-K ít nhất 2 tuần", b: true },
+    {
+      t: ", khi giác mạc và thị lực đã ổn định — sau đó xác nhận lại công suất bằng phép đo khúc xạ trên kính trước khi cấp kính.",
+    },
+  ] as Seg[],
   understandingTargetPower: "Tìm hiểu về Công suất mục tiêu tốt nhất",
   explainerP1: [
     { t: "" },
@@ -598,6 +626,20 @@ const id: Dict = {
   notOrderable: "Tidak dapat dipesan",
   hybridPlanSpherical: "Rencana Hibrida · Sferis",
   hybridPlanToric: "Rencana Hibrida · Toric",
+  hybridGlassesCautionTitle: "Sebelum Meresepkan Tambahan Kacamata",
+  hybridGlassesCaution: [
+    {
+      t: "Tambahan kacamata di atas adalah perkiraan untuk perencanaan, bukan resep akhir. ",
+    },
+    { t: "Setiap pasien merespons ortho-K secara berbeda", b: true },
+    {
+      t: ", sehingga meresepkan kacamata persis sesuai angka ini dapat membuat pasien terkoreksi berlebih atau kurang dan menjadi kontraproduktif. Tambahkan kacamata ",
+    },
+    { t: "hanya setelah minimal 2 minggu pemakaian ortho-K", b: true },
+    {
+      t: ", saat kornea dan penglihatan sudah stabil — lalu konfirmasikan dayanya dengan over-refraction baru sebelum memberikannya.",
+    },
+  ] as Seg[],
   understandingTargetPower: "Memahami Daya Target Terbaik",
   explainerP1: [
     { t: "" },
@@ -823,6 +865,20 @@ const ja: Dict = {
   notOrderable: "発注不可",
   hybridPlanSpherical: "ハイブリッドプラン · 球面",
   hybridPlanToric: "ハイブリッドプラン · トーリック",
+  hybridGlassesCautionTitle: "眼鏡による追加矯正を処方する前に",
+  hybridGlassesCaution: [
+    {
+      t: "上記の眼鏡による追加矯正は計画用の目安であり、最終的な処方ではありません。",
+    },
+    { t: "オルソKへの反応は患者ごとに異なる", b: true },
+    {
+      t: "ため、これらの数値どおりに厳密に眼鏡を処方すると、過矯正または低矯正となり逆効果になることがあります。眼鏡による追加矯正は、",
+    },
+    { t: "オルソK装用を少なくとも2週間続けた後", b: true },
+    {
+      t: "に、角膜と視力が安定してから行ってください。処方前に改めてオーバーレフラクションで度数を確認してください。",
+    },
+  ] as Seg[],
   understandingTargetPower: "最適な目標度数について",
   explainerP1: [
     { t: "" },
