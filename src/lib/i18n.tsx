@@ -147,15 +147,15 @@ const en = {
   hybridGlassesCautionTitle: "Before Prescribing the Spectacle Top-up",
   hybridGlassesCaution: [
     {
-      t: "The spectacle top-up above is a planning estimate, not a final prescription. ",
+      t: "The spectacle top-up values provided are preliminary estimates and should not be used as a final prescription. ",
     },
-    { t: "Every patient responds to ortho-K differently", b: true },
+    { t: "Ortho-K outcomes vary between patients", b: true },
     {
-      t: ", so prescribing glasses strictly to these figures can over- or under-correct the patient and backfire. Add the spectacle top-up ",
+      t: ", and relying on early calculations may result in unintended over- or under-correction. Only consider prescribing a spectacle top-up after a ",
     },
-    { t: "only after at least 2 weeks of ortho-K wear", b: true },
+    { t: "minimum of 2 weeks of stable ortho-K wear", b: true },
     {
-      t: ", once the cornea and vision have stabilised — then confirm the power with a fresh over-refraction before dispensing.",
+      t: ", once corneal changes have settled. Always confirm the final power with an updated over-refraction before dispensing.",
     },
   ] as Seg[],
   understandingTargetPower: "Understanding the Best Target Power",
@@ -390,15 +390,15 @@ const vi: Dict = {
   hybridGlassesCautionTitle: "Trước khi kê đơn kính gọng bổ sung",
   hybridGlassesCaution: [
     {
-      t: "Phần bổ sung bằng kính gọng ở trên là ước tính để lập kế hoạch, không phải đơn kính cuối cùng. ",
+      t: "Các giá trị bổ sung bằng kính gọng được cung cấp chỉ là ước tính sơ bộ và không nên dùng làm đơn kính cuối cùng. ",
     },
-    { t: "Mỗi bệnh nhân đáp ứng với ortho-K một cách khác nhau", b: true },
+    { t: "Kết quả Ortho-K khác nhau giữa các bệnh nhân", b: true },
     {
-      t: ", nên việc kê đơn kính gọng đúng y theo các số liệu này có thể khiến bệnh nhân bị quá hoặc thiếu điều chỉnh và gây phản tác dụng. Chỉ bổ sung kính gọng ",
+      t: ", và việc dựa vào các tính toán ban đầu có thể dẫn đến quá hoặc thiếu điều chỉnh ngoài ý muốn. Chỉ cân nhắc kê đơn kính gọng bổ sung sau ",
     },
-    { t: "sau khi đã đeo ortho-K ít nhất 2 tuần", b: true },
+    { t: "tối thiểu 2 tuần đeo Ortho-K ổn định", b: true },
     {
-      t: ", khi giác mạc và thị lực đã ổn định — sau đó xác nhận lại công suất bằng phép đo khúc xạ trên kính trước khi cấp kính.",
+      t: ", khi những thay đổi ở giác mạc đã ổn định. Luôn xác nhận công suất cuối cùng bằng phép đo khúc xạ trên kính cập nhật trước khi cấp kính.",
     },
   ] as Seg[],
   understandingTargetPower: "Tìm hiểu về Công suất mục tiêu tốt nhất",
@@ -629,15 +629,15 @@ const id: Dict = {
   hybridGlassesCautionTitle: "Sebelum Meresepkan Tambahan Kacamata",
   hybridGlassesCaution: [
     {
-      t: "Tambahan kacamata di atas adalah perkiraan untuk perencanaan, bukan resep akhir. ",
+      t: "Nilai tambahan kacamata yang diberikan adalah perkiraan awal dan tidak boleh digunakan sebagai resep akhir. ",
     },
-    { t: "Setiap pasien merespons ortho-K secara berbeda", b: true },
+    { t: "Hasil Ortho-K bervariasi antar pasien", b: true },
     {
-      t: ", sehingga meresepkan kacamata persis sesuai angka ini dapat membuat pasien terkoreksi berlebih atau kurang dan menjadi kontraproduktif. Tambahkan kacamata ",
+      t: ", dan mengandalkan perhitungan awal dapat menyebabkan koreksi berlebih atau kurang yang tidak diinginkan. Pertimbangkan untuk meresepkan tambahan kacamata hanya setelah ",
     },
-    { t: "hanya setelah minimal 2 minggu pemakaian ortho-K", b: true },
+    { t: "minimal 2 minggu pemakaian Ortho-K yang stabil", b: true },
     {
-      t: ", saat kornea dan penglihatan sudah stabil — lalu konfirmasikan dayanya dengan over-refraction baru sebelum memberikannya.",
+      t: ", ketika perubahan kornea sudah mereda. Selalu konfirmasikan daya akhir dengan over-refraction terbaru sebelum memberikan kacamata.",
     },
   ] as Seg[],
   understandingTargetPower: "Memahami Daya Target Terbaik",
@@ -868,15 +868,15 @@ const ja: Dict = {
   hybridGlassesCautionTitle: "眼鏡による追加矯正を処方する前に",
   hybridGlassesCaution: [
     {
-      t: "上記の眼鏡による追加矯正は計画用の目安であり、最終的な処方ではありません。",
+      t: "提供される眼鏡による追加矯正の値は暫定的な目安であり、最終的な処方として使用すべきではありません。",
     },
-    { t: "オルソKへの反応は患者ごとに異なる", b: true },
+    { t: "オルソKの結果は患者によって異なり", b: true },
     {
-      t: "ため、これらの数値どおりに厳密に眼鏡を処方すると、過矯正または低矯正となり逆効果になることがあります。眼鏡による追加矯正は、",
+      t: "、初期の計算に頼ると意図しない過矯正または低矯正を招くおそれがあります。眼鏡による追加矯正の処方は、",
     },
-    { t: "オルソK装用を少なくとも2週間続けた後", b: true },
+    { t: "安定したオルソK装用を最低2週間続けた後", b: true },
     {
-      t: "に、角膜と視力が安定してから行ってください。処方前に改めてオーバーレフラクションで度数を確認してください。",
+      t: "、角膜の変化が落ち着いてから検討してください。処方前には必ず、最新のオーバーレフラクションで最終度数を確認してください。",
     },
   ] as Seg[],
   understandingTargetPower: "最適な目標度数について",
