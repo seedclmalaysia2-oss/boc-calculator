@@ -67,7 +67,12 @@ function CalculatorBody({
   const [re, setRe] = useState<EyeInput>(EMPTY_EYE);
   const [le, setLe] = useState<EyeInput>(EMPTY_EYE);
   const [unit, setUnit] = useState<Unit>("mm");
-  const [hasCalculated, setHasCalculated] = useState(false);
+  // `calculated` keeps the results on screen (and live-updating) once the
+  // first calculation has run; `locked` only freezes the inputs. Amending
+  // unlocks the inputs while the results stay visible and recalculate live
+  // as new values are keyed in.
+  const [calculated, setCalculated] = useState(false);
+  const [locked, setLocked] = useState(false);
   const reportDate = formatDate(lang);
   const mainRef = useRef<HTMLElement>(null);
 
@@ -211,7 +216,7 @@ function CalculatorBody({
           le={le}
           unit={unit}
           result={result}
-          locked={hasCalculated}
+          locked={locked}
           simple={simple}
           onField={onField}
           onUnit={onUnit}
@@ -223,18 +228,18 @@ function CalculatorBody({
           result={result}
           reActive={reActive}
           leActive={leActive}
-          locked={hasCalculated}
+          locked={locked}
           simple={simple}
           onField={onField}
         />
       </div>
 
       <div className="my-[22px] flex flex-col items-center gap-2 print:hidden">
-        {hasCalculated ? (
+        {locked ? (
           <>
             <button
               type="button"
-              onClick={() => setHasCalculated(false)}
+              onClick={() => setLocked(false)}
               className="flex items-center gap-2.5 rounded-[10px] border border-brand bg-surface px-12 py-[13px] font-display text-[15px] font-bold tracking-[0.01em] text-brand transition-colors hover:bg-tint"
             >
               <svg
@@ -258,7 +263,10 @@ function CalculatorBody({
         ) : (
           <button
             type="button"
-            onClick={() => setHasCalculated(true)}
+            onClick={() => {
+              setCalculated(true);
+              setLocked(true);
+            }}
             disabled={!canCalculate}
             className="flex items-center gap-[11px] rounded-[10px] bg-[linear-gradient(180deg,#2f5aa0,#244784)] px-14 py-[15px] font-display text-[15px] font-bold tracking-[0.01em] text-white shadow-[0_8px_20px_-7px_rgba(31,61,112,0.6)] transition-[filter,opacity] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
           >
@@ -271,7 +279,7 @@ function CalculatorBody({
         )}
       </div>
 
-      {hasCalculated && (
+      {calculated && (
         <>
           {!simple && (
             <ConversionTable
