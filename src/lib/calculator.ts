@@ -7,6 +7,7 @@ import type {
   LensResult,
 } from "./types";
 import { formatGlassesRx, formatSigned } from "./format";
+import { eccentricityFcOffset } from "./constants";
 import { isStdOrderable, stdTargetPowerRange } from "./stdRange";
 import { STRINGS, type Dict, type Lang } from "./i18n";
 
@@ -80,7 +81,10 @@ function computeEye(input: EyeInput, C: CalcStrings): EyeResult {
   const screeningValue = parseFloat(fmt(flatKd + tpRaw));
   const screeningSuitable = screeningValue >= MIN_SCREENING;
 
-  const fitCurve = mRound(avgKd, 0.25);
+  // Eccentricity-driven fitting algorithm: shift the STD/HD fitting curve
+  // by -0.50 D for High e-values (steeper fit), +0.50 D for Low (flatter
+  // fit). Normal / blank → no adjustment. TD continues to fit on Flat K.
+  const fitCurve = mRound(avgKd + eccentricityFcOffset(input.eccentricity), 0.25);
   const cylInWindow = cornealCyl >= CYL_MIN && cornealCyl <= CYL_MAX;
 
   // ---- BOC STD ---------------------------------------------------------

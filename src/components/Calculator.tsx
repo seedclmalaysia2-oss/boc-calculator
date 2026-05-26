@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Eye, EyeInput, Unit } from "@/lib/types";
-import { EMPTY_EYE, recommendedDiameter } from "@/lib/constants";
+import { EMPTY_EYE, resolveDiameterRecommendation } from "@/lib/constants";
 import { compute } from "@/lib/calculator";
 import { convertK } from "@/lib/format";
 import { LangProvider, formatDate, useLang, useT, type Lang } from "@/lib/i18n";
@@ -93,17 +93,25 @@ function CalculatorBody({
   }
 
   /**
-   * Update HVID and, when it parses cleanly, snap Closest Diameter to the
-   * rule-based recommendation. The dropdown stays manually overridable —
-   * editing HVID after a manual change still re-applies the rule, which
-   * matches the "rules drive the diameter" intent.
+   * Update HVID or Eccentricity, then re-resolve the Closest Diameter from
+   * the eye's current inputs. Eccentricity wins over HVID when both are
+   * entered (see `resolveDiameterRecommendation`). The dropdown stays
+   * manually overridable — a subsequent edit to either input re-applies
+   * the rule, matching the "rules drive the diameter" intent.
    */
   function onHvid(eye: Eye, value: string) {
     setEye(eye, (prev) => {
-      const rec = recommendedDiameter(value);
-      return rec
-        ? { ...prev, hvid: value, diameter: rec.auto }
-        : { ...prev, hvid: value };
+      const next = { ...prev, hvid: value };
+      const rec = resolveDiameterRecommendation(next.hvid, next.eccentricity);
+      return rec ? { ...next, diameter: rec.auto } : next;
+    });
+  }
+
+  function onEccentricity(eye: Eye, value: string) {
+    setEye(eye, (prev) => {
+      const next = { ...prev, eccentricity: value };
+      const rec = resolveDiameterRecommendation(next.hvid, next.eccentricity);
+      return rec ? { ...next, diameter: rec.auto } : next;
     });
   }
 
@@ -230,6 +238,7 @@ function CalculatorBody({
           simple={simple}
           onField={onField}
           onHvid={onHvid}
+          onEccentricity={onEccentricity}
           onUnit={onUnit}
           onAdoptUnit={onAdoptUnit}
         />

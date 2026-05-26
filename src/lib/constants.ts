@@ -34,20 +34,43 @@ export const EMPTY_EYE: EyeInput = {
   steepAxis: "",
   diameter: DEFAULT_DIAMETER,
   hvid: "",
+  eccentricity: "",
   sphere: "0.00",
   cylinder: "0.00",
   refAxis: "",
   va: "",
 };
 
-/** Recommendation derived from an HVID measurement. */
+/** Eccentricity bucket (8–10 mm chord). Drives FC ±0.50 D and diameter. */
+export type ECategory = "high" | "normal" | "low";
+
+/** Classify an e-value into one of the three fitting buckets. */
+export function eccentricityCategory(eValue: string): ECategory | null {
+  const v = parseFloat(eValue);
+  if (!Number.isFinite(v) || v <= 0) return null;
+  if (v >= 0.65) return "high";
+  if (v >= 0.45) return "normal";
+  return "low";
+}
+
+/** Fitting-curve offset (D) applied to Average K for STD/HD. */
+export function eccentricityFcOffset(eValue: string): number {
+  const cat = eccentricityCategory(eValue);
+  if (cat === "high") return -0.5;
+  if (cat === "low") return 0.5;
+  return 0; // "normal" or null → no adjustment
+}
+
+/** Recommendation derived from an HVID measurement or eccentricity bucket. */
 export interface DiameterRecommendation {
   /** The diameter the dropdown is auto-set to. */
   auto: Diameter;
   /** Human-readable label — may list both options when either is acceptable. */
   label: string;
-  /** The rule range that matched. */
-  rule: "small" | "medium" | "large";
+  /** Which input drove the recommendation. */
+  source: "hvid" | "eccentricity";
+  /** The rule bucket / range that matched. */
+  rule: "small" | "medium" | "large" | ECategory;
 }
 
 /**
@@ -60,7 +83,36 @@ export interface DiameterRecommendation {
 export function recommendedDiameter(hvid: string): DiameterRecommendation | null {
   const v = parseFloat(hvid);
   if (!Number.isFinite(v) || v <= 0) return null;
-  if (v > 12.0) return { auto: "11.0", label: "11.0", rule: "large" };
-  if (v >= 11.5) return { auto: "10.6", label: "10.6", rule: "medium" };
-  return { auto: "10.6", label: "10.2 or 10.6", rule: "small" };
+  if (v > 12.0)
+    return { auto: "11.0", label: "11.0", source: "hvid", rule: "large" };
+  if (v >= 11.5)
+    return { auto: "10.6", label: "10.6", source: "hvid", rule: "medium" };
+  return { auto: "10.6", label: "10.2 or 10.6", source: "hvid", rule: "small" };
+}
+
+/**
+ * Map eccentricity to a recommended Closest Diameter:
+ *   e ≥ 0.65 (High)   → 10.2
+ *   0.45 ≤ e (Normal) → 10.6
+ *   e < 0.45 (Low)    → 11.0
+ */
+export function eccentricityDiameter(
+  eValue: string,
+): DiameterRecommendation | null {
+  const cat = eccentricityCategory(eValue);
+  if (!cat) return null;
+  const auto: Diameter = cat === "high" ? "10.2" : cat === "normal" ? "10.6" : "11.0";
+  return { auto, label: auto, source: "eccentricity", rule: cat };
+}
+
+/**
+ * Resolve the diameter recommendation for an eye. Eccentricity takes
+ * precedence over HVID because it is the more specific clinical signal —
+ * when both are entered, the e-value bucket wins.
+ */
+export function resolveDiameterRecommendation(
+  hvid: string,
+  eccentricity: string,
+): DiameterRecommendation | null {
+  return eccentricityDiameter(eccentricity) ?? recommendedDiameter(hvid);
 }

@@ -1,5 +1,9 @@
 import type { CalcResult, Eye, EyeInput, Unit } from "@/lib/types";
-import { DIAMETERS, recommendedDiameter } from "@/lib/constants";
+import {
+  DIAMETERS,
+  eccentricityCategory,
+  resolveDiameterRecommendation,
+} from "@/lib/constants";
 import { fmt } from "@/lib/format";
 import { useT } from "@/lib/i18n";
 import { Panel } from "./Panel";
@@ -103,6 +107,7 @@ export function KeratometryPanel({
   simple,
   onField,
   onHvid,
+  onEccentricity,
   onUnit,
   onAdoptUnit,
 }: {
@@ -114,6 +119,7 @@ export function KeratometryPanel({
   simple: boolean;
   onField: (eye: Eye, field: keyof EyeInput, value: string) => void;
   onHvid: (eye: Eye, value: string) => void;
+  onEccentricity: (eye: Eye, value: string) => void;
   onUnit: (u: Unit) => void;
   onAdoptUnit: (u: Unit) => void;
 }) {
@@ -156,11 +162,57 @@ export function KeratometryPanel({
     />
   );
 
-  /** Closest-diameter dropdown + a gold chip that surfaces the HVID rule
-   *  that picked the default — only when an HVID is entered. */
+  /** Eccentricity (e-value) input + a brand-tinted chip showing the
+   *  bucket (High/Normal/Low) that drives the FC ±0.50 shift. */
+  const eccentricityCell = (key: Eye) => {
+    const data = eyes.find((e) => e.key === key)!.data;
+    const cat = eccentricityCategory(data.eccentricity);
+    const catLabel = cat === "high" ? T.eHigh : cat === "normal" ? T.eNormal : cat === "low" ? T.eLow : null;
+    const tone =
+      cat === "high"
+        ? "bg-no-soft text-no"
+        : cat === "low"
+          ? "bg-gold-soft text-gold"
+          : "bg-ok-soft text-ok";
+    return (
+      <div>
+        <InputCell
+          ariaLabel={`${T.eccentricity} ${sideLabel(key)}`}
+          inputMode="decimal"
+          placeholder="e-value"
+          value={data.eccentricity}
+          disabled={locked}
+          onChange={(v) => onEccentricity(key, v)}
+        />
+        {catLabel && (
+          <div
+            className={`mt-1.5 inline-flex w-full items-center justify-center gap-1 rounded-md px-2 py-[3px] text-[10px] font-bold uppercase tracking-[0.05em] ${tone}`}
+          >
+            <span aria-hidden className="h-1 w-1 rounded-full bg-current" />
+            {catLabel}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  /** Closest-diameter dropdown + a gold chip that surfaces whichever rule
+   *  (eccentricity bucket or HVID) picked the default. */
   const diameterCell = (key: Eye) => {
     const data = eyes.find((e) => e.key === key)!.data;
-    const rec = recommendedDiameter(data.hvid);
+    const rec = resolveDiameterRecommendation(data.hvid, data.eccentricity);
+    const sourceLabel =
+      rec?.source === "eccentricity"
+        ? T.fromEccentricity(
+            rec.rule === "high"
+              ? T.eHigh
+              : rec.rule === "low"
+                ? T.eLow
+                : T.eNormal,
+          )
+        : rec?.source === "hvid"
+          ? T.fromHvid
+          : null;
     return (
       <div>
         <SelectCell
@@ -173,7 +225,10 @@ export function KeratometryPanel({
         {rec && (
           <div className="mt-1.5 inline-flex w-full items-center justify-center gap-1 rounded-md bg-gold-soft px-2 py-[3px] text-[10px] font-bold uppercase tracking-[0.05em] text-gold">
             <span aria-hidden className="h-1 w-1 rounded-full bg-gold" />
-            {T.recommendedDiameterLabel(rec.label)}
+            <span>{T.recommendedDiameterLabel(rec.label)}</span>
+            {sourceLabel && (
+              <span className="opacity-70">· {sourceLabel}</span>
+            )}
           </div>
         )}
       </div>
@@ -224,6 +279,11 @@ export function KeratometryPanel({
         label={T.hvid}
         re={hvidCell("re")}
         le={hvidCell("le")}
+      />
+      <FieldRow
+        label={T.eccentricity}
+        re={eccentricityCell("re")}
+        le={eccentricityCell("le")}
       />
       <FieldRow
         label={T.closestDiameter}
