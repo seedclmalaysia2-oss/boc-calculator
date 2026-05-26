@@ -73,9 +73,9 @@ export interface DiameterRecommendation {
 
 /**
  * Map an HVID measurement (mm) to a recommended Closest Diameter:
- *   HVID < 11.5      → 10.2 or 10.6  (defaults the dropdown to 10.6)
- *   HVID 11.5 – 12.0 → 10.6
- *   HVID > 12.0      → 11.0
+ *   HVID < 11.4       → 10.2  (covers the user's "<11.3" bucket)
+ *   HVID 11.4 – 11.89 → 10.6
+ *   HVID ≥ 11.9       → 11.0
  * Returns `null` when HVID is blank or non-numeric.
  *
  * Eccentricity does NOT influence the diameter — it only adjusts the
@@ -84,7 +84,7 @@ export interface DiameterRecommendation {
 export function recommendedDiameter(hvid: string): DiameterRecommendation | null {
   const v = parseFloat(hvid);
   if (!Number.isFinite(v) || v <= 0) return null;
-  if (v > 12.0) return { auto: "11.0", label: "11.0", rule: "large" };
-  if (v >= 11.5) return { auto: "10.6", label: "10.6", rule: "medium" };
-  return { auto: "10.6", label: "10.2 or 10.6", rule: "small" };
+  if (v >= 11.9) return { auto: "11.0", label: "11.0", rule: "large" };
+  if (v >= 11.4) return { auto: "10.6", label: "10.6", rule: "medium" };
+  return { auto: "10.2", label: "10.2", rule: "small" };
 }
