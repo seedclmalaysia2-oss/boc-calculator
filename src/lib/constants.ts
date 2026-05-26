@@ -61,16 +61,14 @@ export function eccentricityFcOffset(eValue: string): number {
   return 0; // "normal" or null → no adjustment
 }
 
-/** Recommendation derived from an HVID measurement or eccentricity bucket. */
+/** Recommendation derived from an HVID measurement. */
 export interface DiameterRecommendation {
   /** The diameter the dropdown is auto-set to. */
   auto: Diameter;
   /** Human-readable label — may list both options when either is acceptable. */
   label: string;
-  /** Which input drove the recommendation. */
-  source: "hvid" | "eccentricity";
   /** The rule bucket / range that matched. */
-  rule: "small" | "medium" | "large" | ECategory;
+  rule: "small" | "medium" | "large";
 }
 
 /**
@@ -79,40 +77,14 @@ export interface DiameterRecommendation {
  *   HVID 11.5 – 12.0 → 10.6
  *   HVID > 12.0      → 11.0
  * Returns `null` when HVID is blank or non-numeric.
+ *
+ * Eccentricity does NOT influence the diameter — it only adjusts the
+ * STD/HD fitting curve via `eccentricityFcOffset`.
  */
 export function recommendedDiameter(hvid: string): DiameterRecommendation | null {
   const v = parseFloat(hvid);
   if (!Number.isFinite(v) || v <= 0) return null;
-  if (v > 12.0)
-    return { auto: "11.0", label: "11.0", source: "hvid", rule: "large" };
-  if (v >= 11.5)
-    return { auto: "10.6", label: "10.6", source: "hvid", rule: "medium" };
-  return { auto: "10.6", label: "10.2 or 10.6", source: "hvid", rule: "small" };
-}
-
-/**
- * Map eccentricity to a recommended Closest Diameter:
- *   e ≥ 0.65 (High)   → 10.2
- *   0.45 ≤ e (Normal) → 10.6
- *   e < 0.45 (Low)    → 11.0
- */
-export function eccentricityDiameter(
-  eValue: string,
-): DiameterRecommendation | null {
-  const cat = eccentricityCategory(eValue);
-  if (!cat) return null;
-  const auto: Diameter = cat === "high" ? "10.2" : cat === "normal" ? "10.6" : "11.0";
-  return { auto, label: auto, source: "eccentricity", rule: cat };
-}
-
-/**
- * Resolve the diameter recommendation for an eye. Eccentricity takes
- * precedence over HVID because it is the more specific clinical signal —
- * when both are entered, the e-value bucket wins.
- */
-export function resolveDiameterRecommendation(
-  hvid: string,
-  eccentricity: string,
-): DiameterRecommendation | null {
-  return eccentricityDiameter(eccentricity) ?? recommendedDiameter(hvid);
+  if (v > 12.0) return { auto: "11.0", label: "11.0", rule: "large" };
+  if (v >= 11.5) return { auto: "10.6", label: "10.6", rule: "medium" };
+  return { auto: "10.6", label: "10.2 or 10.6", rule: "small" };
 }

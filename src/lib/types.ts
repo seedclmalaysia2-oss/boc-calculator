@@ -11,8 +11,8 @@ export interface EyeInput {
   diameter: Diameter;
   /** Horizontal visible iris diameter (mm). Drives the diameter recommendation. */
   hvid: string;
-  /** Corneal eccentricity (e-value, 8–10 mm chord). Adjusts STD/HD fitting
-   *  curve by ±0.25 D and (when present) overrides the HVID diameter rule. */
+  /** Corneal eccentricity (e-value, 8–10 mm chord). Adjusts the STD/HD
+   *  fitting curve by ±0.25 D; does NOT affect the diameter. */
   eccentricity: string;
   sphere: string;
   cylinder: string;
