@@ -33,8 +33,34 @@ export const EMPTY_EYE: EyeInput = {
   steepK: "",
   steepAxis: "",
   diameter: DEFAULT_DIAMETER,
+  hvid: "",
   sphere: "0.00",
   cylinder: "0.00",
   refAxis: "",
   va: "",
 };
+
+/** Recommendation derived from an HVID measurement. */
+export interface DiameterRecommendation {
+  /** The diameter the dropdown is auto-set to. */
+  auto: Diameter;
+  /** Human-readable label — may list both options when either is acceptable. */
+  label: string;
+  /** The rule range that matched. */
+  rule: "small" | "medium" | "large";
+}
+
+/**
+ * Map an HVID measurement (mm) to a recommended Closest Diameter:
+ *   HVID < 11.5      → 10.2 or 10.6  (defaults the dropdown to 10.6)
+ *   HVID 11.5 – 12.0 → 10.6
+ *   HVID > 12.0      → 11.0
+ * Returns `null` when HVID is blank or non-numeric.
+ */
+export function recommendedDiameter(hvid: string): DiameterRecommendation | null {
+  const v = parseFloat(hvid);
+  if (!Number.isFinite(v) || v <= 0) return null;
+  if (v > 12.0) return { auto: "11.0", label: "11.0", rule: "large" };
+  if (v >= 11.5) return { auto: "10.6", label: "10.6", rule: "medium" };
+  return { auto: "10.6", label: "10.2 or 10.6", rule: "small" };
+}

@@ -1,5 +1,5 @@
 import type { CalcResult, Eye, EyeInput, Unit } from "@/lib/types";
-import { DIAMETERS } from "@/lib/constants";
+import { DIAMETERS, recommendedDiameter } from "@/lib/constants";
 import { fmt } from "@/lib/format";
 import { useT } from "@/lib/i18n";
 import { Panel } from "./Panel";
@@ -102,6 +102,7 @@ export function KeratometryPanel({
   locked,
   simple,
   onField,
+  onHvid,
   onUnit,
   onAdoptUnit,
 }: {
@@ -112,6 +113,7 @@ export function KeratometryPanel({
   locked: boolean;
   simple: boolean;
   onField: (eye: Eye, field: keyof EyeInput, value: string) => void;
+  onHvid: (eye: Eye, value: string) => void;
   onUnit: (u: Unit) => void;
   onAdoptUnit: (u: Unit) => void;
 }) {
@@ -142,6 +144,41 @@ export function KeratometryPanel({
       onChange={(v) => onField(key, field, v)}
     />
   );
+
+  const hvidCell = (key: Eye) => (
+    <InputCell
+      ariaLabel={`${T.hvid} ${sideLabel(key)}`}
+      inputMode="decimal"
+      placeholder="mm"
+      value={eyes.find((e) => e.key === key)!.data.hvid}
+      disabled={locked}
+      onChange={(v) => onHvid(key, v)}
+    />
+  );
+
+  /** Closest-diameter dropdown + a gold chip that surfaces the HVID rule
+   *  that picked the default — only when an HVID is entered. */
+  const diameterCell = (key: Eye) => {
+    const data = eyes.find((e) => e.key === key)!.data;
+    const rec = recommendedDiameter(data.hvid);
+    return (
+      <div>
+        <SelectCell
+          ariaLabel={`${T.closestDiameter} ${sideLabel(key)}`}
+          value={data.diameter}
+          options={DIAMETERS}
+          disabled={locked}
+          onChange={(v) => onField(key, "diameter", v)}
+        />
+        {rec && (
+          <div className="mt-1.5 inline-flex w-full items-center justify-center gap-1 rounded-md bg-gold-soft px-2 py-[3px] text-[10px] font-bold uppercase tracking-[0.05em] text-gold">
+            <span aria-hidden className="h-1 w-1 rounded-full bg-gold" />
+            {T.recommendedDiameterLabel(rec.label)}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   const unitMismatch =
     looksLikeWrongUnit(re, unit) || looksLikeWrongUnit(le, unit);
@@ -184,25 +221,14 @@ export function KeratometryPanel({
         le={axisCell("le", "steepAxis", T.steepKAxis)}
       />
       <FieldRow
+        label={T.hvid}
+        re={hvidCell("re")}
+        le={hvidCell("le")}
+      />
+      <FieldRow
         label={T.closestDiameter}
-        re={
-          <SelectCell
-            ariaLabel={`${T.closestDiameter} ${T.rightEye}`}
-            value={re.diameter}
-            options={DIAMETERS}
-            disabled={locked}
-            onChange={(v) => onField("re", "diameter", v)}
-          />
-        }
-        le={
-          <SelectCell
-            ariaLabel={`${T.closestDiameter} ${T.leftEye}`}
-            value={le.diameter}
-            options={DIAMETERS}
-            disabled={locked}
-            onChange={(v) => onField("le", "diameter", v)}
-          />
-        }
+        re={diameterCell("re")}
+        le={diameterCell("le")}
       />
 
       {!simple && (

@@ -9,6 +9,8 @@ export interface EyeInput {
   steepK: string;
   steepAxis: string;
   diameter: Diameter;
+  /** Horizontal visible iris diameter (mm). Drives the diameter recommendation. */
+  hvid: string;
   sphere: string;
   cylinder: string;
   refAxis: string;

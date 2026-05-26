@@ -56,6 +56,8 @@ const en = {
   steepK: "Steep K",
   steepKAxis: "Steep K Axis",
   closestDiameter: "Closest Diameter",
+  hvid: "HVID",
+  recommendedDiameterLabel: (d: string) => `Recommended: ${d}`,
   fittingCurveBasis: "Fitting Curve Basis",
   averageK: "Average K",
 
@@ -307,6 +309,8 @@ const vi: Dict = {
   steepK: "K cong",
   steepKAxis: "Trục K cong",
   closestDiameter: "Đường kính gần nhất",
+  hvid: "HVID",
+  recommendedDiameterLabel: (d: string) => `Khuyến nghị: ${d}`,
   fittingCurveBasis: "Cơ sở đường cong lắp",
   averageK: "K trung bình",
 
@@ -546,6 +550,8 @@ const id: Dict = {
   steepK: "K Curam",
   steepKAxis: "Aksis K Curam",
   closestDiameter: "Diameter Terdekat",
+  hvid: "HVID",
+  recommendedDiameterLabel: (d: string) => `Direkomendasikan: ${d}`,
   fittingCurveBasis: "Dasar Kurva Fitting",
   averageK: "K Rata-rata",
 
@@ -785,6 +791,8 @@ const ja: Dict = {
   steepK: "スティープK",
   steepKAxis: "スティープK 軸",
   closestDiameter: "最も近い直径",
+  hvid: "HVID",
+  recommendedDiameterLabel: (d: string) => `推奨: ${d}`,
   fittingCurveBasis: "フィッティングカーブの基準",
   averageK: "平均K",
 

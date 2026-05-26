@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Eye, EyeInput, Unit } from "@/lib/types";
-import { EMPTY_EYE } from "@/lib/constants";
+import { EMPTY_EYE, recommendedDiameter } from "@/lib/constants";
 import { compute } from "@/lib/calculator";
 import { convertK } from "@/lib/format";
 import { LangProvider, formatDate, useLang, useT, type Lang } from "@/lib/i18n";
@@ -90,6 +90,21 @@ function CalculatorBody({
 
   function onField(eye: Eye, field: keyof EyeInput, value: string) {
     setEye(eye, (prev) => ({ ...prev, [field]: value }));
+  }
+
+  /**
+   * Update HVID and, when it parses cleanly, snap Closest Diameter to the
+   * rule-based recommendation. The dropdown stays manually overridable —
+   * editing HVID after a manual change still re-applies the rule, which
+   * matches the "rules drive the diameter" intent.
+   */
+  function onHvid(eye: Eye, value: string) {
+    setEye(eye, (prev) => {
+      const rec = recommendedDiameter(value);
+      return rec
+        ? { ...prev, hvid: value, diameter: rec.auto }
+        : { ...prev, hvid: value };
+    });
   }
 
   function onUnit(next: Unit) {
@@ -214,6 +229,7 @@ function CalculatorBody({
           locked={hasCalculated}
           simple={simple}
           onField={onField}
+          onHvid={onHvid}
           onUnit={onUnit}
           onAdoptUnit={onAdoptUnit}
         />
