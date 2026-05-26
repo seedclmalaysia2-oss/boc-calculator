@@ -167,13 +167,9 @@ export function KeratometryPanel({
   const eccentricityCell = (key: Eye) => {
     const data = eyes.find((e) => e.key === key)!.data;
     const cat = eccentricityCategory(data.eccentricity);
-    const catLabel = cat === "high" ? T.eHigh : cat === "normal" ? T.eNormal : cat === "low" ? T.eLow : null;
+    const catLabel = cat === "high" ? T.eHigh : cat === "normal" ? T.eNormal : null;
     const tone =
-      cat === "high"
-        ? "bg-no-soft text-no"
-        : cat === "low"
-          ? "bg-gold-soft text-gold"
-          : "bg-ok-soft text-ok";
+      cat === "high" ? "bg-no-soft text-no" : "bg-ok-soft text-ok";
     return (
       <div>
         <InputCell

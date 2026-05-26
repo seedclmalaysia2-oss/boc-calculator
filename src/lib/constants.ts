@@ -41,23 +41,30 @@ export const EMPTY_EYE: EyeInput = {
   va: "",
 };
 
-/** Eccentricity bucket (8–10 mm chord). Drives FC ±0.50 D and diameter. */
-export type ECategory = "high" | "normal" | "low";
+/** Eccentricity bucket (8–10 mm chord). Drives the STD/HD FC offset. */
+export type ECategory = "high" | "normal";
 
-/** Classify an e-value into one of the three fitting buckets. */
+/**
+ * Classify an e-value into a fitting bucket. The "Low" bucket has been
+ * retired — e-values below 0.45 (and blank / non-numeric inputs) return
+ * `null`, leaving the fitting curve unadjusted.
+ *
+ *   e ≥ 0.60       → "high"
+ *   0.45 ≤ e < 0.60 → "normal"
+ *   anything else  → null
+ */
 export function eccentricityCategory(eValue: string): ECategory | null {
   const v = parseFloat(eValue);
   if (!Number.isFinite(v) || v <= 0) return null;
-  if (v >= 0.65) return "high";
+  if (v >= 0.6) return "high";
   if (v >= 0.45) return "normal";
-  return "low";
+  return null;
 }
 
 /** Fitting-curve offset (D) applied to Average K for STD/HD. */
 export function eccentricityFcOffset(eValue: string): number {
   const cat = eccentricityCategory(eValue);
   if (cat === "high") return -0.25;
-  if (cat === "low") return 0.25;
   return 0; // "normal" or null → no adjustment
 }
 

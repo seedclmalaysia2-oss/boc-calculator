@@ -82,8 +82,9 @@ function computeEye(input: EyeInput, C: CalcStrings): EyeResult {
   const screeningSuitable = screeningValue >= MIN_SCREENING;
 
   // Eccentricity-driven fitting algorithm: shift the STD/HD fitting curve
-  // by -0.25 D for High e-values (steeper fit), +0.25 D for Low (flatter
-  // fit). Normal / blank → no adjustment. TD continues to fit on Flat K.
+  // by -0.25 D for High e-values (e >= 0.60, steeper fit). Normal
+  // (0.45 <= e < 0.60) / blank / below-0.45 → no adjustment. TD continues
+  // to fit on Flat K, unchanged.
   const fitCurve = mRound(avgKd + eccentricityFcOffset(input.eccentricity), 0.25);
   const cylInWindow = cornealCyl >= CYL_MIN && cornealCyl <= CYL_MAX;
 
