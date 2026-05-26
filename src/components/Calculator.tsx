@@ -66,7 +66,7 @@ function CalculatorBody({
   const T = useT();
   const [re, setRe] = useState<EyeInput>(EMPTY_EYE);
   const [le, setLe] = useState<EyeInput>(EMPTY_EYE);
-  const [unit, setUnit] = useState<Unit>("mm");
+  const [unit, setUnit] = useState<Unit>("d");
   const [hasCalculated, setHasCalculated] = useState(false);
   const reportDate = formatDate(lang);
   const mainRef = useRef<HTMLElement>(null);
