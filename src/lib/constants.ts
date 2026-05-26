@@ -56,8 +56,8 @@ export function eccentricityCategory(eValue: string): ECategory | null {
 /** Fitting-curve offset (D) applied to Average K for STD/HD. */
 export function eccentricityFcOffset(eValue: string): number {
   const cat = eccentricityCategory(eValue);
-  if (cat === "high") return -0.5;
-  if (cat === "low") return 0.5;
+  if (cat === "high") return -0.25;
+  if (cat === "low") return 0.25;
   return 0; // "normal" or null → no adjustment
 }
 
